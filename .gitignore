@@ -1,0 +1,16 @@
+# Project sources fed in for documentation (keep out of version control)
+projects/*
+!projects/README.md
+
+# Loose files at the top of output/ (only mode folders and README are tracked)
+/output/*
+!/output/README.md
+!/output/mode-a/
+!/output/mode-b/
+
+# Generated exports
+output/*/*/export/
+
+# Python
+__pycache__/
+*.pyc

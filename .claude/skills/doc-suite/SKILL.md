@@ -1,0 +1,56 @@
+---
+name: doc-suite
+description: MODE A (existing code). Generate the complete documentation suite for a fed-in project. It runs intake, then the Completion Plan, Proposal, User Manual, Technical Manual, Developer Manual (and optionally repo docs), followed by a cross-document consistency review. Use when the user says "document this project", "create all the documents", "full documentation", or gives a project path without naming a specific document.
+argument-hint: <path-to-project or slug> [--only plan,proposal,user,technical,developer,repo] [--format md|docx|pdf]
+---
+
+# Full Documentation Suite
+
+> **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
+
+Input: `$ARGUMENTS`.
+
+## Step 1 — Intake
+If `output/mode-a/<slug>/00-project-profile.md` does not exist, run the `doc-intake` procedure.
+Then show the user the Open Questions **once**. Ask them to answer what they can, or to
+reply "continue" to proceed with `[TBD]` markers. Wait for that reply. It is the only
+pause in the suite.
+
+## Step 2 — Generate documents
+Follow each skill's SKILL.md exactly. Default order (later documents reuse earlier ones):
+
+| Order | Skill file | Output |
+|-------|-----------|--------|
+| 1 | `.claude/skills/doc-plan/SKILL.md` | `01-project-completion-plan.md` |
+| 2 | `.claude/skills/doc-proposal/SKILL.md` | `02-project-proposal.md` |
+| 3 | `.claude/skills/doc-user-manual/SKILL.md` | `03-user-manual.md` |
+| 4 | `.claude/skills/doc-technical-manual/SKILL.md` | `04-technical-manual.md` |
+| 5 | `.claude/skills/doc-developer-manual/SKILL.md` | `05-developer-manual.md` |
+| 6 (optional) | `.claude/skills/doc-repo-files/SKILL.md` | `repo/*` |
+
+Respect `--only` if it is given.
+
+**Parallelism:** documents 1→2 are sequential (the Proposal reuses the Plan). Documents
+3, 4, and 5 depend only on the profile, so you may delegate them to parallel
+`general-purpose` agents. Give each agent the slug, the skill file path to follow, and the
+instruction to obey `CLAUDE.md`, `rules/`, and `mode-a-existing-project/rules/`.
+
+## Step 3 — Cross-document consistency review
+Read all generated documents and check the "Suite consistency" section of
+`rules/50-review-checklist.md`:
+- Product name, version, and terminology are identical (use the profile Glossary).
+- Feature IDs (F-xx) are consistent between Plan, Proposal, and User Manual.
+- Proposal scope = Plan WBS scope.
+- Config keys in the Developer Manual setup ⊆ the Technical Manual config reference.
+Fix any inconsistency in place.
+
+## Step 4 — Index and export
+1. Write `output/mode-a/<slug>/INDEX.md`: a table of each document with its audience, status,
+   and Open Items count, followed by a consolidated **Open Items** list (deduplicated,
+   grouped by who must answer).
+2. If `--format docx` or `pdf` was requested, convert each finished Markdown document with
+   the `docx` / `pdf` skill into `output/mode-a/<slug>/export/`.
+
+## Step 5 — Report
+Give a short summary: the files written (as links), the checklist pass/fail per document,
+and the top Open Items the user should resolve first.
