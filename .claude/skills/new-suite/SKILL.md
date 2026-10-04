@@ -16,7 +16,7 @@ Input: `$ARGUMENTS`.
 
 ## Step 1 — Brief
 If `output/mode-b/<slug>/00-project-brief.md` does not exist, run the `new-brief`
-procedure, including its single interview round. This is the **only pause** in the suite.
+procedure, including its single interview round. This is the **only pause** in the suite (skipped in non-interactive runs; see `new-brief` Step 3).
 After the user answers (or says "use defaults"), continue without further questions.
 Any remaining unknowns become markers.
 

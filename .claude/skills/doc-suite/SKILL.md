@@ -17,7 +17,8 @@ Input: `$ARGUMENTS`.
 If `output/mode-a/<slug>/00-project-profile.md` does not exist, run the `doc-intake` procedure.
 Then show the user the Open Questions **once**. Ask them to answer what they can, or to
 reply "continue" to proceed with `[TBD]` markers. Wait for that reply. It is the only
-pause in the suite.
+pause in the suite. In a non-interactive or evaluation run, do not pause: continue with
+`[TBD]` markers.
 
 ## Step 2 — Generate documents
 Follow each skill's SKILL.md exactly. Default order (later documents reuse earlier ones):

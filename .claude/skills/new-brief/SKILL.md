@@ -35,6 +35,11 @@ Read the idea and map every fact in it to the brief sections in
 already said.
 
 ## Step 3 — Interview (one round)
+**Non-interactive runs:** if the input already contains interview answers, or says it is a
+non-interactive or evaluation run, do not ask anything. Record the given answers in the
+Interview Log, treat every unanswered question as `[TBD]` (do **not** silently accept
+defaults; a suggested default may appear only as **Proposed**), and continue to Step 4.
+
 Ask the remaining questions in **one message**, grouped and numbered. Ask at most about
 12 questions. For each one, give a suggested default in brackets so the user can reply
 quickly. Skip any group the idea already answers.

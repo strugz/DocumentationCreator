@@ -1,0 +1,41 @@
+{
+  "id": "b-clinic-booking",
+  "mode": "b",
+  "title": "Mode B — clinic appointment booking idea with scripted interview answers",
+  "slug": "eval-clinic-booking",
+  "product_name": "Clinic Booking",
+  "skill": "new-suite",
+  "input": "idea.md",
+  "answers": "answers.md",
+  "suite_args": "--no-manuals",
+  "context": "Use the interview answers provided; do not ask questions.",
+  "traps": {
+    "excluded_feature": "Online payments are explicitly Won't — must not appear as in scope.",
+    "undecided_hosting": "Hosting is undecided — must surface as a [DECISION], not a silent choice.",
+    "no_budget": "No budget or rates given — no money amounts allowed.",
+    "given_deadline": "Deadline 2027-03-31 is given and must be used; no other invented milestone dates.",
+    "unnamed_client": "The clinic name is withheld — no invented organization name."
+  },
+  "checks": [
+    {"id": "files", "type": "files", "files": ["00-project-brief.md", "01-requirements-specification.md", "02-system-design.md", "03-project-plan.md", "04-project-proposal.md", "05-test-plan.md"], "weight": 3},
+    {"id": "lint-clean", "type": "lint", "max_errors": 0, "weight": 3},
+
+    {"id": "brief-features", "type": "contains_all", "file": "00-project-brief.md", "patterns": ["book", "reminder", "schedule", "no-show"], "desc": "Brief captures all features the user named", "weight": 2},
+    {"id": "brief-roles", "type": "contains_all", "file": "01-requirements-specification.md", "patterns": ["receptionist", "doctor", "patient", "admin"], "desc": "Requirements cover every role"},
+    {"id": "language", "type": "contains", "file": "01-requirements-specification.md", "pattern": "filipino|tagalog", "desc": "Bilingual UI requirement captured"},
+    {"id": "fr-count", "type": "min_count", "file": "01-requirements-specification.md", "pattern": "^\\|\\s*FR-\\d+", "min": 8, "desc": "At least 8 functional requirements"},
+    {"id": "nfr-count", "type": "min_count", "file": "01-requirements-specification.md", "pattern": "^\\|\\s*NFR-\\d+", "min": 6, "desc": "At least 6 non-functional requirements"},
+    {"id": "uat-count", "type": "min_count", "file": "05-test-plan.md", "pattern": "^\\|\\s*UAT-\\d+", "min": 3, "desc": "At least 3 UAT scenarios"},
+
+    {"id": "payments-excluded", "type": "qualified", "file": "*", "pattern": "payment", "allowed_if": "won't|wont|out of scope|not (included|in scope|part of|covered|supported)|excluded|exclude|future|later|deferred|no online|without", "desc": "Online payments never presented as in scope", "weight": 4},
+    {"id": "hosting-decision", "type": "line", "file": "*", "all": ["\\[DECISION", "host"], "desc": "Undecided hosting raised as a [DECISION]", "weight": 3},
+    {"id": "sms-proposed", "type": "line", "file": ["02-system-design.md", "00-project-brief.md"], "all": ["sms", "proposed|\\[DECISION"], "desc": "SMS provider choice labeled Proposed or DECISION"},
+    {"id": "design-proposed", "type": "min_count", "file": "02-system-design.md", "pattern": "proposed", "min": 3, "desc": "Design labels its own choices as Proposed"},
+    {"id": "deadline-used", "type": "contains", "file": "03-project-plan.md", "pattern": "2027-03-31|31 March 2027|March 31, 2027", "desc": "Plan uses the user's deadline", "weight": 2},
+
+    {"id": "no-invented-costs", "type": "absent", "file": ["03-project-plan.md", "04-project-proposal.md"], "pattern": "(?:[$€£₱]|\\b(?:USD|PHP|EUR)\\b)\\s?\\d", "desc": "No invented money amounts", "weight": 3},
+    {"id": "budget-tbd", "type": "line", "file": "04-project-proposal.md", "all": ["\\[TBD", "budget|cost|total"], "desc": "Budget left as [TBD]"},
+    {"id": "not-built", "type": "absent", "file": "*", "pattern": "(has|have) been (built|implemented|developed|deployed)|is already (built|live|in production|available)|currently (supports|allows|sends)", "desc": "Nothing described as already built", "weight": 3},
+    {"id": "no-invented-org", "type": "absent", "file": "*", "pattern": "\\b(medical (center|centre)|hospital inc|clinic inc|health(care)? (inc|corp|llc))\\b", "desc": "No invented organization name", "weight": 2}
+  ]
+}

@@ -14,3 +14,6 @@ output/*/*/export/
 # Python
 __pycache__/
 *.pyc
+
+# Eval run outputs (the baseline in evals/baseline.json is tracked)
+evals/runs/
