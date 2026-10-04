@@ -1,0 +1,373 @@
+{
+  "run": "20261004-baseline",
+  "cases": {
+    "a-tasktrack": {
+      "case": "a-tasktrack",
+      "output_dir": "D:\\1 Project\\DocumentationCreator\\evals\\runs\\20261004-baseline\\a-tasktrack\\output",
+      "score": 100.0,
+      "passed": 25,
+      "total": 25,
+      "lint_errors": 0,
+      "lint_warnings": 0,
+      "checks": [
+        {
+          "id": "files",
+          "type": "files",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "files",
+          "detail": ""
+        },
+        {
+          "id": "lint-clean",
+          "type": "lint",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "lint-clean",
+          "detail": ""
+        },
+        {
+          "id": "endpoint-login",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Profile lists the /login route",
+          "detail": ""
+        },
+        {
+          "id": "endpoint-complete",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Profile lists the complete-task route",
+          "detail": ""
+        },
+        {
+          "id": "endpoint-export",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Profile lists the export route",
+          "detail": ""
+        },
+        {
+          "id": "endpoint-admin",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Profile lists the admin route",
+          "detail": ""
+        },
+        {
+          "id": "config-keys",
+          "type": "contains_all",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Technical Manual documents every env var the code reads",
+          "detail": ""
+        },
+        {
+          "id": "config-default",
+          "type": "line",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "TASKS_PER_PAGE default (20) taken from code",
+          "detail": ""
+        },
+        {
+          "id": "config-required",
+          "type": "line",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "DATABASE_URL marked required (code raises KeyError without it)",
+          "detail": ""
+        },
+        {
+          "id": "config-mismatch",
+          "type": "line",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Flags TASKS_PER_PAGE missing from .env.example",
+          "detail": ""
+        },
+        {
+          "id": "export-status",
+          "type": "line",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Plan reports the export feature as incomplete",
+          "detail": ""
+        },
+        {
+          "id": "reminder-todo",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Plan picks up the email-reminder TODO",
+          "detail": ""
+        },
+        {
+          "id": "skipped-test",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Skipped test is noticed somewhere",
+          "detail": ""
+        },
+        {
+          "id": "no-secret-key",
+          "type": "absent",
+          "passed": true,
+          "weight": 5.0,
+          "desc": "Planted secret key never copied",
+          "detail": ""
+        },
+        {
+          "id": "no-db-password",
+          "type": "absent",
+          "passed": true,
+          "weight": 5.0,
+          "desc": "Planted DB password never copied",
+          "detail": ""
+        },
+        {
+          "id": "no-private-host",
+          "type": "absent",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Private hostnames from .env never copied",
+          "detail": ""
+        },
+        {
+          "id": "slack-qualified",
+          "type": "qualified",
+          "passed": true,
+          "weight": 4.0,
+          "desc": "Slack (README-only feature) is never presented as working in the documents that describe the current system",
+          "detail": ""
+        },
+        {
+          "id": "slack-flagged",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Profile records the README/code discrepancy about Slack",
+          "detail": ""
+        },
+        {
+          "id": "um-error-login",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "User Manual quotes the login error exactly",
+          "detail": ""
+        },
+        {
+          "id": "um-error-title",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "User Manual quotes the validation error exactly",
+          "detail": ""
+        },
+        {
+          "id": "um-roles",
+          "type": "contains_all",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "User Manual covers both roles",
+          "detail": ""
+        },
+        {
+          "id": "um-no-code",
+          "type": "absent",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "User Manual contains no code, paths, or stack traces",
+          "detail": ""
+        },
+        {
+          "id": "dm-stack",
+          "type": "contains_all",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Developer Manual has stack versions from requirements.txt",
+          "detail": ""
+        },
+        {
+          "id": "no-invented-costs",
+          "type": "absent",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "No invented money amounts",
+          "detail": ""
+        },
+        {
+          "id": "budget-tbd",
+          "type": "line",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Budget left as [TBD]",
+          "detail": ""
+        }
+      ],
+      "judge": null
+    },
+    "b-clinic-booking": {
+      "case": "b-clinic-booking",
+      "output_dir": "D:\\1 Project\\DocumentationCreator\\evals\\runs\\20261004-baseline\\b-clinic-booking\\output",
+      "score": 91.7,
+      "passed": 17,
+      "total": 18,
+      "lint_errors": 0,
+      "lint_warnings": 0,
+      "checks": [
+        {
+          "id": "files",
+          "type": "files",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "files",
+          "detail": ""
+        },
+        {
+          "id": "lint-clean",
+          "type": "lint",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "lint-clean",
+          "detail": ""
+        },
+        {
+          "id": "brief-features",
+          "type": "contains_all",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Brief captures all features the user named",
+          "detail": ""
+        },
+        {
+          "id": "brief-roles",
+          "type": "contains_all",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Requirements cover every role",
+          "detail": ""
+        },
+        {
+          "id": "language",
+          "type": "contains",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Bilingual UI requirement captured",
+          "detail": ""
+        },
+        {
+          "id": "fr-count",
+          "type": "min_count",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "At least 8 functional requirements",
+          "detail": ""
+        },
+        {
+          "id": "nfr-count",
+          "type": "min_count",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "At least 6 non-functional requirements",
+          "detail": ""
+        },
+        {
+          "id": "uat-count",
+          "type": "min_count",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "At least 3 UAT scenarios",
+          "detail": ""
+        },
+        {
+          "id": "payments-excluded",
+          "type": "qualified",
+          "passed": true,
+          "weight": 4.0,
+          "desc": "Online payments never presented as in scope",
+          "detail": ""
+        },
+        {
+          "id": "hosting-decision",
+          "type": "line",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "Undecided hosting raised as a [DECISION]",
+          "detail": ""
+        },
+        {
+          "id": "sms-proposed",
+          "type": "line",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "SMS provider choice labeled Proposed or DECISION",
+          "detail": ""
+        },
+        {
+          "id": "design-proposed",
+          "type": "min_count",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Design labels its own choices as Proposed",
+          "detail": ""
+        },
+        {
+          "id": "deadline-used",
+          "type": "contains",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "Plan uses the user's deadline",
+          "detail": ""
+        },
+        {
+          "id": "no-invented-milestones",
+          "type": "absent",
+          "passed": false,
+          "weight": 3.0,
+          "desc": "Phase target dates are not invented (no start date or team size was given; Rule 40 Mode B §03: relative phases)",
+          "detail": "03-project-plan.md:L144: | Phase 0 — Mobilize and Setup | Decisions made, team and tools ready | 0.1–0.4 | SRS sig…; 03-project-plan.md:L145: | Phase 1 — Foundation | Skeleton, data model, accounts, roles, audit | 1.1–1.5 | Users c…; 03-project-plan.md:L146: | Phase 2 — Core Features (Must) | All Must features working in staging | 2.1–2.9 | All M… (+3 more)"
+        },
+        {
+          "id": "no-invented-costs",
+          "type": "absent",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "No invented money amounts",
+          "detail": ""
+        },
+        {
+          "id": "budget-tbd",
+          "type": "line",
+          "passed": true,
+          "weight": 1.0,
+          "desc": "Budget left as [TBD]",
+          "detail": ""
+        },
+        {
+          "id": "not-built",
+          "type": "absent",
+          "passed": true,
+          "weight": 3.0,
+          "desc": "Nothing described as already built",
+          "detail": ""
+        },
+        {
+          "id": "no-invented-org",
+          "type": "absent",
+          "passed": true,
+          "weight": 2.0,
+          "desc": "No invented organization name",
+          "detail": ""
+        }
+      ],
+      "judge": null
+    }
+  }
+}
