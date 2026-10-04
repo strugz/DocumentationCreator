@@ -9,6 +9,9 @@ argument-hint: <project idea or slug> [--only requirements,design,plan,proposal,
 > **Mode B — New project.** For a project that already has code, use the Mode A
 > `/doc-suite` instead.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`.
 
 ## Step 1 — Brief
@@ -47,6 +50,9 @@ Read all generated documents and check the "Suite consistency" section of
 - Proposal scope = Requirements in-scope = Plan WBS scope.
 - Timeline and effort figures in the Proposal equal the Plan's.
 - No document describes the system as already built.
+Start by running `python tools/lint_docs.py output/mode-b/<slug>`: it checks the
+mechanical items (markers, structure, IDs, citations, traceability) for the whole folder.
+Then review the judgment items above by reading the documents.
 Fix any inconsistency in place, starting with the earliest document.
 
 ## Step 4 — Index and export
@@ -58,6 +64,6 @@ Fix any inconsistency in place, starting with the earliest document.
    `docx` / `pdf` skill into `output/mode-b/<slug>/export/`.
 
 ## Step 5 — Report
-Give a short summary: the files written (as links), the checklist pass/fail per document,
+Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),
 the decisions the user should make first, and the reminder that once code exists,
 `/new-gap-check` compares plan against build and the Mode A skills produce the final manuals.

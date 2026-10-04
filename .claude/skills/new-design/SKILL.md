@@ -9,6 +9,9 @@ argument-hint: <project-slug> [preferred stack / hosting]
 > **Mode B — New project.** For existing code, architecture is documented by the Mode A
 > Technical and Developer Manuals.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS` (slug, plus an optional stack or hosting preference that overrides
 the brief).
 
@@ -53,3 +56,7 @@ the brief).
 
 Run the review checklist. Report the file path, the stack chosen (Proposed vs Agreed),
 the counts (components, entities, endpoints, screens), the ADRs, and the Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

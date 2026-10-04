@@ -9,6 +9,9 @@ argument-hint: <project-slug or idea>
 > **Mode B — New project.** For a project with existing code, requirements are derived by
 > the Mode A skills instead.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`.
 
 ## Preconditions
@@ -48,3 +51,7 @@ Input: `$ARGUMENTS`.
 Run `rules/50-review-checklist.md` (common + Mode B). Report the file path, the counts
 (FR by priority, NFR, user stories), the Proposed items the user should confirm, and the
 Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

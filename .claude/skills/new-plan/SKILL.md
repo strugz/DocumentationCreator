@@ -9,6 +9,9 @@ argument-hint: <project-slug> [start date / deadline / team / sprint length]
 > **Mode B — New project.** For a project that already has code, use the Mode A
 > `/doc-plan` (Completion Plan) instead.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS` (slug, plus optional start date, deadline, team size, sprint length).
 
 ## Preconditions
@@ -57,3 +60,7 @@ Input: `$ARGUMENTS` (slug, plus optional start date, deadline, team size, sprint
 Run the review checklist. Report the file path, the headline (WBS item count, estimated
 effort with method, duration, phases), the scope-versus-deadline verdict, and the Open
 Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

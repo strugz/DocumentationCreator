@@ -8,6 +8,9 @@ argument-hint: <project-slug or path> [deadline / team / constraints]
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS` (project slug or path, plus any context such as deadline, team size,
 or sprint length).
 
@@ -46,3 +49,7 @@ or sprint length).
 
 Run the `rules/50-review-checklist.md` checks. Then report the file path, the headline
 (completion %, number of WBS items, estimated phases), and the Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-a/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

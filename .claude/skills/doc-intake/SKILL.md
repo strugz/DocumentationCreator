@@ -8,6 +8,9 @@ argument-hint: <path-to-project> [project name]
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`. Expect a project path (absolute, or relative to `projects/`), and
 optionally a product name. If no path is given, ask for one. That is the only question
 you ask up front.
@@ -65,3 +68,7 @@ Give the user:
 2. The **Open Questions** list. Ask the user to answer what they can. Explain that
    answers improve the Plan and the Proposal most (dates, budget, client, team).
 3. The next step: `/doc-suite <slug>` for everything, or an individual `/doc-*` skill.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-a/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

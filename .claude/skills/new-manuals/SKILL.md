@@ -9,6 +9,9 @@ argument-hint: <project-slug> [user|technical|developer|all]
 > **Mode B — New project.** Once code exists, regenerate the final manuals with the Mode A
 > skills (`/doc-user-manual`, `/doc-technical-manual`, `/doc-developer-manual`).
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`. Default target: `all`.
 
 ## Preconditions
@@ -65,3 +68,7 @@ Input: `$ARGUMENTS`. Default target: `all`.
 
 Run the review checklist for each. Report the file paths, the task count per role, and the
 Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

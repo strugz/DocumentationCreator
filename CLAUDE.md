@@ -51,28 +51,48 @@ project already exist?"
    Mode B: `mode-b-new-project/rules/30-evidence-from-brief.md`. Never invent features,
    numbers, dates, costs, names, or endpoints. In Mode B, label Claude's suggestions
    **Proposed**.
-4. **Self-review.** Run the checklist in `rules/50-review-checklist.md` before reporting done.
+4. **Self-review.** Run `python tools/lint_docs.py output/<mode>/<slug>` (the mechanical
+   checks) and fix every error, then review the judgment items in
+   `rules/50-review-checklist.md` before reporting done.
 5. **Report.** Tell the user which files were written, and list every `[TBD]`,
    `[ASSUMPTION]`, `[VERIFY]`, and (Mode B) `[DECISION]` marker that needs their input.
 
-## Rules (imported — mandatory)
+## Rules (mandatory)
 
-Shared by both modes:
+Shared by both modes (always loaded):
 
 @rules/00-core-principles.md
 @rules/10-writing-style.md
 @rules/20-formatting.md
 @rules/50-review-checklist.md
 
-Mode A only (existing project):
+Mode-specific rules are **not** loaded up front; the skills read them when they run.
+Before writing or editing any document outside a skill, read the active mode's rules first:
 
-@mode-a-existing-project/rules/30-evidence-and-accuracy.md
-@mode-a-existing-project/rules/40-document-specific.md
+| Mode | Evidence rule | Document rules |
+|------|---------------|----------------|
+| A | `mode-a-existing-project/rules/30-evidence-and-accuracy.md` | `mode-a-existing-project/rules/40-document-specific.md` |
+| B | `mode-b-new-project/rules/30-evidence-from-brief.md` | `mode-b-new-project/rules/40-document-specific.md` |
 
-Mode B only (new project):
+The non-negotiables from those rules, in short: never invent features, numbers, dates,
+costs, or names; mark every gap with `[TBD]`, `[ASSUMPTION]`, `[VERIFY]` (and in Mode B,
+`[DECISION]`); in Mode B label Claude's own suggestions **Proposed** and never describe the
+system as already built.
 
-@mode-b-new-project/rules/30-evidence-from-brief.md
-@mode-b-new-project/rules/40-document-specific.md
+## Automated checks
+
+`tools/lint_docs.py` performs the mechanical part of Rule 50 (structure, markers in Open
+Items, placeholders, code-block tags, Mermaid, anchors, secrets, Mode A `path:line`
+citations, Mode B requirement traceability). A project hook (`.claude/settings.json`)
+runs it automatically after every Write/Edit under `output/mode-*/` and reports errors
+back. Fix every reported error before moving on. Run it on the whole folder at the end:
+
+```bash
+python tools/lint_docs.py output/<mode>/<slug>
+```
+
+Rule 50's judgment items (audience, tone, accuracy against evidence) remain a manual
+review.
 
 ## Directory Conventions
 

@@ -8,6 +8,9 @@ argument-hint: <project-slug or path> [readme|architecture|api|all]
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`. Default target: `all`.
 
 ## Preconditions
@@ -32,3 +35,7 @@ Revision History, but the accuracy rules still apply.
 `output/mode-a/<slug>/repo/README.md`, `output/mode-a/<slug>/repo/ARCHITECTURE.md`, `output/mode-a/<slug>/repo/API.md`
 
 Do not write into the source project unless the user explicitly asks you to copy the files there.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-a/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

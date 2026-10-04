@@ -8,6 +8,7 @@
 | Date | {{YYYY-MM-DD}} |
 | Prepared by | {{name}} |
 | Status | Draft |
+| Source revision | {{SHA}} |
 
 ## Table of Contents
 

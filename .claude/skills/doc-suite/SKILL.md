@@ -8,6 +8,9 @@ argument-hint: <path-to-project or slug> [--only plan,proposal,user,technical,de
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`.
 
 ## Step 1 — Intake
@@ -42,6 +45,9 @@ Read all generated documents and check the "Suite consistency" section of
 - Feature IDs (F-xx) are consistent between Plan, Proposal, and User Manual.
 - Proposal scope = Plan WBS scope.
 - Config keys in the Developer Manual setup ⊆ the Technical Manual config reference.
+Start by running `python tools/lint_docs.py output/mode-a/<slug>`: it checks the
+mechanical items (markers, structure, IDs, citations, traceability) for the whole folder.
+Then review the judgment items above by reading the documents.
 Fix any inconsistency in place.
 
 ## Step 4 — Index and export
@@ -52,5 +58,5 @@ Fix any inconsistency in place.
    the `docx` / `pdf` skill into `output/mode-a/<slug>/export/`.
 
 ## Step 5 — Report
-Give a short summary: the files written (as links), the checklist pass/fail per document,
+Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),
 and the top Open Items the user should resolve first.

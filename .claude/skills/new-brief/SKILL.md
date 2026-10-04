@@ -9,6 +9,9 @@ argument-hint: <project idea in plain words> [project name]
 > **Mode B — New project.** Use this skill when there is no code yet. If code already
 > exists, use the Mode A `/doc-intake` skill instead.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`. This is the user's idea, as short or as long as they like. If it is
 empty, ask: "Describe the system you want to build in a few sentences: what it does and
 who uses it."
@@ -79,3 +82,7 @@ Give the user:
 2. The **Decisions Needed** and the most important **Open Questions**.
 3. The next step: `/new-suite <slug>` for the full document set, or a single skill such
    as `/new-requirements <slug>`.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

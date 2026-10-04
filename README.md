@@ -110,6 +110,33 @@ flowchart LR
 
 Each document ends with an **Open Items** table. `INDEX.md` consolidates them all.
 
+## Automated Checks
+
+`tools/lint_docs.py` checks the mechanical parts of the review checklist so the model
+does not have to grade itself on them:
+
+| Check | What it catches |
+|-------|-----------------|
+| structure | Missing Document Control fields, H1 count, skipped heading levels, Table of Contents gaps, missing Open Items / Revision History |
+| markers | `[TBD]` / `[ASSUMPTION]` / `[VERIFY]` / `[DECISION]` markers that are not listed in Open Items |
+| placeholders | Unfilled `{{...}}` template placeholders, leftover template comments |
+| code / mermaid | Code blocks without a language tag, unclosed fences, invalid or oversized Mermaid diagrams |
+| links | `#anchors` that match no heading |
+| secrets | Passwords, keys, tokens, connection strings with credentials |
+| citations (Mode A) | `path:line` references to files or lines that do not exist in the source |
+| ids / trace (Mode B) | Undefined `F-xx` / `FR-xx` references; Must/Should requirements missing from the Design, Plan, Test Plan, or Traceability Matrix |
+
+It runs automatically after every document write (hook in `.claude/settings.json`). You
+can also run it yourself:
+
+```bash
+python tools/lint_docs.py output/mode-b/my-app
+```
+
+```bash
+python -m unittest discover -s tests
+```
+
 ## Repository Structure
 
 ```text
@@ -133,6 +160,11 @@ DocumentationCreator/
 │   ├── doc-*/                    #   Mode A skills (intake, plan, proposal, manuals, repo, suite)
 │   └── new-*/                    #   Mode B skills (brief, requirements, design, plan, proposal,
 │                                 #   test-plan, manuals, suite, gap-check)
+├── tools/
+│   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
+│   └── hooks/lint_on_write.py    # Hook: lints each document as Claude writes it
+├── tests/                        # Unit tests for the linter
+├── .claude/settings.json         # Registers the lint hook (shared with the team)
 ├── projects/                     # (optional) drop Mode A projects here
 └── output/
     ├── mode-a/<project-slug>/    # Generated Mode A documentation
@@ -150,6 +182,7 @@ DocumentationCreator/
 | `.claude/skills/` | Step-by-step procedures Claude runs for each document |
 | `projects/` | Mode A input staging area (read-only to Claude) |
 | `output/` | Generated documents, assets, and exports, separated by mode |
+| `tools/` | Deterministic checks (`lint_docs.py`) and the hook that runs them |
 
 ## Customizing
 - **Change the house style or sections:** edit the templates in

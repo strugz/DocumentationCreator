@@ -8,6 +8,9 @@ argument-hint: <project-slug>
 
 > **Mode B — New project.**
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`.
 
 ## Preconditions
@@ -41,3 +44,7 @@ Input: `$ARGUMENTS`.
 
 Run the review checklist. Report the file path, the test case counts (functional,
 non-functional, UAT), the coverage of Must and Should requirements, and the Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

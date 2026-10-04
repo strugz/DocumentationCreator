@@ -8,6 +8,9 @@ argument-hint: <project-slug or path> [target environment, e.g. Windows Server /
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS` (slug or path, plus an optional target environment).
 
 ## Preconditions
@@ -48,3 +51,7 @@ Input: `$ARGUMENTS` (slug or path, plus an optional target environment).
 
 Run the review checklist. Report the file path, the number of config keys documented,
 the config mismatches found, and the Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-a/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

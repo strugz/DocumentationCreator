@@ -8,6 +8,9 @@ argument-hint: <project-slug or path> [target roles]
 
 > **Mode A — Existing project.** Use this skill only when source code exists. For an idea with no code yet, use the Mode B `new-*` skills.
 
+> **Rules:** Before starting, read `mode-a-existing-project/rules/30-evidence-and-accuracy.md` and
+> `mode-a-existing-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`.
 
 ## Preconditions
@@ -47,3 +50,7 @@ Input: `$ARGUMENTS`.
 
 Run the review checklist. Report the file path, the number of tasks documented per role,
 the screenshot placeholders, and the Open Items.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-a/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

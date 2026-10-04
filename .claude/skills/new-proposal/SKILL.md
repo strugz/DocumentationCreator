@@ -9,6 +9,9 @@ argument-hint: <project-slug> [client / budget / rates]
 > **Mode B — New project.** For a project that already has code, use the Mode A
 > `/doc-proposal` instead.
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md` and
+> `mode-b-new-project/rules/40-document-specific.md`. They are not preloaded.
+
 Input: `$ARGUMENTS` (slug, plus an optional client name, budget, or day rates).
 
 ## Preconditions
@@ -47,3 +50,7 @@ Input: `$ARGUMENTS` (slug, plus an optional client name, budget, or day rates).
 Run the review checklist. Confirm that the proposal scope equals the Requirements' scope
 and the Plan's WBS. Report the file path and the Open Items. Client, approver, budget,
 and dates are usually the most important ones.
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

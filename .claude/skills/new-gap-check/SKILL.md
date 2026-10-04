@@ -6,6 +6,10 @@ argument-hint: <mode-b project-slug> <path-to-code>
 
 # Planned vs Built Gap Report
 
+> **Rules:** Before starting, read `mode-b-new-project/rules/30-evidence-from-brief.md`,
+> `mode-b-new-project/rules/40-document-specific.md`, and (for the code side)
+> `mode-a-existing-project/rules/30-evidence-and-accuracy.md`. They are not preloaded.
+
 Input: `$ARGUMENTS`: the Mode B slug and the path to the project's code. If the path is
 missing, ask for it.
 
@@ -35,3 +39,7 @@ missing, ask for it.
 
 Run the review checklist. Report the coverage, the missing Must requirements, and the
 next step: generate the final manuals with the Mode A skills (`/doc-suite <code-path>`).
+
+**Automated check:** run `python tools/lint_docs.py output/mode-b/<slug>` and fix every error before
+reporting. The project hook also lints each write; this final run catches cross-document
+issues (IDs, traceability, citations).

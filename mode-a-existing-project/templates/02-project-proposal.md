@@ -9,6 +9,7 @@
 | Prepared for | {{Client / Approving body}} |
 | Prepared by | {{name / organization}} |
 | Status | Draft |
+| Source revision | {{SHA}} |
 
 ## Table of Contents
 
