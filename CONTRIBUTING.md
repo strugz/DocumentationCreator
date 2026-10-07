@@ -122,6 +122,8 @@ python tools/lint_docs.py output/mode-b/<slug>
   - the unit test result;
   - for rule, template, or skill changes, the eval scores before and after.
 - Update the README and `CLAUDE.md` when commands, files, or behavior change.
+- Add a line under **Unreleased** in [CHANGELOG.md](CHANGELOG.md) for any change users would
+  notice.
 - Line endings are normalized to LF by `.gitattributes`. You do not need to configure this.
 
 ## Ground Rules

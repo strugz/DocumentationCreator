@@ -27,6 +27,7 @@
 ## Checklist
 
 - [ ] `CLAUDE.md` and the READMEs are updated if commands, files, or behavior changed
+- [ ] `CHANGELOG.md` has a line under **Unreleased** (skip for internal-only changes)
 - [ ] No generated documents from `output/mode-a/` or `output/mode-b/` are included
 - [ ] No real secrets, personal data, or client details (fixture secrets are obviously fake)
 - [ ] I followed [CONTRIBUTING.md](https://github.com/strugz/DocumentationCreator/blob/main/CONTRIBUTING.md) and agree my contribution is released under the MIT License
