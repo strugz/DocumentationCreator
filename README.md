@@ -18,7 +18,7 @@ and choices you must make are marked `[DECISION]`.
 ## Prerequisites
 | Tool | Needed for | Required? |
 |------|------------|-----------|
-| [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension) | Running the skills | Yes |
+| [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension) | Running the skills. Other AI agents work too; see [Using Other AI Tools](#using-other-ai-tools) | Yes, or another agent |
 | Python 3.9 or later | The document linter and its auto-lint hook (`tools/lint_docs.py`) | Yes |
 | `git` | Recording the source revision in Mode A documents | Optional |
 | Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) | Optional |
@@ -198,6 +198,7 @@ See [`evals/README.md`](evals/README.md) for the scoring layers and the baseline
 ```text
 DocumentationCreator/
 ├── CLAUDE.md                     # Master instructions (both modes, imports all rules)
+├── AGENTS.md                     # Same instructions for other AI agents (Codex and others)
 ├── README.md                     # This file
 ├── rules/                        # Shared rules (both modes)
 │   ├── 00-core-principles.md
@@ -262,6 +263,24 @@ DocumentationCreator/
 - Mode A: permission to run the app lets Claude capture real screenshots for the User Manual.
 - From B to A: when development is done, run `/new-gap-check`, then `/doc-suite` on the
   code for the final manuals.
+
+## Using Other AI Tools
+The repository is built for Claude Code, but the templates, rules, skills, and tools are
+plain Markdown and scripts that any AI coding agent can follow. `AGENTS.md` gives other
+agents (for example Codex) the same instructions that `CLAUDE.md` gives Claude Code.
+
+| Feature | Claude Code | Other agents |
+|---------|-------------|--------------|
+| Project instructions | `CLAUDE.md` loads automatically | Agents that read `AGENTS.md` load it automatically. Otherwise, tell the agent to read `AGENTS.md` first |
+| Rules | Imported by `CLAUDE.md` | `AGENTS.md` tells the agent to open each rule file |
+| Commands | `/doc-suite <path>`, `/new-suite <idea>`, … | Ask in words, for example "Follow `.claude/skills/doc-suite/SKILL.md` for `D:/work/app`" |
+| Linting | Runs automatically after every write (hook) | The agent runs `python tools/lint_docs.py output/<mode>/<slug>` itself |
+| Interview questions (Mode B) | Can use a multiple-choice prompt | Asked in a normal chat message |
+| Evals | `python evals/run_evals.py run all` | Use the manual route: `prompt`, run it in the agent, then `collect` (see [`evals/README.md`](evals/README.md)) |
+
+> [!NOTE]
+> The eval baseline was measured with Claude. Document quality with other agents has not
+> been measured. Run the evals with your agent before relying on it.
 
 ## Contributing
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, where each

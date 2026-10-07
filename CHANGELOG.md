@@ -11,6 +11,8 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Security policy (`SECURITY.md`) with private vulnerability reporting.
 - Code of Conduct (Contributor Covenant 2.1).
 - Dependabot security updates for the Word export and GitHub Actions dependencies.
+- `AGENTS.md` so other AI agents (for example Codex) can use the repository, and a README
+  section on using other AI tools.
 
 ## [0.1.0] - 2026-10-07
 
