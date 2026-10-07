@@ -1,0 +1,24 @@
+# Dependabot security updates only. "open-pull-requests-limit: 0" turns off routine
+# version-update pull requests but still allows security-fix pull requests.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /tools
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+
+  # Eval fixture: its outdated dependencies are part of the test. Never update them.
+  - package-ecosystem: pip
+    directory: /evals/cases/a-tasktrack/project
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+    ignore:
+      - dependency-name: "*"
