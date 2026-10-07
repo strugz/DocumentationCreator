@@ -1,5 +1,8 @@
 # DocumentationCreator
 
+[![Tests](https://github.com/strugz/DocumentationCreator/actions/workflows/tests.yml/badge.svg)](https://github.com/strugz/DocumentationCreator/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A Claude Code workspace that produces professional, evidence-based software documentation
 in two modes:
 
