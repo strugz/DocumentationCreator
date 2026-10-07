@@ -15,8 +15,8 @@ guide focuses on keeping them accurate.
 - [Ground Rules](#ground-rules)
 
 ## Ways to Contribute
-- **Report a problem:** open an issue with the command you ran, what you expected, and
-  what the document contained. Paste only a short excerpt, and remove any client or
+- **Report a problem:** open an issue using the **Document problem** form. It asks for
+  the command you ran, what you expected, and what the document contained. Paste only a short excerpt, and remove any client or
   project details first.
 - **Improve a template or rule:** fix a missing section, unclear wording, or a check that
   is too strict or too loose.
@@ -117,7 +117,7 @@ python tools/lint_docs.py output/mode-b/<slug>
 ## Pull Requests
 - Use a short, imperative commit subject that says what changed, for example
   `Add MIT License` or `README: add install steps`.
-- In the pull request description, state:
+- The pull request template includes a checklist. In the description, state:
   - what you changed and why;
   - the unit test result;
   - for rule, template, or skill changes, the eval scores before and after.

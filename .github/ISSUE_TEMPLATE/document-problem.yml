@@ -1,0 +1,64 @@
+name: Document problem
+description: A generated document is wrong, invented something, or broke a rule.
+title: "[Doc]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. **Do not paste client or project details, secrets, or personal
+        data.** Generated documents are kept out of this repository on purpose. Share only a
+        short, cleaned excerpt.
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Mode A (existing project)
+        - Mode B (new project)
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command or request
+      description: The skill you ran, or what you asked in plain language.
+      placeholder: "/doc-user-manual inventory-system"
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Kind of problem
+      options:
+        - Invented a feature, number, date, cost, or name
+        - Copied a secret or personal data
+        - Missing or wrong section
+        - Wrong audience or tone
+        - Linter error that should not happen (false positive)
+        - Linter missed a real problem (false negative)
+        - Word export problem
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What the document contained
+      description: A short, cleaned excerpt, or the linter output.
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Claude Code version and surface (CLI, desktop, IDE), model, OS, Python version.
+      placeholder: "Claude Code 2.x, desktop app, Windows 11, Python 3.12"

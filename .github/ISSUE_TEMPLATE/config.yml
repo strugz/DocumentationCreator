@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contributing guide
+    url: https://github.com/strugz/DocumentationCreator/blob/main/CONTRIBUTING.md
+    about: Setup, where each kind of change lives, and how to test it.

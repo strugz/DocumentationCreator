@@ -1,0 +1,40 @@
+name: Improvement or new document type
+description: Suggest a change to a rule, template, skill, or tool, or a new document type.
+title: "[Idea]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Shared rules (rules/)
+        - Mode A templates, rules, or skills
+        - Mode B templates, rules, or skills
+        - New document type
+        - Linter (tools/lint_docs.py)
+        - Word export (tools/md_to_docx.js)
+        - Evals
+        - README or other repo docs
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is missing or hard today, and who it affects (which reader of which document).
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What you would change. For a new document type, name its audience and what they do after reading it.
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a pull request for this.
