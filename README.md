@@ -13,14 +13,34 @@ names) is marked `[TBD]`. In Mode B, Claude's own suggestions are labeled **Prop
 and choices you must make are marked `[DECISION]`.
 
 ## Prerequisites
-- [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension)
-- Mode A: read access to the project you want to document. Optional: `git` (records the
-  source revision in each document)
+| Tool | Needed for | Required? |
+|------|------------|-----------|
+| [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension) | Running the skills | Yes |
+| Python 3.9 or later | The document linter and its auto-lint hook (`tools/lint_docs.py`) | Yes |
+| `git` | Recording the source revision in Mode A documents | Optional |
+| Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) | Optional |
+
+Mode A also needs read access to the project you want to document.
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/strugz/DocumentationCreator.git
+   ```
+2. Optional: install the Word export dependency:
+   ```bash
+   cd DocumentationCreator/tools && npm install
+   ```
+3. Open the `DocumentationCreator` folder in Claude Code. The skills in `.claude/skills/`
+   and the lint hook in `.claude/settings.json` load automatically. The first time, Claude
+   Code asks you to trust the folder and approve the project hook.
+
+The linter uses only the Python standard library, so there is nothing to `pip install`.
 
 ## Quickstart
-1. Open this folder in Claude Code:
+1. Open this folder in Claude Code (or open it in the desktop app):
    ```bash
-   cd "D:/1 Project/DocumentationCreator"
+   cd DocumentationCreator
    claude
    ```
 2. Pick your mode:
@@ -32,6 +52,12 @@ and choices you must make are marked `[DECISION]`.
    ```
 3. Answer the questions Claude asks (one round), or reply `continue` / `use defaults`.
 4. Collect the results from `output/mode-a/<slug>/` or `output/mode-b/<slug>/`.
+
+> [!NOTE]
+> Generated documents are ignored by git (see `.gitignore`), so your project and client
+> documents stay on your machine. Only the empty `output/mode-a/` and `output/mode-b/`
+> folders are tracked. To keep your documents in version control, store them in a
+> separate private repository.
 
 You can also ask in plain language, for example "Create a user manual for the project in
 D:/work/inventory-system" (Mode A) or "I want to build a leave request system for our HR
@@ -137,6 +163,33 @@ python tools/lint_docs.py output/mode-b/my-app
 python -m unittest discover -s tests
 ```
 
+## Exporting to Word
+Markdown is the master format. To produce `.docx` files from a finished output folder:
+
+```bash
+node tools/md_to_docx.js output/mode-b/my-app
+```
+
+The files are written to `output/<mode>/<slug>/export/`. Mermaid diagrams appear as source
+with a note, and review markers are highlighted. For PDF, open the `.docx` in Word and save
+as PDF. The suites do this for you when you pass `--format docx` or `--format pdf`.
+
+## Measuring Quality (Evals)
+If you change a rule, template, or skill, run the eval set before and after the change
+and compare the scores. Two fixture cases (one per mode) test that Claude does not invent
+features, copy secrets, or fill in budgets it was never given.
+
+```bash
+python evals/run_evals.py run all
+```
+
+See [`evals/README.md`](evals/README.md) for the scoring layers and the baseline.
+
+> [!NOTE]
+> `evals/cases/a-tasktrack/project/.env` contains **fake, deliberately planted** secrets.
+> The eval checks that they never appear in generated documents. They are not real
+> credentials.
+
 ## Repository Structure
 
 ```text
@@ -162,11 +215,13 @@ DocumentationCreator/
 │                                 #   test-plan, manuals, suite, gap-check)
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
+│   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)
 │   └── hooks/lint_on_write.py    # Hook: lints each document as Claude writes it
-├── tests/                        # Unit tests for the linter
+├── evals/                        # Eval cases, grader, and baseline scores
+├── tests/                        # Unit tests for the linter and grader
 ├── .claude/settings.json         # Registers the lint hook (shared with the team)
 ├── projects/                     # (optional) drop Mode A projects here
-└── output/
+└── output/                       # Generated documents (git-ignored)
     ├── mode-a/<project-slug>/    # Generated Mode A documentation
     └── mode-b/<project-slug>/    # Generated Mode B documentation
 ```
@@ -194,7 +249,7 @@ DocumentationCreator/
   section to that mode's `rules/40-document-specific.md`, and register it in `CLAUDE.md`
   and in the mode's suite skill (`doc-suite` or `new-suite`).
 - **Word/PDF output:** pass `--format docx` or `--format pdf` to either suite, or ask
-  "export the proposal to Word".
+  "export the proposal to Word". See [Exporting to Word](#exporting-to-word).
 
 ## Tips for Best Results
 - Give business context up front (client, purpose, deadline, team size, budget). It
