@@ -7,6 +7,9 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- Security policy (`SECURITY.md`) with private vulnerability reporting.
+
 ## [0.1.0] - 2026-10-07
 
 ### Added

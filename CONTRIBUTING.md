@@ -127,6 +127,8 @@ python tools/lint_docs.py output/mode-b/<slug>
 - Line endings are normalized to LF by `.gitattributes`. You do not need to configure this.
 
 ## Ground Rules
+- **Report security problems privately,** as described in [SECURITY.md](SECURITY.md), not
+  in a public issue.
 - **Never commit generated documents.** Everything under `output/mode-a/` and
   `output/mode-b/` is ignored by git on purpose, because it often contains client or
   project details. Share a short, cleaned excerpt in an issue instead.

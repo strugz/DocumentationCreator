@@ -3,3 +3,6 @@ contact_links:
   - name: Contributing guide
     url: https://github.com/strugz/DocumentationCreator/blob/main/CONTRIBUTING.md
     about: Setup, where each kind of change lives, and how to test it.
+  - name: Report a security vulnerability
+    url: https://github.com/strugz/DocumentationCreator/security/advisories/new
+    about: Report security problems privately. Do not open a public issue.
