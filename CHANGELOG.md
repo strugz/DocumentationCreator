@@ -3,10 +3,11 @@
 All notable changes to this project are recorded in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version
-numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) once the first
-release is tagged.
+numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.0] - 2026-10-07
 
 ### Added
 - **Mode A (existing project):** skills, templates, and rules that document an existing
@@ -38,4 +39,5 @@ release is tagged.
 - Generated documents under `output/mode-a/` and `output/mode-b/` are ignored by git, so
   client and project details stay out of the repository.
 
-[Unreleased]: https://github.com/strugz/DocumentationCreator/commits/main
+[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/strugz/DocumentationCreator/releases/tag/v0.1.0
