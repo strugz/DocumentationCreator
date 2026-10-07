@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Unit tests (Python ${{ matrix.python }}, ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+  word-export:
+    name: Word export smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+        working-directory: tools
+      - name: Convert every template to .docx
+        run: |
+          node tools/md_to_docx.js mode-a-existing-project/templates "$RUNNER_TEMP/docx-a"
+          node tools/md_to_docx.js mode-b-new-project/templates "$RUNNER_TEMP/docx-b"
+          ls -l "$RUNNER_TEMP"/docx-a "$RUNNER_TEMP"/docx-b
