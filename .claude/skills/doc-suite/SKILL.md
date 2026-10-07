@@ -56,7 +56,8 @@ Fix any inconsistency in place.
    and Open Items count, followed by a consolidated **Open Items** list (deduplicated,
    grouped by who must answer).
 2. If `--format docx` or `pdf` was requested, convert each finished Markdown document with
-   the `docx` / `pdf` skill into `output/mode-a/<slug>/export/`.
+   the `docx` / `pdf` skill into `output/mode-a/<slug>/export/` (for Word, run
+   `node tools/md_to_docx.js output/mode-a/<slug>`; see Rule 20 Export).
 
 ## Step 5 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),

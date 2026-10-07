@@ -61,7 +61,8 @@ Fix any inconsistency in place, starting with the earliest document.
    (all `[DECISION]` items, with recommendations) and **Open Items** list (deduplicated,
    grouped by who must answer: client, project manager, technical lead).
 2. If `--format docx` or `pdf` was requested, convert each finished document with the
-   `docx` / `pdf` skill into `output/mode-b/<slug>/export/`.
+   `docx` / `pdf` skill into `output/mode-b/<slug>/export/` (for Word, run
+   `node tools/md_to_docx.js output/mode-b/<slug>`; see Rule 20 Export).
 
 ## Step 5 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),

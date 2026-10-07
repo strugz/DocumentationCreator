@@ -17,3 +17,12 @@ __pycache__/
 
 # Eval run outputs (the baseline in evals/baseline.json is tracked)
 evals/runs/
+
+# Node dependencies for tools/
+tools/node_modules/
+
+# Generated documents for individual projects (keep the empty mode folders)
+/output/mode-a/*
+!/output/mode-a/.gitkeep
+/output/mode-b/*
+!/output/mode-b/.gitkeep

@@ -1,0 +1,11 @@
+{
+  "name": "documentationcreator-tools",
+  "private": true,
+  "description": "Export helpers for DocumentationCreator",
+  "scripts": {
+    "export-docx": "node md_to_docx.js"
+  },
+  "dependencies": {
+    "docx": "^9.8.1"
+  }
+}
