@@ -259,3 +259,8 @@ DocumentationCreator/
 - Mode A: permission to run the app lets Claude capture real screenshots for the User Manual.
 - From B to A: when development is done, run `/new-gap-check`, then `/doc-suite` on the
   code for the final manuals.
+
+## License
+Released under the [MIT License](LICENSE). You may use, copy, modify, and share this
+repository, including for commercial work, as long as you keep the copyright notice.
+Documents you generate with it belong to you.
