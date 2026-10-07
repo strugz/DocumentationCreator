@@ -260,6 +260,10 @@ DocumentationCreator/
 - From B to A: when development is done, run `/new-gap-check`, then `/doc-suite` on the
   code for the final manuals.
 
+## Contributing
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, where each
+kind of change lives, and how to test it with the unit tests and evals.
+
 ## License
 Released under the [MIT License](LICENSE). You may use, copy, modify, and share this
 repository, including for commercial work, as long as you keep the copyright notice.
