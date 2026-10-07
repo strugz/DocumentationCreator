@@ -127,6 +127,8 @@ python tools/lint_docs.py output/mode-b/<slug>
 - Line endings are normalized to LF by `.gitattributes`. You do not need to configure this.
 
 ## Ground Rules
+- **Be respectful.** Everyone taking part agrees to the
+  [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Report security problems privately,** as described in [SECURITY.md](SECURITY.md), not
   in a public issue.
 - **Never commit generated documents.** Everything under `output/mode-a/` and
