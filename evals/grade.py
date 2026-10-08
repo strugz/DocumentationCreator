@@ -17,8 +17,14 @@ Check types
   line          one single line matches every regex in `all`
   qualified     every line matching `pattern` also matches `allowed_if` (within ±1 line)
   min_count     `pattern` matches at least `min` times (multiline: ^ = line start)
+  ids_covered   every ID captured by group 1 of `id_pattern` in `source_file` also appears
+                in `file` (for example: every F-xx in the Mode A profile is in the brief)
 
 `file` is a file name, a list of names, or "*" (every .md file in the output folder).
+A name starting with `prerequisite/` refers to the case's prerequisite output (Mode C:
+the Mode A profile folder), which `run_evals.py collect` stores next to `output/`; when
+grading in place it falls back to `output/mode-<m>/<slug>/` named by the case's
+`prerequisite` field.
 Patterns are case-insensitive unless the check sets "case_sensitive": true.
 """
 from __future__ import annotations
@@ -64,6 +70,20 @@ def _flags(check: dict) -> int:
     return re.M | (0 if check.get("case_sensitive") else re.I)
 
 
+PREREQ_PREFIX = "prerequisite/"
+
+# Set by grade() for the duration of one grading: the folder holding the case's
+# prerequisite output (Mode C: the Mode A profile folder), or None.
+_PREREQ: Path | None = None
+
+
+def _resolve(output: Path, name: str) -> Path:
+    if name.startswith(PREREQ_PREFIX):
+        base = _PREREQ if _PREREQ is not None else output / "__no_prerequisite__"
+        return base / name[len(PREREQ_PREFIX):]
+    return output / name
+
+
 def _files(output: Path, spec) -> tuple[list[Path], list[str]]:
     """Resolve a file spec to existing paths plus the names that are missing."""
     if spec == "*":
@@ -71,9 +91,23 @@ def _files(output: Path, spec) -> tuple[list[Path], list[str]]:
     names = [spec] if isinstance(spec, str) else list(spec)
     found, missing = [], []
     for name in names:
-        p = output / name
+        p = _resolve(output, name)
         (found if p.is_file() else missing).append(p if p.is_file() else name)
     return found, missing
+
+
+def prerequisite_dir(case: dict, output: Path) -> Path | None:
+    """Where the case's prerequisite output lives: `prerequisite/` next to a collected
+    run's `output/`, else the live output/mode-<m>/<slug>/ folder the case names."""
+    collected = output.parent / "prerequisite"
+    if collected.is_dir():
+        return collected
+    pre = case.get("prerequisite")
+    if pre and pre.get("mode") and pre.get("slug"):
+        live = ROOT / "output" / f"mode-{pre['mode']}" / pre["slug"]
+        if live.is_dir():
+            return live
+    return None
 
 
 def _read(p: Path) -> str:
@@ -179,6 +213,22 @@ def check_min_count(check, output, _lint):
     return n >= check["min"], f"found {n}, need ≥ {check['min']}"
 
 
+def check_ids_covered(check, output, _lint):
+    src_files, missing = _files(output, check["source_file"])
+    if missing:
+        return False, "missing source file: " + ", ".join(map(str, missing))
+    id_pat = re.compile(check["id_pattern"], _flags(check))
+    ids = sorted({m.group(1) for p in src_files for m in id_pat.finditer(_read(p))})
+    if not ids:
+        return False, f"no IDs match {check['id_pattern']} in {check['source_file']}"
+    files, missing = _files(output, check["file"])
+    if missing:
+        return False, "missing file: " + ", ".join(map(str, missing))
+    text = "\n".join(_read(p) for p in files)
+    absent = [i for i in ids if not re.search(r"\b" + re.escape(i) + r"\b", text)]
+    return not absent, (f"{len(absent)} of {len(ids)} IDs not found: " + ", ".join(absent)) if absent else ""
+
+
 CHECKS = {
     "files": check_files,
     "lint": check_lint,
@@ -188,6 +238,7 @@ CHECKS = {
     "line": check_line,
     "qualified": check_qualified,
     "min_count": check_min_count,
+    "ids_covered": check_ids_covered,
 }
 
 
@@ -197,10 +248,20 @@ def load_case(case_dir: Path) -> dict:
     return json.loads((case_dir / "case.json").read_text(encoding="utf-8"))
 
 
+def source_dir(case: dict, case_dir: Path) -> Path | None:
+    """The documented source project (Modes A and C), used for citation checks."""
+    if case.get("mode") not in ("a", "c"):
+        return None
+    p = (case_dir / case.get("input", "project")).resolve()
+    return p if p.is_dir() else None
+
+
 def grade(case_dir: Path, output: Path, judge_path: Path | None = None) -> CaseResult:
+    global _PREREQ
     case = load_case(case_dir)
-    source = str(case_dir / "project") if case.get("mode") == "a" else None
-    lint = lint_docs.lint([output], source) if output.is_dir() else []
+    source = source_dir(case, case_dir)
+    _PREREQ = prerequisite_dir(case, output)
+    lint = lint_docs.lint([output], str(source) if source else None) if output.is_dir() else []
     results = []
     for check in case["checks"]:
         fn = CHECKS.get(check["type"])

@@ -18,8 +18,20 @@ it but kept separate, because model judgments vary between runs.
 |------|------|-------|----------------|
 | `a-tasktrack` | A | Small Flask app in `cases/a-tasktrack/project/` | README feature with no code (Slack), planted secrets in `.env`, stub endpoint, env var missing from `.env.example`, unused config |
 | `b-clinic-booking` | B | `idea.md` + scripted `answers.md` | Excluded feature (payments), undecided hosting → `[DECISION]`, no budget → no amounts, given deadline, unnamed client |
+| `c-tasktrack-modernize` | C | The `a-tasktrack` fixture project + scripted `answers.md` (target stack NestJS/React/PostgreSQL, strangler-fig migration, feature dispositions) | Planted secrets, Slack (README-only) must be Drop and never a current capability, stub export must be reported unfinished, undecided hosting → `[DECISION]`, user-skipped testing layer → Proposed, no budget or dates → no amounts or phase dates, unnamed organization. Also: every profile `F-xx` in the Feature Disposition table, parity requirements and `TC-P-xx` tests, data migration and cutover tests |
 
 Do not "fix" the fixture project: its flaws are the test.
+
+### Prerequisites (Mode C)
+A Mode C case depends on a Mode A profile. Its `case.json` names it in `prerequisite`
+(mode, slug, file, and the skill that builds it). The generation prompt tells the agent to
+reuse `output/mode-a/<slug>/00-project-profile.md` if it exists and to build it with
+`doc-intake` first if it does not, so the case runs on its own. `collect` copies that
+folder into the run as `prerequisite/` (next to `output/`), and checks refer to it with
+the `prerequisite/` prefix, for example `prerequisite/00-project-profile.md`. The case
+shares the slug `eval-tasktrack` with `a-tasktrack`, so a profile left over from a Mode A
+run is reused; `collect a-tasktrack` moves it away, in which case the Mode C run rebuilds
+it.
 
 ## Running
 
@@ -71,8 +83,10 @@ a blocker.
 > at least twice. A difference of one minor check is noise; a trap check flipping is not.
 
 ## Adding a case
-1. Create `cases/<id>/` with `case.json` plus either `project/` (Mode A) or `idea.md` and
-   `answers.md` (Mode B). Use the slug prefix `eval-`.
+1. Create `cases/<id>/` with `case.json` plus either `project/` (Mode A), `idea.md` and
+   `answers.md` (Mode B), or an `input` pointing at a Mode A fixture project, a
+   `prerequisite` block, and `answers.md` (Mode C). Use the slug prefix `eval-`; a Mode C
+   case uses the same slug as its Mode A profile.
 2. Plant at least three traps that a careless generator would fall into, and write one
    check per trap with a high `weight`.
 3. Add checks for the facts a correct document **must** contain. Prefer facts that come

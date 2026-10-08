@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -58,36 +59,71 @@ def output_dir_for(case: dict) -> Path:
     return ROOT / "output" / f"mode-{case['mode']}" / case["slug"]
 
 
+def rel(path: Path) -> str:
+    """Repo-relative POSIX path (case inputs may point outside their own folder with `..`)."""
+    return Path(os.path.normpath(path)).relative_to(ROOT).as_posix()
+
+
+def prerequisite_dir_for(case: dict) -> Path | None:
+    """The live output folder of the case's prerequisite (Mode C: the Mode A profile)."""
+    pre = case.get("prerequisite")
+    if not pre:
+        return None
+    return ROOT / "output" / f"mode-{pre['mode']}" / pre["slug"]
+
+
 def build_prompt(case_id: str) -> str:
     d = case_dir(case_id)
     case = grader.load_case(d)
     out = f"output/mode-{case['mode']}/{case['slug']}/"
     skill = case["skill"]
+    pre = case.get("prerequisite")
+    write_scope = f"Write only inside `{out}`."
+    prereq_text = ""
+    if pre:
+        pre_out = f"output/mode-{pre['mode']}/{pre['slug']}/"
+        pre_file = f"{pre_out}{pre['file']}"
+        write_scope = f"Write only inside `{out}` and, for the prerequisite, `{pre_out}`."
+        prereq_text = (
+            f"\n\nPrerequisite: this run needs `{pre_file}`. If it exists, reuse it unchanged. If it "
+            f"does not exist, build it first by following `.claude/skills/{pre['skill']}/SKILL.md` on "
+            f"the project path above with the same slug `{pre['slug']}`, then continue with "
+            f"`/{skill}`."
+        )
     common = (
         f"Product name: {case['product_name']}. Use exactly the slug `{case['slug']}`, so all "
         f"documents go to `{out}`.\n"
         f"This is a NON-INTERACTIVE EVALUATION RUN. {case.get('context', '')} Do not ask the user "
         "anything and do not pause: where the procedure would wait for answers, continue and mark "
-        "unknowns with the markers from the rules. Do not run the application or its tests. Write "
-        f"only inside `{out}`.\n"
+        f"unknowns with the markers from the rules. Do not run the application or its tests. "
+        f"{write_scope}\n"
         f"(Skill file: `.claude/skills/{skill}/SKILL.md` — follow it exactly.)"
     )
-    if case["mode"] == "a":
-        project = (d / case["input"]).relative_to(ROOT).as_posix()
-        return f"/{skill} {project} {case.get('suite_args', '')}".rstrip() + "\n\n" + common
-    idea = (d / case["input"]).read_text(encoding="utf-8").strip()
-    answers = (d / case["answers"]).read_text(encoding="utf-8").strip()
-    return (f"/{skill} {idea} {case.get('suite_args', '')}".rstrip() + "\n\n" + common +
-            "\n\nThe interview has already happened. Use these answers instead of asking:\n\n" + answers)
+    answers_text = ""
+    if case.get("answers"):
+        answers = (d / case["answers"]).read_text(encoding="utf-8").strip()
+        answers_text = "\n\nThe interview has already happened. Use these answers instead of asking:\n\n" + answers
+    if case["mode"] in ("a", "c"):
+        project = rel(d / case["input"])
+        head = f"/{skill} {project} {case.get('suite_args', '')}".rstrip()
+    else:
+        idea = (d / case["input"]).read_text(encoding="utf-8").strip()
+        head = f"/{skill} {idea} {case.get('suite_args', '')}".rstrip()
+    return head + "\n\n" + common + prereq_text + answers_text
 
 
 def judge_prompt(run_id: str, case_id: str) -> str:
     d = case_dir(case_id)
     case = grader.load_case(d)
     run_case = (RUNS / run_id / case_id).relative_to(ROOT).as_posix()
-    evidence = (f"`{(d / 'project').relative_to(ROOT).as_posix()}/`" if case["mode"] == "a"
-                else f"`{(d / case['input']).relative_to(ROOT).as_posix()}` and "
-                     f"`{(d / case['answers']).relative_to(ROOT).as_posix()}`")
+    if case["mode"] == "a":
+        evidence = f"`{rel(d / case.get('input', 'project'))}/`"
+    elif case["mode"] == "c":
+        evidence = (f"the source project `{rel(d / case['input'])}/`, the Mode A profile in "
+                    f"`{run_case}/prerequisite/`, and the interview answers "
+                    f"`{rel(d / case['answers'])}`")
+    else:
+        evidence = f"`{rel(d / case['input'])}` and `{rel(d / case['answers'])}`"
     return (
         "You are an independent reviewer. You did not write these documents.\n"
         f"Read `evals/rubric.md` and follow it exactly. Documents: `{run_case}/output/`. "
@@ -115,6 +151,16 @@ def collect(case_id: str, run_id: str, meta: dict | None = None) -> Path:
     dest.mkdir(parents=True, exist_ok=True)
     shutil.move(str(src), str(dest / "output"))
     info = {"case": case_id, "run": run_id, "collected": datetime.now().isoformat(timespec="seconds")}
+    pre = prerequisite_dir_for(case)
+    if pre is not None:
+        # Copy (not move): the prerequisite belongs to another mode and may be reused.
+        if (dest / "prerequisite").exists():
+            shutil.rmtree(dest / "prerequisite")
+        if pre.is_dir():
+            shutil.copytree(pre, dest / "prerequisite")
+            info["prerequisite"] = str(pre)
+        else:
+            print(f"Warning: prerequisite {pre} does not exist; checks that need it will fail.")
     info.update(meta or {})
     (dest / "meta.json").write_text(json.dumps(info, indent=2), encoding="utf-8")
     return dest

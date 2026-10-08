@@ -7,7 +7,9 @@ not write the documents.
 ## Inputs the judge reads
 1. Every document in the run's `output/` folder.
 2. The evidence: Mode A, the source project in `evals/cases/<case>/project/`; Mode B,
-   `idea.md` and `answers.md` in the case folder.
+   `idea.md` and `answers.md` in the case folder; Mode C, the fixture project the case's
+   `input` points at, the Mode A profile in the run's `prerequisite/` folder, and
+   `answers.md` in the case folder.
 3. The repository rules: `rules/` plus the mode's `rules/30-*.md` and `rules/40-*.md`.
 
 ## Criteria (score each document 1–5)
