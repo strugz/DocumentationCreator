@@ -8,6 +8,9 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- `tools/render_mermaid.py`: renders every Mermaid diagram of an output folder to PNG in
+  `assets/diagrams/`, through a local page opened in any browser. `tools/md_to_docx.js`
+  embeds a rendered image in place of the diagram source when one matches the block.
 - Eval case `c-tasktrack-modernize` for Mode C: reuses the `a-tasktrack` fixture project
   with scripted modernization interview answers (NestJS/React/PostgreSQL target stack,
   strangler-fig migration, feature dispositions, no budget or dates) and checks for

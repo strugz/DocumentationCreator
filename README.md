@@ -203,8 +203,16 @@ Markdown is the master format. To produce `.docx` files from a finished output f
 node tools/md_to_docx.js output/mode-b/my-app
 ```
 
-The files are written to `output/<mode>/<slug>/export/`. Mermaid diagrams appear as source
-with a note, and review markers are highlighted. For PDF, open the `.docx` in Word and save
+The files are written to `output/<mode>/<slug>/export/`. Review markers are highlighted.
+Mermaid diagrams appear as source with a note, unless you render them first:
+
+```bash
+python tools/render_mermaid.py output/mode-b/my-app
+```
+
+The script prints a local URL; open it in any browser and it renders every diagram (with
+Mermaid from the jsDelivr CDN) to `output/<mode>/<slug>/assets/diagrams/`. The Word export
+then embeds those images. Re-run it after a diagram changes. For PDF, open the `.docx` in Word and save
 as PDF. The suites do this for you when you pass `--format docx` or `--format pdf`.
 
 ## Measuring Quality (Evals)
@@ -256,6 +264,7 @@ DocumentationCreator/
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
 │   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)
+│   ├── render_mermaid.py         # Renders Mermaid diagrams to PNG for the Word export
 │   └── hooks/lint_on_write.py    # Hook: lints each document as Claude writes it
 ├── evals/                        # Eval cases, grader, and baseline scores
 ├── tests/                        # Unit tests for the linter and grader

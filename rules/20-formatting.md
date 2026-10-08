@@ -48,6 +48,8 @@ Add a **Revision History** table at the end of every document.
 - Markdown is the master format. If the user asks for Word or PDF, convert the
   finished Markdown. Do not author directly in those formats.
 - Word: `node tools/md_to_docx.js output/<mode>/<slug>` writes `.docx` files to
-  `output/<mode>/<slug>/export/` (first time: `npm install` in `tools/`). Mermaid diagrams
-  appear as source with a note; review markers are highlighted.
+  `output/<mode>/<slug>/export/` (first time: `npm install` in `tools/`). Review markers are highlighted. Mermaid
+  diagrams appear as source with a note unless `python tools/render_mermaid.py
+  output/<mode>/<slug>` has rendered them (open the URL it prints in a browser); then the
+  export embeds them as images.
 - PDF: open the `.docx` in Word and save as PDF, or use the `pdf` skill.

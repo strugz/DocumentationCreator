@@ -7,17 +7,19 @@
  *
  * A folder converts every NN-*.md and INDEX.md in it; the default out-folder is
  * <folder>/export. Supports the subset the templates use: headings, paragraphs,
- * GFM tables, bullet / numbered / checkbox lists, fenced code (Mermaid shown as source
- * with a note), GFM alerts, block quotes, bold, italic, inline code, links, <kbd>.
+ * GFM tables, bullet / numbered / checkbox lists, fenced code (Mermaid embedded as an image
+ * when tools/render_mermaid.py has rendered it to <folder>/assets/diagrams/, otherwise shown
+ * as source with a note), GFM alerts, block quotes, bold, italic, inline code, links, <kbd>.
  * Review markers ([TBD], [ASSUMPTION], [VERIFY], [DECISION]) are highlighted.
  * The Markdown "Table of Contents" section becomes a Word TOC field.
  */
 "use strict";
 
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const {
-  AlignmentType, BorderStyle, Document, ExternalHyperlink, Footer, HeadingLevel,
+  AlignmentType, BorderStyle, Document, ExternalHyperlink, Footer, HeadingLevel, ImageRun,
   LevelFormat, Packer, PageNumber, Paragraph, ShadingType, Table, TableCell,
   TableOfContents, TableRow, TextRun, WidthType,
 } = require("docx");
@@ -108,9 +110,31 @@ function table(rows) {
   });
 }
 
+let diagramDir = null; // <doc folder>/assets/diagrams, set per file
+
+// Same key as tools/render_mermaid.py: first 16 hex chars of SHA-1 of the block source.
+function diagramImage(lines) {
+  if (!diagramDir) return null;
+  const key = crypto.createHash("sha1").update(lines.join("\n").trim(), "utf8").digest("hex").slice(0, 16);
+  const file = path.join(diagramDir, key + ".png");
+  if (!fs.existsSync(file)) return null;
+  const data = fs.readFileSync(file);
+  let w = data.readUInt32BE(16) / 2, h = data.readUInt32BE(20) / 2; // rendered at 2x
+  const maxW = 640, maxH = 860;
+  const s = Math.min(1, maxW / w, maxH / h);
+  w = Math.round(w * s); h = Math.round(h * s);
+  return new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 120, after: 120 },
+    children: [new ImageRun({ type: "png", data, transformation: { width: w, height: h } })],
+  });
+}
+
 function codeBlock(lines, lang) {
   const out = [];
   if (lang === "mermaid") {
+    const img = diagramImage(lines);
+    if (img) return [img];
     out.push(new Paragraph({
       spacing: { before: 120 },
       children: [new TextRun({ text: "Diagram (Mermaid source; view the Markdown file for the rendered diagram):", italics: true, size: 18, color: "595959" })],
@@ -295,6 +319,7 @@ let numberingInstance = 1;
 
 async function convertFile(src, outDir) {
   numberingInstance = 1;
+  diagramDir = path.join(path.dirname(src), "assets", "diagrams");
   const md = fs.readFileSync(src, "utf8");
   const h1 = (md.match(/^#\s+(.*)$/m) || [null, path.basename(src, ".md")])[1].replace(/[*`]/g, "");
   const doc = convert(md, h1);
