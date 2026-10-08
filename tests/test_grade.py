@@ -109,6 +109,80 @@ class GradeTest(unittest.TestCase):
         r = grade.grade(self.case_dir, self.out / "nope")
         self.assertEqual(r.score, 0.0)
 
+    def _write_prerequisite(self, text: str) -> Path:
+        """A collected run stores the prerequisite next to output/."""
+        pre = self.out.parent / "prerequisite"
+        pre.mkdir(exist_ok=True)
+        (pre / "00-project-profile.md").write_text(text, encoding="utf-8")
+        return pre
+
+    def test_prerequisite_prefix_resolves_next_to_output(self):
+        self.assertFalse(self.run_check({"type": "files", "files": ["prerequisite/00-project-profile.md"]}).passed)
+        self._write_prerequisite("# Profile\n")
+        self.assertTrue(self.run_check({"type": "files", "files": ["prerequisite/00-project-profile.md"]}).passed)
+        self.assertTrue(self.run_check({"type": "contains", "file": "prerequisite/00-project-profile.md",
+                                        "pattern": "profile"}).passed)
+
+    def test_prerequisite_falls_back_to_live_output_folder(self):
+        case = {"id": "t", "mode": "c", "prerequisite": {"mode": "a", "slug": "zz-no-such-slug"}, "checks": []}
+        self.assertIsNone(grade.prerequisite_dir(case, self.out))
+        self._write_prerequisite("# Profile\n")
+        self.assertEqual(grade.prerequisite_dir(case, self.out), self.out.parent / "prerequisite")
+
+    def test_ids_covered(self):
+        self._write_prerequisite("| ID | Feature |\n|---|---|\n| F-01 | Login |\n| F-02 | Export |\n| F-03 | Slack |\n")
+        (self.out / "00-modernization-brief.md").write_text(
+            "| F-01 | Login | Keep |\n| F-03 | Slack | Drop |\n", encoding="utf-8")
+        check = {"type": "ids_covered", "source_file": "prerequisite/00-project-profile.md",
+                 "id_pattern": r"^\|\s*(F-\d+)\s*\|", "file": "00-modernization-brief.md"}
+        r = self.run_check(dict(check))
+        self.assertFalse(r.passed)
+        self.assertIn("F-02", r.detail)
+        self.assertNotIn("F-01", r.detail)
+        (self.out / "00-modernization-brief.md").write_text(
+            "| F-01 | Login | Keep |\n| F-02 | Export | Improve |\n| F-03 | Slack | Drop |\n", encoding="utf-8")
+        self.assertTrue(self.run_check(dict(check)).passed)
+
+    def test_ids_covered_fails_when_source_has_no_ids(self):
+        self._write_prerequisite("# Profile without a feature table\n")
+        r = self.run_check({"type": "ids_covered", "source_file": "prerequisite/00-project-profile.md",
+                            "id_pattern": r"^\|\s*(F-\d+)\s*\|", "file": "*"})
+        self.assertFalse(r.passed)
+        self.assertIn("no IDs", r.detail)
+
+    def test_ids_covered_fails_when_prerequisite_missing(self):
+        r = self.run_check({"type": "ids_covered", "source_file": "prerequisite/00-project-profile.md",
+                            "id_pattern": r"(F-\d+)", "file": "*"})
+        self.assertFalse(r.passed)
+        self.assertIn("missing source file", r.detail)
+
+    def test_source_dir_for_modes(self):
+        (self.case_dir / "proj").mkdir()
+        self.assertEqual(grade.source_dir({"mode": "a", "input": "proj"}, self.case_dir), (self.case_dir / "proj").resolve())
+        self.assertEqual(grade.source_dir({"mode": "c", "input": "proj"}, self.case_dir), (self.case_dir / "proj").resolve())
+        self.assertIsNone(grade.source_dir({"mode": "c", "input": "nope"}, self.case_dir))
+        self.assertIsNone(grade.source_dir({"mode": "b", "input": "idea.md"}, self.case_dir))
+        # Mode A keeps its historical default of `project/` when `input` is absent.
+        (self.case_dir / "project").mkdir()
+        self.assertEqual(grade.source_dir({"mode": "a"}, self.case_dir), (self.case_dir / "project").resolve())
+
+    def test_mode_c_case_patterns_accept_expected_rows(self):
+        """The Mode C case's structural regexes must match the shapes the templates produce."""
+        case = json.loads((Path(__file__).resolve().parents[1] / "evals" / "cases" / "c-tasktrack-modernize"
+                           / "case.json").read_text(encoding="utf-8"))
+        checks = {c["id"]: c for c in case["checks"]}
+        import re
+        self.assertTrue(re.search(checks["parity-requirements"]["pattern"],
+                                  "| FR-01 | The target system shall sign in users. | Parity | Must | F-01 | … |",
+                                  re.M | re.I))
+        self.assertTrue(re.search(checks["parity-tests"]["pattern"], "| TC-P-01 | Login parity | FR-01 |", re.M))
+        self.assertTrue(re.search(checks["features-carried"]["id_pattern"], "| F-07 | Slack notifications |", re.M))
+        self.assertFalse(re.search(checks["no-invented-org"]["pattern"], "Increment 2 moves the task list.", re.I))
+        self.assertFalse(re.search(checks["target-not-built"]["pattern"],
+                                   "The current system has been deployed on one server.", re.I))
+        self.assertTrue(re.search(checks["target-not-built"]["pattern"],
+                                  "The new system has been deployed to production.", re.I))
+
     def test_real_case_files_are_valid(self):
         cases = Path(__file__).resolve().parents[1] / "evals" / "cases"
         for case_json in cases.glob("*/case.json"):

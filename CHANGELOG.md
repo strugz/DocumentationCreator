@@ -7,6 +7,19 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- Eval case `c-tasktrack-modernize` for Mode C: reuses the `a-tasktrack` fixture project
+  with scripted modernization interview answers (NestJS/React/PostgreSQL target stack,
+  strangler-fig migration, feature dispositions, no budget or dates) and checks for
+  planted secrets, feature carry-over from the profile, parity requirements and tests,
+  `[DECISION]` for undecided hosting, and invented costs, dates, or organization names.
+  No baseline score is recorded yet; it needs a real generation run.
+- Eval runner and grader support for prerequisite output: a case may declare a
+  `prerequisite` (Mode C: the Mode A profile) that the prompt reuses or builds, `collect`
+  stores next to `output/` as `prerequisite/`, and checks address with the
+  `prerequisite/` prefix. New `ids_covered` check type (every ID in one file appears in
+  another). Mode C citations are verified against the case's `input` project.
+
 ## [0.2.0] - 2026-10-08
 
 ### Added
