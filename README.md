@@ -4,16 +4,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A Claude Code workspace that produces professional, evidence-based software documentation
-in two modes:
+in three modes:
 
 | Mode | You have | You give Claude | You get |
 |------|----------|-----------------|---------|
 | **A — Existing project** | Working or partial code | A project folder path | Completion Plan, Proposal, User / Technical / Developer Manuals, repo docs, all grounded in the code |
 | **B — New project** | Only an idea | A description of what you want to build | Project Brief, Requirements Specification, System Design, Project Plan, Proposal, Test Plan, draft manuals |
+| **C — Modernize existing project** | Code documented with Mode A, and the wish to rebuild it on a new stack | The Mode A slug, then answers about the target tech stack and what to keep, improve, replace, or drop | Modernization Brief, Current State Assessment, Target Requirements, Target System Design, Migration Plan, Modernization Proposal, Migration Test Plan |
 
 Nothing is invented. Anything the evidence cannot tell you (budget, deadline, client,
-names) is marked `[TBD]`. In Mode B, Claude's own suggestions are labeled **Proposed**,
-and choices you must make are marked `[DECISION]`.
+names) is marked `[TBD]`. In Modes B and C, Claude's own suggestions are labeled
+**Proposed**, and choices you must make are marked `[DECISION]`.
 
 ## Prerequisites
 | Tool | Needed for | Required? |
@@ -53,18 +54,24 @@ The linter uses only the Python standard library, so there is nothing to `pip in
    ```text
    /new-suite An online ordering system for a bakery with customer accounts, order tracking, and a daily production report
    ```
+   ```text
+   /mod-suite your-project
+   ```
 3. Answer the questions Claude asks (one round), or reply `continue` / `use defaults`.
-4. Collect the results from `output/mode-a/<slug>/` or `output/mode-b/<slug>/`.
+   In Mode C the questions always include the target tech stack, layer by layer.
+4. Collect the results from `output/mode-a/<slug>/`, `output/mode-b/<slug>/`, or
+   `output/mode-c/<slug>/`.
 
 > [!NOTE]
 > Generated documents are ignored by git (see `.gitignore`), so your project and client
-> documents stay on your machine. Only the empty `output/mode-a/` and `output/mode-b/`
-> folders are tracked. To keep your documents in version control, store them in a
-> separate private repository.
+> documents stay on your machine. Only the empty `output/mode-a/`, `output/mode-b/`, and
+> `output/mode-c/` folders are tracked. To keep your documents in version control, store
+> them in a separate private repository.
 
 You can also ask in plain language, for example "Create a user manual for the project in
-D:/work/inventory-system" (Mode A) or "I want to build a leave request system for our HR
-team, create the documents" (Mode B). The matching skills trigger automatically.
+D:/work/inventory-system" (Mode A), "I want to build a leave request system for our HR
+team, create the documents" (Mode B), or "Modernize the inventory system on a new stack
+and plan the migration" (Mode C). The matching skills trigger automatically.
 
 ## Commands
 
@@ -91,7 +98,19 @@ team, create the documents" (Mode B). The matching skills trigger automatically.
 | `/new-test-plan <slug>` | Test Plan with UAT scenarios | `05-test-plan.md` |
 | `/new-manuals <slug> [user\|technical\|developer\|all]` | Draft manuals for the planned system | `06`–`08` |
 | `/new-suite <idea> [--only ...] [--no-manuals] [--format docx\|pdf]` | All of the above, plus a traceability review | everything + `INDEX.md` |
-| `/new-gap-check <slug> <code-path>` | After the build: planned vs built | `09-gap-report.md` |
+| `/new-gap-check <slug> <code-path>` | After the build: planned vs built (Mode B or C slug) | `09-gap-report.md` |
+
+### Mode C — Modernize an existing project (`mod-*`)
+| Command | What it does | Output |
+|---------|--------------|--------|
+| `/mod-brief <mode-a slug or path> [name]` | Reads the Mode A profile and interviews you about the target stack, migration strategy, and feature dispositions | `00-modernization-brief.md` |
+| `/mod-assessment <slug>` | Current State Assessment with severity-rated findings and a keep list | `01-current-state-assessment.md` |
+| `/mod-requirements <slug>` | Target Requirements Specification with parity requirements | `02-target-requirements-specification.md` |
+| `/mod-design <slug> [stack/hosting]` | Target System Design with stack comparison, ADRs, and old-to-new mappings | `03-target-system-design.md` |
+| `/mod-plan <slug> [start/deadline/team]` | Migration Plan with cutover, rollback, and decommission | `04-migration-plan.md` |
+| `/mod-proposal <slug> [client/budget/rates]` | Modernization Proposal with options considered | `05-modernization-proposal.md` |
+| `/mod-test-plan <slug>` | Migration Test Plan with parity, data migration, and cutover tests | `06-migration-test-plan.md` |
+| `/mod-suite <mode-a slug or path> [--only ...] [--format docx\|pdf]` | All of the above, plus a traceability review | everything + `INDEX.md` |
 
 ### Examples
 ```text
@@ -103,6 +122,9 @@ team, create the documents" (Mode B). The matching skills trigger automatically.
 /new-plan field-visit-tracker start 2026-11-02, 3 developers, deadline 2027-03-31
 /new-suite A leave request and approval system for 150 employees --format docx
 /new-gap-check field-visit-tracker D:/work/field-visit-tracker
+
+/mod-brief inventory-management-system target: .NET 8 backend, React frontend, keep SQL Server
+/mod-suite inventory-management-system --format docx
 ```
 
 ## How It Works
@@ -117,16 +139,23 @@ flowchart LR
         ID[Your idea] --> BI["/new-brief<br/>interview"] --> BR[(Project Brief)]
         BR --> BD[Requirements · Design · Plan · Proposal · Test Plan · Draft manuals]
     end
+    subgraph C["Mode C — modernize existing project"]
+        PF --> CI["/mod-brief<br/>stack interview"] --> MB[(Modernization Brief)]
+        MB --> CD[Assessment · Target Requirements · Target Design · Migration Plan · Proposal · Test Plan]
+    end
     BD -. "code gets built" .-> GC["/new-gap-check"]
+    CD -. "new code gets built" .-> GC
     GC -.-> AI
 ```
 
 1. **Evidence base:** Mode A scans the code into a **Project Profile**. Mode B interviews
-   you into a **Project Brief**. Every other document reuses these facts.
-2. **Documents:** each skill fills its template. Mode A cites code (`path:line`). Mode B
-   traces everything to requirement IDs (`FR-01`, `NFR-01`).
+   you into a **Project Brief**. Mode C copies the profile and interviews you into a
+   **Modernization Brief**. Every other document reuses these facts.
+2. **Documents:** each skill fills its template. Mode A cites code (`path:line`). Modes B
+   and C trace everything to requirement IDs (`FR-01`, `NFR-01`); Mode C also keeps the
+   profile's feature IDs and adds assessment findings (`D-01`).
 3. **Review:** every document passes `rules/50-review-checklist.md`. The suites also check
-   cross-document consistency (and, in Mode B, requirement traceability).
+   cross-document consistency (and, in Modes B and C, requirement traceability).
 
 ### Markers
 | Marker | Meaning |
@@ -134,8 +163,9 @@ flowchart LR
 | `[TBD: ...]` | Not in the evidence. A human must supply it (budget, dates, names). |
 | `[ASSUMPTION: ...]` | Inferred, so please confirm. |
 | `[VERIFY: ...]` | Sources conflict, may be stale, or must be confirmed after the build. |
-| `[DECISION: ...]` | Mode B: you must choose between options. A recommendation is given. |
-| **Proposed** | Mode B: Claude's suggestion, with a reason. |
+| `[DECISION: ...]` | Modes B and C: you must choose between options. A recommendation is given. |
+| **Proposed** | Modes B and C: Claude's suggestion, with a reason. |
+| **Keep / Improve / Replace / Drop / New** | Mode C: what happens to each current feature in the target system. |
 
 Each document ends with an **Open Items** table. `INDEX.md` consolidates them all.
 
@@ -152,8 +182,8 @@ does not have to grade itself on them:
 | code / mermaid | Code blocks without a language tag, unclosed fences, invalid or oversized Mermaid diagrams |
 | links | `#anchors` that match no heading |
 | secrets | Passwords, keys, tokens, connection strings with credentials |
-| citations (Mode A) | `path:line` references to files or lines that do not exist in the source |
-| ids / trace (Mode B) | Undefined `F-xx` / `FR-xx` references; Must/Should requirements missing from the Design, Plan, Test Plan, or Traceability Matrix |
+| citations (Modes A and C) | `path:line` references to files or lines that do not exist in the source |
+| ids / trace (Modes B and C) | Undefined `F-xx` / `FR-xx` references; Must/Should requirements missing from the Design, Plan, Test Plan, or Traceability Matrix |
 
 It runs automatically after every document write (hook in `.claude/settings.json`). You
 can also run it yourself:
@@ -213,10 +243,16 @@ DocumentationCreator/
 │   ├── README.md
 │   ├── rules/                    #   30 evidence (brief), 40 document rules
 │   └── templates/                #   00-brief … 05-test-plan, 09-gap-report
+├── mode-c-modernize-project/     # MODE C — plan the modernized rebuild of a Mode A project
+│   ├── README.md
+│   ├── rules/                    #   30 evidence (profile + brief), 40 document rules
+│   └── templates/                #   00-modernization-brief … 06-migration-test-plan
 ├── .claude/skills/
 │   ├── doc-*/                    #   Mode A skills (intake, plan, proposal, manuals, repo, suite)
-│   └── new-*/                    #   Mode B skills (brief, requirements, design, plan, proposal,
-│                                 #   test-plan, manuals, suite, gap-check)
+│   ├── new-*/                    #   Mode B skills (brief, requirements, design, plan, proposal,
+│   │                             #   test-plan, manuals, suite, gap-check)
+│   └── mod-*/                    #   Mode C skills (brief, assessment, requirements, design, plan,
+│                                 #   proposal, test-plan, suite)
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
 │   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)
@@ -227,17 +263,19 @@ DocumentationCreator/
 ├── projects/                     # (optional) drop Mode A projects here
 └── output/                       # Generated documents (git-ignored)
     ├── mode-a/<project-slug>/    # Generated Mode A documentation
-    └── mode-b/<project-slug>/    # Generated Mode B documentation
+    ├── mode-b/<project-slug>/    # Generated Mode B documentation
+    └── mode-c/<project-slug>/    # Generated Mode C documentation
 ```
 
 ## Architecture Summary
 
 | Module | Responsibility |
 |--------|----------------|
-| `CLAUDE.md` | Entry point. Defines both modes and the workflow, and imports the rules |
+| `CLAUDE.md` | Entry point. Defines the three modes and the workflow, and imports the rules |
 | `rules/` | Shared standards: principles, style, formatting, QA checklist |
 | `mode-a-existing-project/` | Mode A templates and evidence rules (code is the source of truth) |
 | `mode-b-new-project/` | Mode B templates and evidence rules (the brief is the source of truth) |
+| `mode-c-modernize-project/` | Mode C templates and evidence rules (the Mode A profile for the current system, the modernization brief for the target) |
 | `.claude/skills/` | Step-by-step procedures Claude runs for each document |
 | `projects/` | Mode A input staging area (read-only to Claude) |
 | `output/` | Generated documents, assets, and exports, separated by mode |
@@ -245,13 +283,14 @@ DocumentationCreator/
 
 ## Customizing
 - **Change the house style or sections:** edit the templates in
-  `mode-a-existing-project/templates/` or `mode-b-new-project/templates/`.
+  `mode-a-existing-project/templates/`, `mode-b-new-project/templates/`, or
+  `mode-c-modernize-project/templates/`.
 - **Change writing standards:** edit `rules/` (shared) or the mode's own `rules/` folder.
   They load automatically through `CLAUDE.md`.
 - **Add a new document type:** add a template to the mode's `templates/`, add
   `.claude/skills/<name>/SKILL.md` (copy an existing skill of the same mode), add a
   section to that mode's `rules/40-document-specific.md`, and register it in `CLAUDE.md`
-  and in the mode's suite skill (`doc-suite` or `new-suite`).
+  and in the mode's suite skill (`doc-suite`, `new-suite`, or `mod-suite`).
 - **Word/PDF output:** pass `--format docx` or `--format pdf` to either suite, or ask
   "export the proposal to Word". See [Exporting to Word](#exporting-to-word).
 
@@ -263,6 +302,10 @@ DocumentationCreator/
 - Mode A: permission to run the app lets Claude capture real screenshots for the User Manual.
 - From B to A: when development is done, run `/new-gap-check`, then `/doc-suite` on the
   code for the final manuals.
+- From A to C: run `/doc-suite` (or at least `/doc-intake`) on the current code first.
+  The better the profile, the better the assessment and the parity requirements. Tell
+  Claude your team's skills and any must-use or must-avoid technologies; it turns most
+  stack `[DECISION]`s into agreed choices.
 
 ## Using Other AI Tools
 The repository is built for Claude Code, but the templates, rules, skills, and tools are
@@ -273,9 +316,9 @@ agents (for example Codex) the same instructions that `CLAUDE.md` gives Claude C
 |---------|-------------|--------------|
 | Project instructions | `CLAUDE.md` loads automatically | Agents that read `AGENTS.md` load it automatically. Otherwise, tell the agent to read `AGENTS.md` first |
 | Rules | Imported by `CLAUDE.md` | `AGENTS.md` tells the agent to open each rule file |
-| Commands | `/doc-suite <path>`, `/new-suite <idea>`, … | Ask in words, for example "Follow `.claude/skills/doc-suite/SKILL.md` for `D:/work/app`" |
+| Commands | `/doc-suite <path>`, `/new-suite <idea>`, `/mod-suite <slug>`, … | Ask in words, for example "Follow `.claude/skills/doc-suite/SKILL.md` for `D:/work/app`" |
 | Linting | Runs automatically after every write (hook) | The agent runs `python tools/lint_docs.py output/<mode>/<slug>` itself |
-| Interview questions (Mode B) | Can use a multiple-choice prompt | Asked in a normal chat message |
+| Interview questions (Modes B and C) | Can use a multiple-choice prompt | Asked in a normal chat message |
 | Evals | `python evals/run_evals.py run all` | Use the manual route: `prompt`, run it in the agent, then `collect` (see [`evals/README.md`](evals/README.md)) |
 
 > [!NOTE]

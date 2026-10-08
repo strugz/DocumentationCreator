@@ -7,12 +7,23 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-08
+
 ### Added
 - Security policy (`SECURITY.md`) with private vulnerability reporting.
 - Code of Conduct (Contributor Covenant 2.1).
 - Dependabot security updates for the Word export and GitHub Actions dependencies.
 - `AGENTS.md` so other AI agents (for example Codex) can use the repository, and a README
   section on using other AI tools.
+- **Mode C (modernize an existing project):** skills, templates, and rules that plan the
+  rebuild of a Mode A documented project on a new tech stack: Modernization Brief (with a
+  layer-by-layer target stack interview), Current State Assessment, Target Requirements
+  Specification (parity requirements), Target System Design (stack comparison, ADRs,
+  component and data mappings), Migration Plan (cutover, rollback, decommission),
+  Modernization Proposal, Migration Test Plan, and the `/mod-suite` command.
+- Linter support for `output/mode-c/`: the modernization brief defines feature IDs,
+  `02-target-requirements-specification.md` holds the traceability matrix, and
+  `path:line` citations are verified against the brief's source location.
 
 ## [0.1.0] - 2026-10-07
 
@@ -46,5 +57,6 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Generated documents under `output/mode-a/` and `output/mode-b/` are ignored by git, so
   client and project details stay out of the repository.
 
-[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/strugz/DocumentationCreator/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/strugz/DocumentationCreator/releases/tag/v0.1.0

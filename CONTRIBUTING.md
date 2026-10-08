@@ -20,7 +20,7 @@ guide focuses on keeping them accurate.
   project details first.
 - **Improve a template or rule:** fix a missing section, unclear wording, or a check that
   is too strict or too loose.
-- **Add a document type:** a new template and skill for either mode.
+- **Add a document type:** a new template and skill for any mode.
 - **Add an eval case:** a new fixture that catches a mistake the current cases miss.
 - **Improve the tools:** the linter (`tools/lint_docs.py`), the Word export
   (`tools/md_to_docx.js`), or the eval runner (`evals/run_evals.py`).
@@ -42,6 +42,7 @@ guide focuses on keeping them accurate.
 | Style, formatting, or review rules for both modes | `rules/` | `tools/lint_docs.py` if the rule is mechanical |
 | Mode A evidence or per-document rules | `mode-a-existing-project/rules/` | — |
 | Mode B evidence or per-document rules | `mode-b-new-project/rules/` | — |
+| Mode C evidence or per-document rules | `mode-c-modernize-project/rules/` | — |
 | Sections of a document | `mode-*/templates/NN-*.md` | The matching skill, if it names sections |
 | How Claude produces a document | `.claude/skills/<name>/SKILL.md` | The suite skill (`doc-suite` or `new-suite`) if the order or inputs change |
 | Mechanical checks | `tools/lint_docs.py` | `tests/test_lint_docs.py` |
@@ -70,9 +71,11 @@ rename, or remove a skill or template.
    and in the suite skill.
 
 ### Template and skill conventions
-- Mode A facts must come from the code. Mode B facts must come from the brief. Never add
-  template content that invites Claude to invent numbers, dates, costs, or names.
-- Gaps are marked with `[TBD]`, `[ASSUMPTION]`, `[VERIFY]`, and (Mode B) `[DECISION]`.
+- Mode A facts must come from the code. Mode B facts must come from the brief. Mode C
+  facts must come from the Mode A profile (current system) and the modernization brief
+  (target system). Never add template content that invites Claude to invent numbers,
+  dates, costs, or names.
+- Gaps are marked with `[TBD]`, `[ASSUMPTION]`, `[VERIFY]`, and (Modes B and C) `[DECISION]`.
   Do not introduce new marker types without updating the linter.
 - Use `{{placeholder}}` for values Claude fills in. The linter fails any that are left.
 
@@ -131,8 +134,8 @@ python tools/lint_docs.py output/mode-b/<slug>
   [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Report security problems privately,** as described in [SECURITY.md](SECURITY.md), not
   in a public issue.
-- **Never commit generated documents.** Everything under `output/mode-a/` and
-  `output/mode-b/` is ignored by git on purpose, because it often contains client or
+- **Never commit generated documents.** Everything under `output/mode-a/`,
+  `output/mode-b/`, and `output/mode-c/` is ignored by git on purpose, because it often contains client or
   project details. Share a short, cleaned excerpt in an issue instead.
 - **Never commit real secrets or personal data,** including in eval fixtures. Fixture
   secrets must be obviously fake.

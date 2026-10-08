@@ -47,4 +47,5 @@ jobs:
         run: |
           node tools/md_to_docx.js mode-a-existing-project/templates "$RUNNER_TEMP/docx-a"
           node tools/md_to_docx.js mode-b-new-project/templates "$RUNNER_TEMP/docx-b"
-          ls -l "$RUNNER_TEMP"/docx-a "$RUNNER_TEMP"/docx-b
+          node tools/md_to_docx.js mode-c-modernize-project/templates "$RUNNER_TEMP/docx-c"
+          ls -l "$RUNNER_TEMP"/docx-a "$RUNNER_TEMP"/docx-b "$RUNNER_TEMP"/docx-c

@@ -1,6 +1,6 @@
 # Rule 20 — Formatting
 
-> **Scope: shared by Mode A and Mode B.**
+> **Scope: shared by Modes A, B, and C.**
 
 ## Markdown
 - Use GitHub-Flavored Markdown (GFM).
@@ -32,14 +32,14 @@
 | Date | YYYY-MM-DD |
 | Prepared by | <Author / "Generated with Claude, reviewed by <name>"> |
 | Status | Draft / In Review / Approved |
-| Source revision | Mode A: <git commit SHA or "working copy, YYYY-MM-DD">. Mode B: <"Brief v<n>, YYYY-MM-DD"> |
+| Source revision | Mode A: <git commit SHA or "working copy, YYYY-MM-DD">. Mode B: <"Brief v<n>, YYYY-MM-DD">. Mode C: <"Profile <slug> @ <SHA>; Modernization Brief v<n>, YYYY-MM-DD"> |
 ```
 Add a **Revision History** table at the end of every document.
 
 ## Files
 - Output path: `output/<mode>/<project-slug>/NN-<document-name>.md`, where `<mode>` is
-  `mode-a` (existing project) or `mode-b` (new project), and `<project-slug>` is
-  lowercase-kebab-case.
+  `mode-a` (existing project), `mode-b` (new project), or `mode-c` (modernized project),
+  and `<project-slug>` is lowercase-kebab-case. In Mode C the slug equals the Mode A slug.
 - Images and diagrams that cannot be Mermaid go in `output/<mode>/<project-slug>/assets/`.
 - Screenshots that are not available: insert `![Screenshot: <what it shows>](assets/TBD.png)`
   plus `[TBD: capture screenshot of <screen>]`.

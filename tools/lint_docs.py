@@ -4,7 +4,7 @@
 Usage:
     python tools/lint_docs.py <file-or-folder> [...] [--source PATH] [--json] [--strict]
 
-Checks every Markdown document under output/mode-a/<slug>/ or output/mode-b/<slug>/:
+Checks every Markdown document under output/mode-a/, output/mode-b/, or output/mode-c/<slug>/:
   structure    one H1, no skipped heading levels, Document Control block,
                Table of Contents vs headings, Open Items and Revision History present
   markers      every [TBD]/[ASSUMPTION]/[VERIFY]/[DECISION] is listed in Open Items
@@ -13,9 +13,9 @@ Checks every Markdown document under output/mode-a/<slug>/ or output/mode-b/<slu
   mermaid      known diagram type, balanced brackets, quoted special labels, size
   links        internal #anchors resolve to a heading
   secrets      no credentials, keys, or connection strings with passwords
-  citations    (Mode A) every `path:line` exists in the source project
+  citations    (Modes A and C) every `path:line` exists in the source project
   ids          F-xx / FR-xx / NFR-xx references point to defined IDs
-  trace        (Mode B) Must/Should requirements reach Design, Plan, and Test Plan
+  trace        (Modes B and C) Must/Should requirements reach Design, Plan, and Test Plan
 
 Exit code: 0 = no errors, 1 = errors found (or warnings with --strict), 2 = usage error.
 Standard library only.
@@ -39,7 +39,7 @@ HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
 FENCE_RE = re.compile(r"^(\s*)(`{3,}|~{3,})(.*)$")
 LINK_ANCHOR_RE = re.compile(r"\]\(#([^)\s]+)\)")
 CITATION_RE = re.compile(r"`([A-Za-z0-9_.\-/\\]+\.[A-Za-z0-9]+):(\d+)(?:-(\d+))?`")
-ID_DEF_RE = re.compile(r"^\|\s*((?:N?FR|F|R|US|TC|UAT|S|C|G)-[\w-]+)\s*\|")
+ID_DEF_RE = re.compile(r"^\|\s*((?:N?FR|F|R|US|TC|UAT|S|C|G|D|P)-[\w-]+)\s*\|")
 REQ_REF_RE = re.compile(r"\b(N?FR-\d+)\b")
 FEATURE_REF_RE = re.compile(r"\bF-\d+\b")
 
@@ -63,13 +63,28 @@ SECRET_PATTERNS = [
 ]
 
 # Documents that are evidence bases, not reader-facing documents.
-EVIDENCE_BASE = {"00-project-profile.md", "00-project-brief.md"}
-REQUIREMENTS = "01-requirements-specification.md"
-TRACE_TARGETS = {  # Mode B document -> traceability matrix column it fills
-    "02-system-design.md": "Design component",
-    "03-project-plan.md": "WBS item",
-    "05-test-plan.md": "Test case",
+EVIDENCE_BASE = {"00-project-profile.md", "00-project-brief.md", "00-modernization-brief.md"}
+# Per mode: the evidence base that defines F-xx IDs (first match wins).
+FEATURE_SOURCES = ("00-project-brief.md", "00-modernization-brief.md", "00-project-profile.md")
+# Per mode: the requirements document that holds the Traceability Matrix.
+REQUIREMENTS = {
+    "b": "01-requirements-specification.md",
+    "c": "02-target-requirements-specification.md",
 }
+# Per mode: document -> traceability matrix column it fills.
+TRACE_TARGETS = {
+    "b": {
+        "02-system-design.md": "Design component",
+        "03-project-plan.md": "WBS item",
+        "05-test-plan.md": "Test case",
+    },
+    "c": {
+        "03-target-system-design.md": "Design component",
+        "04-migration-plan.md": "WBS item",
+        "06-migration-test-plan.md": "Test case",
+    },
+}
+MODES = ("mode-a", "mode-b", "mode-c")
 
 
 # ---------------------------------------------------------------- model
@@ -87,7 +102,7 @@ class Finding:
 class Doc:
     path: Path
     lines: list[str]
-    mode: str  # "a" | "b" | "?"
+    mode: str  # "a" | "b" | "c" | "?"
     kind: str  # "evidence" | "repo" | "index" | "document"
     headings: list[tuple[int, int, str]] = field(default_factory=list)  # (line, level, text)
     fences: list[tuple[int, int, str]] = field(default_factory=list)  # (start, end, lang)
@@ -106,7 +121,7 @@ def load_doc(path: Path) -> Doc:
     raw = path.read_text(encoding="utf-8", errors="replace")
     lines = raw.splitlines()
     parts = {p.lower() for p in path.parts}
-    mode = "a" if "mode-a" in parts else "b" if "mode-b" in parts else "?"
+    mode = next((m[-1] for m in MODES if m in parts), "?")
     if path.name in EVIDENCE_BASE:
         kind = "evidence"
     elif "repo" in parts:
@@ -394,19 +409,21 @@ def requirement_priorities(req: Doc) -> dict[str, str]:
 def find_source_root(folder: Path, cli_source: str | None) -> Path | None:
     if cli_source:
         return Path(cli_source)
-    profile = folder / "00-project-profile.md"
-    if not profile.exists():
-        return None
-    for row in table_rows(profile.read_text(encoding="utf-8", errors="replace").splitlines()[:30]):
-        if len(row) > 1 and row[0].strip("* ").lower() == "source location":
-            value = row[1].strip("` ")
-            if value and not value.startswith("{{") and not value.lower().startswith("http"):
-                return Path(value)
+    # Mode A: the profile. Mode C: the modernization brief copies the profile's value.
+    for name in ("00-project-profile.md", "00-modernization-brief.md"):
+        base = folder / name
+        if not base.exists():
+            continue
+        for row in table_rows(base.read_text(encoding="utf-8", errors="replace").splitlines()[:30]):
+            if len(row) > 1 and row[0].strip("* ").lower() == "source location":
+                value = row[1].strip("` ")
+                if value and not value.startswith("{{") and not value.lower().startswith("http"):
+                    return Path(value)
     return None
 
 
 def check_citations(doc: Doc, source: Path | None, out: list[Finding], cache: dict) -> None:
-    if doc.mode != "a" or doc.kind == "index":
+    if doc.mode not in ("a", "c") or doc.kind == "index":
         return
     f = str(doc.path)
     cites = [(i, m) for i, line in enumerate(doc.lines, 1) for m in CITATION_RE.finditer(line)]
@@ -415,7 +432,7 @@ def check_citations(doc: Doc, source: Path | None, out: list[Finding], cache: di
     if source is None or not source.is_dir():
         out.append(Finding(f, cites[0][0], "warning", "citations",
                            f"{len(cites)} code citations not verified: source project not found "
-                           "(pass --source or fill 'Source location' in the profile)"))
+                           "(pass --source or fill 'Source location' in the profile or modernization brief)"))
         return
     for ln, m in cites:
         rel, start, end = m.group(1), int(m.group(2)), int(m.group(3) or m.group(2))
@@ -439,10 +456,13 @@ def check_citations(doc: Doc, source: Path | None, out: list[Finding], cache: di
 
 def check_project(folder: Path, docs: dict[str, Doc], targets: set[Path], out: list[Finding]) -> None:
     """Cross-document ID and traceability checks for one output/<mode>/<slug>/ folder."""
-    base = docs.get("00-project-brief.md") or docs.get("00-project-profile.md")
+    mode = folder.parent.name[-1] if folder.parent.name in MODES else "?"
+    base = next((docs[n] for n in FEATURE_SOURCES if n in docs), None)
     features = defined_ids(base, r"F-\d+") if base else set()
-    req = docs.get(REQUIREMENTS)
+    req_name = REQUIREMENTS.get(mode, "")
+    req = docs.get(req_name)
     prio = requirement_priorities(req) if req else {}
+    trace_targets = TRACE_TARGETS.get(mode, {})
 
     for name, doc in docs.items():
         if doc.path not in targets:
@@ -457,17 +477,17 @@ def check_project(folder: Path, docs: dict[str, Doc], targets: set[Path], out: l
             for i, line in enumerate(doc.lines, 1):
                 for ref in set(REQ_REF_RE.findall(line)):
                     if ref not in prio:
-                        out.append(Finding(f, i, "error", "ids", f"{ref} is not defined in {REQUIREMENTS}"))
+                        out.append(Finding(f, i, "error", "ids", f"{ref} is not defined in {req_name}"))
 
-        # Mode B: each trace target must cover every Must/Should requirement.
-        if doc.mode == "b" and prio and name in TRACE_TARGETS:
+        # Modes B and C: each trace target must cover every Must/Should requirement.
+        if prio and name in trace_targets:
             mentioned = set(REQ_REF_RE.findall(doc.text))
             for rid, p in sorted(prio.items()):
                 if p in ("Must", "Should") and rid not in mentioned:
                     out.append(Finding(f, 1, "error", "trace", f"{p} requirement {rid} is not covered in {name}"))
 
-    # Mode B: the traceability matrix must be filled for every target document that exists.
-    if req and req.path in targets and req.mode == "b":
+    # Modes B and C: the traceability matrix must be filled for every target document that exists.
+    if req and req.path in targets and trace_targets:
         span = section_span(req, r"traceability matrix")
         if not span:
             out.append(Finding(str(req.path), 1, "error", "trace", "Missing 'Traceability Matrix' section"))
@@ -476,7 +496,7 @@ def check_project(folder: Path, docs: dict[str, Doc], targets: set[Path], out: l
         if not rows:
             return
         header = [h.lower() for h in rows[0]]
-        for target_name, column in TRACE_TARGETS.items():
+        for target_name, column in trace_targets.items():
             if target_name not in docs or column.lower() not in header:
                 continue
             col = header.index(column.lower())
@@ -496,7 +516,7 @@ def project_folder(path: Path) -> Path | None:
     """Return the output/<mode>/<slug>/ folder that contains path, if any."""
     p = path.resolve()
     for parent in [p] + list(p.parents):
-        if parent.parent.name in ("mode-a", "mode-b") and parent.parent.parent.name == "output":
+        if parent.parent.name in MODES and parent.parent.parent.name == "output":
             return parent
     return None
 
@@ -573,7 +593,7 @@ def main(argv: list[str] | None = None) -> int:
             stream.reconfigure(encoding="utf-8", errors="replace")
     ap =argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("paths", nargs="+", help="Markdown files or folders (e.g. output/mode-b/my-app)")
-    ap.add_argument("--source", help="Mode A: path to the documented project, for citation checks")
+    ap.add_argument("--source", help="Modes A and C: path to the documented project, for citation checks")
     ap.add_argument("--json", action="store_true", help="Print findings as JSON")
     ap.add_argument("--strict", action="store_true", help="Fail on warnings too")
     args = ap.parse_args(argv)

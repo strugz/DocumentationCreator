@@ -2,7 +2,7 @@
 """Claude Code PostToolUse hook: lint a generated document right after it is written.
 
 Reads the hook JSON from stdin. If the written file is a Markdown file under
-output/mode-a/ or output/mode-b/, runs tools/lint_docs.py on it. On errors, prints
+output/mode-a/, output/mode-b/, or output/mode-c/, runs tools/lint_docs.py on it. On errors, prints
 the report to stderr and exits 2 so Claude sees it and fixes the document.
 Warnings alone do not block. Any other file, or any internal failure, exits 0.
 """
@@ -36,7 +36,7 @@ def main() -> int:
         rel = path.relative_to(ROOT / "output")
     except ValueError:
         return 0
-    if not rel.parts or rel.parts[0] not in ("mode-a", "mode-b"):
+    if not rel.parts or rel.parts[0] not in ("mode-a", "mode-b", "mode-c"):
         return 0
 
     import lint_docs  # noqa: E402  (after sys.path setup)

@@ -1,6 +1,6 @@
 # Rule 50 — Review Checklist (run before declaring a document done)
 
-> **Scope: shared by Mode A and Mode B.** Run the common sections plus the section for
+> **Scope: shared by Modes A, B, and C.** Run the common sections plus the section for
 > the active mode.
 
 ## Structure
@@ -26,6 +26,20 @@
 - [ ] Facts match `00-project-brief.md` (names, roles, feature IDs, glossary).
 - [ ] Nothing is described as already built, working, or tested.
 
+## Accuracy — Mode C (modernize an existing project)
+- [ ] Every statement about the current system traces to the Mode A profile or to code
+      (`path:line`); no current feature is described that the profile does not list.
+- [ ] Every statement about the target system traces to the modernization brief (`F-xx`
+      with its disposition, `D-xx`, `R-xx`, Brief §n) and is in the future tense.
+- [ ] Every feature from the profile appears in the brief's Feature Disposition table with
+      Keep / Improve / Replace / Drop / New, and the same disposition is used everywhere.
+- [ ] Every target stack layer is Agreed or **Proposed** with a reason; undecided layers
+      are `[DECISION]` items; end-of-support dates are `[VERIFY]`.
+- [ ] Every Keep and Improve feature has a parity requirement and a parity test.
+- [ ] Every Critical and High assessment finding is resolved by a requirement.
+- [ ] All uncertainty is marked with `[TBD]`, `[ASSUMPTION]`, `[DECISION]`, or `[VERIFY]`.
+- [ ] Facts match `00-modernization-brief.md` (names, roles, feature IDs, stack, glossary).
+
 ## Quality
 - [ ] Written for the stated audience (no code in the User Manual; exact commands in
       the Technical Manual).
@@ -43,5 +57,9 @@
 - [ ] Technical Manual config reference matches the Developer Manual's environment setup.
 - [ ] Mode B: every Must requirement appears in the Plan's WBS, the System Design, and the
       Test Plan (check the traceability matrix).
+- [ ] Mode C: every Must requirement appears in the Migration Plan's WBS, the Target
+      System Design, and the Migration Test Plan; the design's Stack Comparison matches
+      the brief's Target Tech Stack layer by layer; the proposal's strategy, timeline,
+      and scope equal the plan's.
 
 Report the checklist result to the user as a short pass/fail summary. List failures, if any.

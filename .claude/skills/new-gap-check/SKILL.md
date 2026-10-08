@@ -1,7 +1,7 @@
 ---
 name: new-gap-check
-description: Bridge from MODE B to MODE A. Once code exists for a project that was planned with the Mode B skills, compare the planned requirements and design with what was actually built, and write a Planned vs Built Gap Report. Use when the user asks "what did we build vs plan", "check the code against the requirements", "requirements coverage", or "gap analysis".
-argument-hint: <mode-b project-slug> <path-to-code>
+description: Bridge from MODE B (or MODE C) to MODE A. Once code exists for a project that was planned with the Mode B or Mode C skills, compare the planned requirements and design with what was actually built, and write a Planned vs Built Gap Report. Use when the user asks "what did we build vs plan", "check the code against the requirements", "requirements coverage", or "gap analysis".
+argument-hint: <mode-b or mode-c project-slug> <path-to-code>
 ---
 
 # Planned vs Built Gap Report
@@ -10,12 +10,17 @@ argument-hint: <mode-b project-slug> <path-to-code>
 > `mode-b-new-project/rules/40-document-specific.md`, and (for the code side)
 > `mode-a-existing-project/rules/30-evidence-and-accuracy.md`. They are not preloaded.
 
-Input: `$ARGUMENTS`: the Mode B slug and the path to the project's code. If the path is
-missing, ask for it.
+Input: `$ARGUMENTS`: the Mode B (or Mode C) slug and the path to the project's code. If
+the path is missing, ask for it.
 
 ## Preconditions
-1. `output/mode-b/<slug>/01-requirements-specification.md` must exist. If it does not,
-   stop and tell the user to run `/new-requirements` first.
+1. The planned requirements must exist: `output/mode-b/<slug>/01-requirements-specification.md`
+   (Mode B) or, if there is no Mode B folder for the slug,
+   `output/mode-c/<slug>/02-target-requirements-specification.md` (Mode C, a modernized
+   rebuild). If neither exists, stop and tell the user to run `/new-requirements` or
+   `/mod-requirements` first. For a Mode C project, write the report to
+   `output/mode-c/<slug>/09-gap-report.md`, compare the build against the Target System
+   Design, and read `mode-c-modernize-project/rules/30-evidence-from-profile.md` as well.
 2. A Mode A profile is needed for the code. If `output/mode-a/<slug>/00-project-profile.md`
    does not exist, run the `doc-intake` procedure on the code path, using the same slug.
    The source code is **read-only**.

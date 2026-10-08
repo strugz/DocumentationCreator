@@ -239,5 +239,102 @@ class TestCitations(LintTestCase):
         self.assertCheck(self.errors(self.manual("src/app.py:2-9")), "citations", "outside")
 
 
+MOD_BRIEF = textwrap.dedent("""\
+    # Modernization Brief — Demo App
+
+    | Field | Value |
+    |-------|-------|
+    | Project | Demo App |
+    | Source location | {source} |
+
+    ## 6. Feature Disposition
+    | ID | Feature | Disposition | Priority |
+    |----|---------|-------------|----------|
+    | F-01 | Sign in | Keep | Must |
+    | F-02 | Reports | Improve | Should |
+    """)
+
+MOD_REQ_BODY = textwrap.dedent("""\
+    ## 1. Functional Requirements
+    | ID | Requirement | Type | Priority | Source | Acceptance criteria |
+    |----|-------------|------|----------|--------|---------------------|
+    | FR-01 | The target system shall let users sign in. | Parity | Must | F-01 | Matches `src/app.py:1-2`. |
+    | FR-02 | The target system shall export reports as CSV. | Improvement | Should | F-02 | A CSV file downloads. |
+
+    ## 2. Traceability Matrix
+    | Feature | Finding | Requirement | Design component | WBS item | Test case |
+    |---------|---------|-------------|------------------|----------|-----------|
+    | F-01 | — | FR-01 | Auth service | 1.1 | TC-P-01 |
+    | F-02 | D-01 | FR-02 | Reports service | 2.1 | TC-02 |
+    """)
+
+MOD_DESIGN_BODY = "## 1. Components\n| Component | Implements |\n|---|---|\n| Auth service | FR-01 |\n| Reports service | FR-02 |\n"
+MOD_PLAN_BODY = "## 1. WBS\n| WBS ID | Implements |\n|---|---|\n| 1.1 | FR-01 |\n| 2.1 | FR-02 |\n"
+MOD_TEST_BODY = "## 1. Test Cases\n| TC ID | Requirement |\n|---|---|\n| TC-P-01 | FR-01 |\n| TC-02 | FR-02 |\n"
+MOD_REV = "Profile demo @ abc1234; Modernization Brief v1, 2026-10-08"
+
+
+class ModeCTestCase(LintTestCase):
+    """Mode C folders use the modernization brief as the feature source and
+    02-target-requirements-specification.md as the traceability matrix."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.src = self.root / "src-project"
+        self.write("app.py", "line1\nline2\nline3\n", folder=self.src / "src")
+        self.c = self.root / "output" / "mode-c" / "demo"
+        self.c.mkdir(parents=True)
+        self.write("00-modernization-brief.md", MOD_BRIEF.format(source=self.src), folder=self.c)
+        self.write("02-target-requirements-specification.md",
+                   document("Demo App — Target SRS", "Target SRS", MOD_REQ_BODY, revision=MOD_REV), folder=self.c)
+        self.write("03-target-system-design.md",
+                   document("Demo App — Target Design", "Target Design", MOD_DESIGN_BODY, revision=MOD_REV), folder=self.c)
+        self.write("04-migration-plan.md",
+                   document("Demo App — Migration Plan", "Migration Plan", MOD_PLAN_BODY, revision=MOD_REV), folder=self.c)
+        self.write("06-migration-test-plan.md",
+                   document("Demo App — Migration Test Plan", "Migration Test Plan", MOD_TEST_BODY, revision=MOD_REV), folder=self.c)
+
+
+class TestModeC(ModeCTestCase):
+    def test_valid_mode_c_project_has_no_errors(self):
+        self.assertEqual(self.errors(self.c), [])
+
+    def test_modernization_brief_is_exempt_from_doc_control(self):
+        self.assertEqual(self.errors(self.c / "00-modernization-brief.md"), [])
+
+    def test_feature_ids_come_from_modernization_brief(self):
+        p = self.write("04-migration-plan.md",
+                       document("P", "Migration Plan", MOD_PLAN_BODY + "\nCovers F-09.\n", revision=MOD_REV), folder=self.c)
+        self.assertCheck(self.errors(p), "ids", "F-09")
+
+    def test_undefined_requirement_names_mode_c_requirements_file(self):
+        p = self.write("03-target-system-design.md",
+                       document("D", "Target Design", MOD_DESIGN_BODY + "| Billing | FR-42 |\n", revision=MOD_REV), folder=self.c)
+        self.assertCheck(self.errors(p), "ids", "02-target-requirements-specification.md")
+
+    def test_must_requirement_missing_from_migration_test_plan(self):
+        p = self.write("06-migration-test-plan.md",
+                       document("T", "Migration Test Plan", "## 1. Test Cases\n| TC ID | Requirement |\n|---|---|\n| TC-02 | FR-02 |\n",
+                                revision=MOD_REV), folder=self.c)
+        self.assertCheck(self.errors(p), "trace", "FR-01")
+
+    def test_empty_matrix_cell_for_must(self):
+        req = MOD_REQ_BODY.replace("| F-01 | — | FR-01 | Auth service | 1.1 | TC-P-01 |",
+                                   "| F-01 | — | FR-01 | Auth service | — | TC-P-01 |")
+        p = self.write("02-target-requirements-specification.md",
+                       document("S", "Target SRS", req, revision=MOD_REV), folder=self.c)
+        self.assertCheck(self.errors(p), "trace", "WBS item")
+
+    def test_citations_verified_against_brief_source_location(self):
+        p = self.write("01-current-state-assessment.md",
+                       document("A", "Assessment", "## 1. Findings\nSee `src/app.py:9`.\n", revision=MOD_REV), folder=self.c)
+        self.assertCheck(self.errors(p), "citations", "outside")
+
+    def test_valid_citation_in_mode_c(self):
+        p = self.write("01-current-state-assessment.md",
+                       document("A", "Assessment", "## 1. Findings\nSee `src/app.py:1-3`.\n", revision=MOD_REV), folder=self.c)
+        self.assertEqual([f for f in self.errors(p) if f.check == "citations"], [])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
 # Rule 00 — Core Principles
 
-> **Scope: shared by Mode A (existing project) and Mode B (new project).**
+> **Scope: shared by Mode A (existing project), Mode B (new project), and Mode C
+> (modernize an existing project).**
 
 0. **Know the mode first.** Before writing anything, decide which mode applies:
    - **Mode A — Existing project:** source code exists. Evidence comes from the code.
@@ -8,8 +9,14 @@
    - **Mode B — New project:** only an idea or brief exists, no code. Evidence comes from
      the user's brief and interview answers. Follow `mode-b-new-project/rules/`.
      Output goes to `output/mode-b/<slug>/`.
+   - **Mode C — Modernize an existing project:** code exists and has a Mode A profile;
+     the user wants to rebuild it as a new project on a chosen stack. Evidence for the
+     current system comes from the profile and code; evidence for the target system comes
+     from the modernization brief. Follow `mode-c-modernize-project/rules/`. Output goes
+     to `output/mode-c/<slug>/`.
    If the request is ambiguous (e.g. "write a proposal for X" with no path), ask once:
-   "Does code for this project already exist?"
+   "Does code for this project already exist, and do you want to document it as it is or
+   plan a modernized rebuild?"
 1. **Accuracy over completeness.** A short, correct document beats a long, invented one.
    Every statement must trace to evidence (see Rule 30 of the active mode) or be
    explicitly marked.
@@ -28,10 +35,13 @@
    directories, and running read-only commands (`git log`, `--help`, `--version`,
    test listing) are allowed. Running the app or tests requires user approval.
    In Mode B there is no source project; write documents only, never application code.
+   In Mode C the current system's code is read-only in the same way, and the target
+   system has no code yet.
 4. **One source of truth.** Mode A facts live in `output/mode-a/<slug>/00-project-profile.md`.
-   Mode B facts live in `output/mode-b/<slug>/00-project-brief.md`. Other documents reuse
-   those facts instead of re-deriving them differently. If you find a contradiction, fix
-   the profile or brief first.
+   Mode B facts live in `output/mode-b/<slug>/00-project-brief.md`. Mode C facts live in
+   `output/mode-c/<slug>/00-modernization-brief.md`, which copies the current-system facts
+   from the Mode A profile. Other documents reuse those facts instead of re-deriving them
+   differently. If you find a contradiction, fix the profile or brief first.
 5. **Consistency across the suite.** Product name, version, module names, role names,
    and terminology must be identical across all documents. Use the Glossary in the
    profile (Mode A) or brief (Mode B) as the canonical list.

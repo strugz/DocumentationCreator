@@ -1,6 +1,6 @@
 # Rule 10 — Writing Style
 
-> **Scope: shared by Mode A and Mode B.**
+> **Scope: shared by Modes A, B, and C.**
 
 ## Voice
 - Use plain, professional English. Prefer short sentences (target ≤ 25 words).
@@ -25,6 +25,10 @@
 | Requirements Specification (Mode B) | Exact and testable. Uses "shall" for mandatory requirements. |
 | System Design (Mode B) | Precise, explanatory. States each design decision and its reason. |
 | Test Plan (Mode B) | Exact, checklist-style. Every test traces to a requirement. |
+| Modernization Brief (Mode C) | Neutral record: current facts from the profile, user decisions, and labeled proposals, kept apart. |
+| Current State Assessment (Mode C) | Direct, evidence-based. Each finding has a severity and a one-line reason. No blame. |
+| Target Requirements / Design / Migration Plan / Test Plan (Mode C) | As the Mode B equivalents. Current system in present tense with code evidence; target system in future tense. |
+| Modernization Proposal (Mode C) | Persuasive but evidence-based. Problems come from assessment findings; benefits from features and findings resolved. |
 
 ## Procedures
 - One action per numbered step. Put the expected result after the step when useful:
