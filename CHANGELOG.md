@@ -7,6 +7,8 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-08
+
 ### Added
 - `tools/render_mermaid.py`: renders every Mermaid diagram of an output folder to PNG in
   `assets/diagrams/`, through a local page opened in any browser. `tools/md_to_docx.js`
@@ -73,6 +75,7 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Generated documents under `output/mode-a/` and `output/mode-b/` are ignored by git, so
   client and project details stay out of the repository.
 
-[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/strugz/DocumentationCreator/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/strugz/DocumentationCreator/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/strugz/DocumentationCreator/releases/tag/v0.1.0
