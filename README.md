@@ -110,7 +110,7 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/mod-plan <slug> [start/deadline/team]` | Migration Plan with cutover, rollback, and decommission | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | Modernization Proposal with options considered | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | Migration Test Plan with parity, data migration, and cutover tests | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or path> [--only ...] [--format docx\|pdf]` | All of the above, plus a traceability review | everything + `INDEX.md` |
+| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `output/<repo>-repo-starter/` |
 
 ### Examples
 ```text
@@ -178,7 +178,7 @@ does not have to grade itself on them:
 |-------|-----------------|
 | structure | Missing Document Control fields, H1 count, skipped heading levels, Table of Contents gaps, missing Open Items / Revision History |
 | markers | `[TBD]` / `[ASSUMPTION]` / `[VERIFY]` / `[DECISION]` markers that are not listed in Open Items |
-| placeholders | Unfilled `{{...}}` template placeholders, leftover template comments |
+| placeholders | Unfilled `{{...}}` template placeholders, leftover template comments, the section sign (write "section N") |
 | code / mermaid | Code blocks without a language tag, unclosed fences, invalid or oversized Mermaid diagrams |
 | links | `#anchors` that match no heading |
 | secrets | Passwords, keys, tokens, connection strings with credentials |
@@ -241,7 +241,9 @@ DocumentationCreator/
 ├── rules/                        # Shared rules (both modes)
 │   ├── 00-core-principles.md
 │   ├── 10-writing-style.md
+│   ├── 15-response-and-code-output.md
 │   ├── 20-formatting.md
+│   ├── 25-typography.md
 │   └── 50-review-checklist.md
 ├── mode-a-existing-project/      # MODE A — document existing code
 │   ├── README.md
@@ -281,7 +283,7 @@ DocumentationCreator/
 | Module | Responsibility |
 |--------|----------------|
 | `CLAUDE.md` | Entry point. Defines the three modes and the workflow, and imports the rules |
-| `rules/` | Shared standards: principles, style, formatting, QA checklist |
+| `rules/` | Shared standards: principles, style, response and code output, formatting, typography, QA checklist |
 | `mode-a-existing-project/` | Mode A templates and evidence rules (code is the source of truth) |
 | `mode-b-new-project/` | Mode B templates and evidence rules (the brief is the source of truth) |
 | `mode-c-modernize-project/` | Mode C templates and evidence rules (the Mode A profile for the current system, the modernization brief for the target) |

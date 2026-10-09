@@ -16,7 +16,7 @@ the documents a team needs to plan the modernization. Documents only, no applica
 | `/mod-plan <slug> [start/deadline/team]` | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or code path> [--only ...] [--format docx\|pdf]` | All of the above + `INDEX.md` |
+| `/mod-suite <mode-a slug or code path> [change] [--only ...] [--format docx\|pdf]` | All of the above + `INDEX.md`, Word files, a presentation deck (`deck/`, PowerPoint in `export/`), and `output/<repo>-repo-starter/` |
 
 ## Example
 ```text
@@ -52,7 +52,22 @@ flowchart LR
    one requirement per serious finding. The design shows the stack comparison and the
    old-to-new component and data mappings. The plan includes cutover, rollback, and
    decommission. The test plan includes parity, data migration, and cutover tests.
-4. **After you build it:** run the Mode A skills on the new code for the final manuals.
+4. **Readable from the first draft:** every document opens with a plain-language
+   **Read This First** page with process flows (case flow, SDLC flow, ready-to-deploy
+   gate), and every section starts with an "In short" note. The interview also asks
+   where the pilot runs, who tests, how approvers are named, and which words to avoid,
+   so the first draft already follows them.
+5. **Deck and build kit:** the suite ends with Word files, a presentation deck for the
+   approvers, and a starter kit for the new code repository (CLAUDE.md, README, rules and
+   Claude skills built from the documents).
+6. **Changes after review:** run `/mod-suite <slug> <change>`. It records the change in
+   the brief and updates every document, the INDEX, the deck and the kit in order.
+7. **Tech stack questionnaire:** every suite includes
+   `07-tech-stack-questionnaire.md` (and its Word copy), with questions for stakeholders
+   and for developers. Send it out; when the answers come back, run
+   `/mod-suite <slug> <answers>`. The answers update the brief, and the suite carries them
+   through every document.
+8. **After you build it:** run the Mode A skills on the new code for the final manuals.
 
 ## Labels used in Mode C
 | Label | Meaning |
@@ -67,8 +82,9 @@ flowchart LR
 ## Contents of this folder
 | Path | Purpose |
 |------|---------|
-| `templates/` | Document skeletons for Mode C (00–06) |
+| `templates/` | Document skeletons for Mode C (00–07) |
 | `rules/30-evidence-from-profile.md` | Two subjects, two tenses: current system from the profile and code, target system from the brief |
 | `rules/40-document-specific.md` | What each Mode C document must contain |
+| `rules/50-readability-and-refinement.md` | Readability layer, standard process flows, wording and naming, testers and release gate, propagating changes, exports, slides |
 
 Shared writing, formatting, and review rules live in the top-level `rules/` folder.

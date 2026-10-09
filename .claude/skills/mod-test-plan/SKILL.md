@@ -12,16 +12,19 @@ argument-hint: <project-slug>
 > **Rules:** Before starting, read `mode-c-modernize-project/rules/30-evidence-from-profile.md`
 > and `mode-c-modernize-project/rules/40-document-specific.md`. They are not preloaded.
 
+> **Also read** `mode-c-modernize-project/rules/50-readability-and-refinement.md`, and
+> follow the brief section 4 answers on rollout, testers, release gate, names and wording.
+
 Input: `$ARGUMENTS` (slug).
 
 ## Preconditions
 1. Resolve `<slug>`. The brief and requirements must exist. If
    `03-target-system-design.md` is missing, run the `mod-design` procedure first. Read
    `04-migration-plan.md` if it exists (phases, cutover, rollback).
-2. Read the brief (§6 dispositions), the requirements, the design, the plan, the Mode A
-   profile (§7, §9 for current behaviour),
+2. Read the brief (section 6 dispositions), the requirements, the design, the plan, the Mode A
+   profile (sections 7 and 9 for current behaviour),
    `mode-c-modernize-project/templates/06-migration-test-plan.md`, and
-   `mode-c-modernize-project/rules/40-document-specific.md` §06.
+   `mode-c-modernize-project/rules/40-document-specific.md` section 06.
 
 ## Procedure
 1. **Strategy and environments:** fill every level, including Parity, Data migration,
@@ -32,7 +35,7 @@ Input: `$ARGUMENTS` (slug).
 3. **Functional test cases (`TC-xx`):** at least one per Must and Should requirement,
    traced to its `FR`.
 4. **Parity test cases (`TC-P-xx`):** one per Keep and Improve feature, traced to the
-   parity `FR` and citing the current behaviour (`path:line` or Profile §7/§9). Expected
+   parity `FR` and citing the current behaviour (`path:line` or Profile section 7/section 9). Expected
    result: same as current (Keep) or the stated change (Improve).
 5. **Data migration test cases (`TC-D-xx`):** record counts per entity, referential
    integrity, spot checks, transformed fields, and a full rehearsal, each traced to the
@@ -48,6 +51,13 @@ Input: `$ARGUMENTS` (slug).
 10. **Traceability:** fill the "Test case" column of the Target Requirements
     Specification's Traceability Matrix. This is the only edit to that document. Note it
     in its Revision History.
+
+## Readability layer
+Write the `Read This First` section (Rule 50 section 1): who tests what (role, what they test,
+when), the testing flow step by step, the integration or driver release flow, the defect
+flow, and the ready-to-deploy gate (same Mermaid source as the plan). Add an "In short"
+note under every numbered section. Add the transmission or integration test level run by
+the testers the brief names, with criteria, schedule and sign-off rows (Rule 40 section 06).
 
 ## Output
 `output/mode-c/<slug>/06-migration-test-plan.md` (plus the traceability update in `02`)

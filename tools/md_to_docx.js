@@ -11,7 +11,8 @@
  * when tools/render_mermaid.py has rendered it to <folder>/assets/diagrams/, otherwise shown
  * as source with a note), GFM alerts, block quotes, bold, italic, inline code, links, <kbd>.
  * Review markers ([TBD], [ASSUMPTION], [VERIFY], [DECISION]) are highlighted.
- * The Markdown "Table of Contents" section becomes a Word TOC field.
+ * The Markdown "Table of Contents" section becomes a static, linked list of the ## and ###
+ * headings. No Word TOC field is used, so Word never asks to update fields on open.
  */
 "use strict";
 
@@ -19,9 +20,9 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const {
-  AlignmentType, BorderStyle, Document, ExternalHyperlink, Footer, HeadingLevel, ImageRun,
-  LevelFormat, Packer, PageNumber, Paragraph, ShadingType, Table, TableCell,
-  TableOfContents, TableRow, TextRun, WidthType,
+  AlignmentType, Bookmark, BorderStyle, Document, ExternalHyperlink, Footer, HeadingLevel,
+  ImageRun, InternalHyperlink, LevelFormat, Packer, PageNumber, Paragraph, ShadingType, Table,
+  TableCell, TableRow, TextRun, WidthType,
 } = require("docx");
 
 const PAGE = { width: 11906, height: 16838, margin: 1134 }; // A4, 2 cm margins
@@ -119,6 +120,10 @@ function diagramImage(lines) {
   const file = path.join(diagramDir, key + ".png");
   if (!fs.existsSync(file)) return null;
   const data = fs.readFileSync(file);
+  if (data.length < 24 || data.readUInt32BE(0) !== 0x89504e47) { // empty or not a PNG: show the source
+    console.warn(`warning: ${file} is not a valid PNG; re-run tools/render_mermaid.py`);
+    return null;
+  }
   let w = data.readUInt32BE(16) / 2, h = data.readUInt32BE(20) / 2; // rendered at 2x
   const maxW = 640, maxH = 860;
   const s = Math.min(1, maxW / w, maxH / h);
@@ -142,7 +147,7 @@ function codeBlock(lines, lang) {
   }
   lines.forEach((l, i) => out.push(new Paragraph({
     shading: { type: ShadingType.CLEAR, color: "auto", fill: "F2F2F2" },
-    spacing: { before: i === 0 ? 60 : 0, after: i === lines.length - 1 ? 120 : 0 },
+    spacing: { before: i === 0 ? 60 : 0, after: i === lines.length - 1 ? 120 : 0, line: 240 },
     children: [new TextRun({ text: l.length ? l : " ", font: MONO, size: 17 })],
   })));
   return out;
@@ -153,6 +158,8 @@ function convert(md, title) {
   const children = [];
   let i = 0;
   let skipToc = false;
+  let tocAt = -1; // index in children where the TOC entries go
+  const tocEntries = []; // { level, text, anchor }
   let para = [];
 
   const flushPara = () => {
@@ -189,14 +196,17 @@ function convert(md, title) {
         children.push(new Paragraph({ heading: HeadingLevel.TITLE, children: runs(text) }));
       } else if (level === 2 && /^table of contents$/i.test(text)) {
         children.push(new Paragraph({ heading: HeadingLevel.HEADING_1, children: runs(text) }));
-        children.push(new TableOfContents("Table of Contents", { hyperlink: true, headingStyleRange: "1-3" }));
-        children.push(new Paragraph({
-          children: [new TextRun({ text: "If the table of contents is empty, right-click it in Word and choose Update Field.", italics: true, size: 16, color: "808080" })],
-        }));
+        tocAt = children.length;
         skipToc = true;
       } else {
         const map = { 2: HeadingLevel.HEADING_1, 3: HeadingLevel.HEADING_2, 4: HeadingLevel.HEADING_3 };
-        children.push(new Paragraph({ heading: map[level] || HeadingLevel.HEADING_4, children: runs(text) }));
+        let content = runs(text);
+        if (level <= 3) {
+          const anchor = `_Toc_${tocEntries.length + 1}`; // leading "_" hides it in Word's bookmark list
+          tocEntries.push({ level, text, anchor });
+          content = [new Bookmark({ id: anchor, children: content })];
+        }
+        children.push(new Paragraph({ heading: map[level] || HeadingLevel.HEADING_4, children: content }));
       }
       i++;
       continue;
@@ -276,17 +286,24 @@ function convert(md, title) {
   }
   flushPara();
 
+  if (tocAt >= 0) {
+    children.splice(tocAt, 0, ...tocEntries.map((e) => new Paragraph({
+      indent: { left: (e.level - 2) * 360 },
+      spacing: { after: e.level === 2 ? 60 : 20 },
+      children: [new InternalHyperlink({ anchor: e.anchor, children: runs(e.text, { color: "0563C1" }) })],
+    })));
+  }
+
   return new Document({
     creator: "DocumentationCreator",
     title,
-    features: { updateFields: true },
     styles: {
-      default: { document: { run: { font: FONT, size: 21 } } },
+      default: { document: { run: { font: FONT, size: 21 }, paragraph: { spacing: { line: 276 } } } }, // Rule 25: 10.5 pt, 1.15 line spacing
       paragraphStyles: [
-        { id: "Title", name: "Title", basedOn: "Normal", run: { size: 40, bold: true, color: "1F3864" }, paragraph: { spacing: { after: 240 } } },
-        { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 30, bold: true, color: "1F3864" }, paragraph: { spacing: { before: 360, after: 120 }, outlineLevel: 0, keepNext: true } },
-        { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 25, bold: true, color: "2F5496" }, paragraph: { spacing: { before: 240, after: 100 }, outlineLevel: 1, keepNext: true } },
-        { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 22, bold: true, color: "2F5496" }, paragraph: { spacing: { before: 200, after: 80 }, outlineLevel: 2, keepNext: true } },
+        { id: "Title", name: "Title", basedOn: "Normal", run: { size: 40, bold: true, color: "1F3864" }, paragraph: { spacing: { after: 240, line: 240 } } },
+        { id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 30, bold: true, color: "1F3864" }, paragraph: { spacing: { before: 360, after: 120, line: 240 }, outlineLevel: 0, keepNext: true } },
+        { id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 25, bold: true, color: "2F5496" }, paragraph: { spacing: { before: 240, after: 100, line: 240 }, outlineLevel: 1, keepNext: true } },
+        { id: "Heading3", name: "Heading 3", basedOn: "Normal", next: "Normal", quickFormat: true, run: { size: 22, bold: true, color: "2F5496" }, paragraph: { spacing: { before: 200, after: 80, line: 240 }, outlineLevel: 2, keepNext: true } },
       ],
     },
     numbering: {
@@ -302,10 +319,10 @@ function convert(md, title) {
           children: [new Paragraph({
             alignment: AlignmentType.RIGHT,
             children: [
-              new TextRun({ text: `${title}  |  Page `, size: 16, color: "808080" }),
-              new TextRun({ children: [PageNumber.CURRENT], size: 16, color: "808080" }),
-              new TextRun({ text: " of ", size: 16, color: "808080" }),
-              new TextRun({ children: [PageNumber.TOTAL_PAGES], size: 16, color: "808080" }),
+              new TextRun({ text: `${title}  |  Page `, size: 16, color: "595959" }),
+              new TextRun({ children: [PageNumber.CURRENT], size: 16, color: "595959" }),
+              new TextRun({ text: " of ", size: 16, color: "595959" }),
+              new TextRun({ children: [PageNumber.TOTAL_PAGES], size: 16, color: "595959" }),
             ],
           })],
         }),
@@ -319,7 +336,9 @@ let numberingInstance = 1;
 
 async function convertFile(src, outDir) {
   numberingInstance = 1;
-  diagramDir = path.join(path.dirname(src), "assets", "diagrams");
+  // Audience copies live in <doc folder>/export/<name>/; their diagrams are the suite's.
+  const dirs = [0, 1, 2].map((up) => path.join(path.dirname(src), ...Array(up).fill(".."), "assets", "diagrams"));
+  diagramDir = dirs.find((d) => fs.existsSync(d)) || dirs[0];
   const md = fs.readFileSync(src, "utf8");
   const h1 = (md.match(/^#\s+(.*)$/m) || [null, path.basename(src, ".md")])[1].replace(/[*`]/g, "");
   const doc = convert(md, h1);

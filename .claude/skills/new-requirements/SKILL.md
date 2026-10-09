@@ -19,27 +19,27 @@ Input: `$ARGUMENTS`.
    `new-brief` procedure first (`.claude/skills/new-brief/SKILL.md`).
 2. Read the brief, `mode-b-new-project/templates/01-requirements-specification.md`,
    `mode-b-new-project/rules/30-evidence-from-brief.md`, and
-   `mode-b-new-project/rules/40-document-specific.md` §01.
+   `mode-b-new-project/rules/40-document-specific.md` section 01.
 
 ## Procedure
-1. **Scope and users:** take them from Brief §1–4. Copy role IDs (`R-xx`) unchanged.
+1. **Scope and users:** take them from Brief section 1–4. Copy role IDs (`R-xx`) unchanged.
 2. **Functional requirements:** for each in-scope feature `F-xx` (Won't items go to Out of
    Scope), write one subsection. Break the feature into atomic "The system shall…"
    requirements (`FR-01`… numbered across the whole document). Each one has a priority,
-   a source (`F-xx` or `Brief §n`), and a testable acceptance criterion.
+   a source (`F-xx` or `Brief section n`), and a testable acceptance criterion.
    - Cover the obvious supporting behavior the user did not mention but the feature
      needs (validation, empty states, permissions, notifications). Mark it **Proposed**.
    - Every requirement needs a role allowed to perform it.
-3. **User stories:** write one or more stories for each key workflow in Brief §6, with
+3. **User stories:** write one or more stories for each key workflow in Brief section 6, with
    Given / When / Then acceptance criteria.
 4. **Non-functional requirements:** fill every category in the template. Use the user's
-   numbers from Brief §11. Otherwise suggest a reasonable target, labeled **Proposed**,
+   numbers from Brief section 11. Otherwise suggest a reasonable target, labeled **Proposed**,
    e.g. "Pages load in under 3 seconds for 95% of requests — Proposed".
-5. **Data:** list entities from Brief §7, plus any the requirements imply. Add validation
+5. **Data:** list entities from Brief section 7, plus any the requirements imply. Add validation
    rules and retention (`[TBD]` if legal retention is unknown). Fill Data Migration from
-   Brief §5/§7, or mark it Not applicable.
-6. **Interfaces and reports:** from Brief §9 and §12.
-7. **Out of Scope:** copy Brief §13 and add things a reader might assume are included
+   Brief section 5/section 7, or mark it Not applicable.
+6. **Interfaces and reports:** from Brief sections 9 and 12.
+7. **Out of Scope:** copy Brief section 13 and add things a reader might assume are included
    (mobile app, offline mode, multi-language, data migration) when the brief excludes them.
 8. **Traceability Matrix:** fill the Feature → Requirement columns. Leave Design, WBS, and
    Test columns as `—`. Later skills fill them.

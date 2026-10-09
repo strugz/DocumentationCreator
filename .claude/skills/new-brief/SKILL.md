@@ -75,8 +75,8 @@ Fill `mode-b-new-project/templates/00-project-brief.md` completely and write it 
 - Roles get `R-01`…, constraints `C-01`….
 - Where the user accepted defaults, record the value with Source = "Proposed (accepted
   default)".
-- Put unknown business facts (budget, dates, names) in §3 as `[TBD]` and in §19.
-- Put real choices in §18 Decisions Needed as `[DECISION: ...]` with a recommendation.
+- Put unknown business facts (budget, dates, names) in section 3 as `[TBD]` and in section 19.
+- Put real choices in section 18 Decisions Needed as `[DECISION: ...]` with a recommendation.
 - Build the Glossary from the user's own words for things (e.g. "job order", not "ticket",
   if that is what they say).
 

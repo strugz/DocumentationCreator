@@ -12,6 +12,9 @@
   "simply", "just", "easily"). State capabilities and let facts speak.
 - Avoid unexplained jargon. Define every acronym on first use, e.g.
   "Role-Based Access Control (RBAC)", and add it to the Glossary.
+- Never use the section sign (§) in a document, a slide, or speaker notes. Write the word:
+  "section 4", "Brief section 7", "Profile sections 10 and 12", "sections 4 to 8"
+  ("Section 4" at the start of a sentence or table cell).
 
 ## Tone per document
 | Document | Tone |

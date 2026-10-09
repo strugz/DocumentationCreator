@@ -12,6 +12,9 @@ argument-hint: <project-slug>
 > **Rules:** Before starting, read `mode-c-modernize-project/rules/30-evidence-from-profile.md`
 > and `mode-c-modernize-project/rules/40-document-specific.md`. They are not preloaded.
 
+> **Also read** `mode-c-modernize-project/rules/50-readability-and-refinement.md`, and
+> follow the brief section 4 answers on rollout, testers, release gate, names and wording.
+
 Input: `$ARGUMENTS` (slug).
 
 ## Preconditions
@@ -19,15 +22,15 @@ Input: `$ARGUMENTS` (slug).
    `01-current-state-assessment.md` is missing, run the `mod-assessment` procedure first.
 2. Read the brief, the assessment, the Mode A profile (for current behaviour to cite),
    `mode-c-modernize-project/templates/02-target-requirements-specification.md`, and
-   `mode-c-modernize-project/rules/40-document-specific.md` §02.
+   `mode-c-modernize-project/rules/40-document-specific.md` section 02.
 
 ## Procedure
 1. **Scope and perspective:** state what the target system replaces, the goals it serves
-   (Brief §3), and, for an incremental strategy, how it coexists with the current system.
+   (Brief section 3), and, for an incremental strategy, how it coexists with the current system.
 2. **Users:** carry the roles (`R-xx`) from the brief with any changes noted there.
 3. **Functional requirements, by feature and disposition:**
    - **Keep:** at least one **parity** requirement. Acceptance criterion: "matches the
-     current behaviour" with the evidence cited (`path:line` or Profile §7/§9). Priority
+     current behaviour" with the evidence cited (`path:line` or Profile section 7/section 9). Priority
      Must unless the brief says otherwise.
    - **Improve:** a parity requirement for what stays the same plus one requirement per
      stated change.
@@ -35,21 +38,28 @@ Input: `$ARGUMENTS` (slug).
      the current mechanism in "Current behaviour".
    - **New:** requirements from the brief's description, acceptance criteria proposed
      and labeled.
-   - **Drop:** no requirements; list the feature in §8 Out of Scope with the reason.
+   - **Drop:** no requirements; list the feature in section 8 Out of Scope with the reason.
    One "shall" per row. Type column: Parity / Improvement / New / Finding.
 4. **Findings:** every Critical and High `D-xx` from the assessment gets at least one
    requirement (functional or non-functional) that resolves it; its Source names the
    `D-xx`. Medium findings get one where the brief's goals justify it.
 5. **Non-functional requirements:** fill every category. The "Current" column cites the
    assessment or profile; the "Target" is the user's figure or a **Proposed** value.
-6. **Data:** entities from the brief §9; a Data Migration table (migrate / transform /
+6. **Data:** entities from the brief section 9; a Data Migration table (migrate / transform /
    archive / drop, with verification). If no data migrates, write
    `Not applicable — <reason from the brief>`.
-7. **Interfaces and reports:** from the brief §10 and the profile §9 and §12, each with
+7. **Interfaces and reports:** from the brief section 10 and the profile sections 9 and 12, each with
    its disposition.
 8. **Traceability Matrix:** one row per requirement with Feature and Finding filled.
    Leave Design component, WBS item, and Test case as `{{filled by /mod-design}}` etc.
    only while those documents do not exist; the later skills fill them.
+
+## Readability layer
+Write the `Read This First` section (Rule 50 section 1): how to read a requirement row, what the
+system must do by area (area, requirement range, examples), the main case flow (same
+Mermaid source as the design), and the "requirement to acceptance" flow. Add an "In short"
+note under every numbered section. The Acceptance Approach names the testers and the
+release gate from the brief section 4.
 
 ## Output
 `output/mode-c/<slug>/02-target-requirements-specification.md`

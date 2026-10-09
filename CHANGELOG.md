@@ -7,6 +7,69 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- Shared Rule 15 `rules/15-response-and-code-output.md`: direct openings with no filler,
+  complete runnable code blocks (only secret and reader-supplied placeholders allowed),
+  tables for comparisons of 3 or more items, numbered lists for sequences, and concise,
+  specific explanations. It applies to chat replies and to code blocks in documents.
+- Shared Rule 25 `rules/25-typography.md`: one type system for every output. It sets
+  font families with CSS font-stack fallbacks (Calibri, Cambria, Consolas, plus
+  metric-compatible and system fonts), the print scale in pt for the Word export, the screen
+  scale in rem/px with weights, line heights, letter spacing and margins (H1–H4, body,
+  captions, UI elements, code), slide sizes, line-length limits, and WCAG 2.2 contrast pairs.
+  CLAUDE.md, AGENTS.md, Rule 20, the review checklist, and the Mode C deck rules point to it.
+- Mode C Tech Stack Questionnaire (template `07-tech-stack-questionnaire.md`, Rule 40
+  section 07), written by `/mod-suite` in every run right after the brief: Part A for
+  stakeholders (goals, users, hosting, compliance, budget, support, timeline), Parts B
+  and C for developers (stack layer by layer with current and Proposed values, team
+  skills, tools, risks), and a Response Summary. `tools/split_questionnaire.py` makes a
+  stakeholder copy and a developer copy for separate Word files; `tools/md_to_docx.js`
+  finds the suite's rendered diagrams for those copies. Running `/mod-suite <slug>` with the
+  returned answers consolidates them into the brief and the rest of the suite. The deck
+  and starter kit sections of Rule 40 are now sections 08 and 09.
+- Mode C rule `50-readability-and-refinement.md`: the readability layer (Read This First
+  page, In short notes, bullet executive summaries), standard process flows (case flow,
+  SDLC, sprint, release gate, testing and defect flows) with Mermaid pitfalls, audience
+  and professional-naming guidance, binding wording rules, the order for propagating a
+  change across documents and slides, and export notes.
+
+### Changed
+- LMS 4 PowerPoint deck follows Rule 25: the orange accent is `9B540E` (was `C46A12`,
+  3.1–3.9:1, now 4.6–5.7:1), card and flow-step text is 14 pt (was 13 pt), and the slide 6
+  cards are 0.12" taller so the Verify step fits. Rule 25 section 5 adds sizes for card
+  text, card headings, and number badges, and requires accent text to meet 4.5:1.
+- Word export (`tools/md_to_docx.js`) follows Rule 25: body text uses 1.15 line spacing
+  (headings and code stay at 1.0), and the footer and note text is `#595959` instead of
+  `#808080`, which failed the 4.5:1 contrast minimum.
+- Mode C produces the refined result in one run, based on a full review cycle of a real
+  suite:
+  - The `/mod-brief` interview also asks for the request's origin, the users' own pain
+    points, team and AI-assisted development, pilot site, when clients receive the new
+    version, data migration, who tests and the release gate, how approvers are named,
+    words to avoid, and the deliverables. Brief §4 records the answers.
+  - Every Mode C template starts with a `Read This First` section, and every document
+    skill writes it with its standard flows and an "In short" note per section.
+  - Rule 40 adds the estimation method (sizes, AI-assisted factor, capacity), pilot and
+    release milestones, named testers and a transmission test level, user-view problems
+    and a short options paragraph in the proposal, case flows in the design, and two new
+    outputs: the presentation deck (§07) and the build repository starter kit (§08).
+  - `/mod-suite` checks readability, names and wording, writes a reader guide in
+    INDEX.md, renders diagrams before the Word export, builds the deck and the starter
+    kit, and applies later review changes in order when run with a change request.
+  - The review checklist has a Mode C readability item.
+- Documents never use the section sign: Rule 10 says to write "section 4", templates,
+  rules and skills follow it, and `tools/lint_docs.py` reports a section sign as an error.
+
+### Fixed
+- `tools/render_mermaid.py` rendered Gantt charts as empty files, because Mermaid sized
+  them to a 0-pixel-wide container. It now sets a fixed Gantt width and reports an empty
+  image as a failure. `tools/md_to_docx.js` no longer crashes on an empty or invalid PNG;
+  it shows the diagram source instead and prints a warning.
+- Word asked "This document contains fields that may refer to other files" every time an
+  exported `.docx` opened. `tools/md_to_docx.js` no longer sets the update-fields flag. It
+  now builds the Table of Contents itself as a linked list of the `##` and `###` headings,
+  so the TOC is filled in on open without the prompt (it has no page numbers).
+
 ## [0.3.0] - 2026-10-08
 
 ### Added

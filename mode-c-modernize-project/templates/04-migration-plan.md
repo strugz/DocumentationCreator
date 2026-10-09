@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     The plan on one page (what, who builds, who tests, start, pilot, ready to deploy, handover, effort, migration); the SDLC process flow; the sprint flow; the integration or driver release flow; the ready-to-deploy gate; phases in plain words; a 'Where to Find What' table.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Executive Summary
 <!-- 5–8 sentences: what is being modernized, the strategy, the phases, the estimated
      duration (with method) or [TBD], the cutover approach, the biggest risks, and the
@@ -27,9 +34,9 @@
 ## 3. Starting Point
 | Item | Status | Evidence / Needed by |
 |------|--------|----------------------|
-| Current system in production | Yes / No / [TBD] | Brief §1 |
-| Current users and data volume | [TBD] | Brief §1, §9 |
-| Freeze policy during migration | [TBD] | Brief §4 |
+| Current system in production | Yes / No / [TBD] | Brief section 1 |
+| Current users and data volume | [TBD] | Brief sections 1 and 9 |
+| Freeze policy during migration | [TBD] | Brief section 4 |
 | Decisions resolved (`[DECISION]` items) | Not yet | Phase 0 |
 | Team assigned | [TBD] | Phase 0 |
 | Target repository and tools | [TBD] | Phase 0 |
@@ -37,7 +44,7 @@
 | Copy of production data for rehearsal | [TBD] | Phase 4 |
 
 ## 4. Migration Strategy
-<!-- From Brief §8. State the chosen strategy and why; for incremental, list the increments. -->
+<!-- From Brief section 8. State the chosen strategy and why; for incremental, list the increments. -->
 | Increment | Features that move (F-xx) | Routing change | Exit criteria |
 |-----------|---------------------------|----------------|---------------|
 

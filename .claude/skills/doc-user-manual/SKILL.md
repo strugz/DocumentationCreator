@@ -16,7 +16,7 @@ Input: `$ARGUMENTS`.
 ## Preconditions
 1. Resolve `<slug>`. Run the `doc-intake` procedure if the profile is missing.
 2. Read the profile, `mode-a-existing-project/templates/03-user-manual.md`, `rules/10-writing-style.md`, and
-   `mode-a-existing-project/rules/40-document-specific.md` §3.
+   `mode-a-existing-project/rules/40-document-specific.md` section 3.
 
 ## Procedure
 1. **Inventory the UI.** For each user-facing feature in the profile, open its screen,
@@ -30,7 +30,7 @@ Input: `$ARGUMENTS`.
 2. **Map features to user goals.** Group tasks the way a user thinks
    ("Manage orders", "Run reports"), not by code module. Order them by typical workflow:
    first login → daily tasks → occasional tasks → admin tasks.
-3. **Roles.** If roles exist, add §3 User Roles and mark "Who can do this" on every task.
+3. **Roles.** If roles exist, add section 3 User Roles and mark "Who can do this" on every task.
    Put admin-only tasks in their own section.
 4. **Write each task** using the task block in the template: purpose, who, prerequisites,
    numbered steps (one action each, labels in **bold**), result, tips, errors.

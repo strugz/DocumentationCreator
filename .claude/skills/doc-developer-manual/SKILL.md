@@ -15,7 +15,7 @@ Input: `$ARGUMENTS`.
 
 ## Preconditions
 1. Resolve `<slug>`. Run the `doc-intake` procedure if the profile is missing.
-2. Read the profile, `mode-a-existing-project/templates/05-developer-manual.md`, and `mode-a-existing-project/rules/40-document-specific.md` §5.
+2. Read the profile, `mode-a-existing-project/templates/05-developer-manual.md`, and `mode-a-existing-project/rules/40-document-specific.md` section 5.
 3. If `output/mode-a/<slug>/04-technical-manual.md` exists, link to its configuration reference
    instead of duplicating it.
 

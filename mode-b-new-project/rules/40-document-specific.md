@@ -32,7 +32,7 @@ document reveals a problem, fix the earlier one first.
   users, functional requirements, non-functional requirements, data, interfaces,
   constraints, acceptance, traceability.
 - Every requirement is **atomic** (one "shall" per row), **testable**, and has an ID,
-  priority, source (`F-xx` / `Brief §n`), and acceptance criteria.
+  priority, source (`F-xx` / `Brief section n`), and acceptance criteria.
 - Write important flows as **user stories** ("As a <role>, I want <goal>, so that
   <benefit>") with **Given / When / Then** acceptance criteria.
 - Non-functional requirements cover at least: performance, availability, security,
@@ -69,7 +69,7 @@ document reveals a problem, fix the earlier one first.
   go-live plan, and a handover checklist.
 
 ## 04. Project Proposal
-- Same structure and rules as Mode A §2 (problem → solution → scope → approach →
+- Same structure and rules as Mode A section 2 (problem → solution → scope → approach →
   timeline → resources and cost → risks → benefits → recommendation).
 - The proposal type is always **New system proposal**.
 - All features are tagged **Planned**. Scope must equal the Requirements' in-scope list

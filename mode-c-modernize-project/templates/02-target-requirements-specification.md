@@ -12,10 +12,17 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     How to read a requirement row (ID, type, priority, acceptance criteria); what the system must do by area (area, requirement range, examples); the case flow; the 'requirement to acceptance' flow.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose of This Document
 ### 1.2 Product Scope
-<!-- What the target system will do, which current system it replaces, and the goals it serves (Brief §2–3). -->
+<!-- What the target system will do, which current system it replaces, and the goals it serves (Brief section 2–3). -->
 ### 1.3 Definitions and Acronyms
 <!-- Link to the Glossary in Appendix A. -->
 ### 1.4 References
@@ -34,7 +41,7 @@ flowchart LR
 |---------|------|-------------|-----------------|---------------|
 | R-01 | | | Low / Medium / High | [TBD] |
 ### 2.3 Operating Environment
-<!-- Target platforms, devices, browsers (Brief §7). Proposed items labeled. -->
+<!-- Target platforms, devices, browsers (Brief section 7). Proposed items labeled. -->
 ### 2.4 Design and Implementation Constraints
 | ID | Constraint | Source |
 |----|-----------|--------|
@@ -44,7 +51,7 @@ flowchart LR
 <!-- Group by feature (F-xx), in disposition order: Keep, Improve, Replace, New.
      One "shall" per requirement. Every Keep/Improve feature has a parity requirement. -->
 ### 3.1 {{F-01 Feature name}} — {{Keep / Improve / Replace / New}}
-**Current behaviour:** {{one line, with `path:line` or Profile §7/§9}}
+**Current behaviour:** {{one line, with `path:line` or Profile section 7/section 9}}
 **Priority:** Must / Should / Could
 
 | ID | Requirement | Type | Priority | Source | Acceptance criteria |
@@ -62,7 +69,7 @@ flowchart LR
 <!-- Each NFR that resolves an assessment finding names it in Source. -->
 | ID | Category | Requirement | Current (evidence) | Target | Source | How verified |
 |----|----------|-------------|--------------------|--------|--------|--------------|
-| NFR-01 | Performance | | | Proposed: {{value}} | Proposed / Brief §12 / D-xx | |
+| NFR-01 | Performance | | | Proposed: {{value}} | Proposed / Brief section 12 / D-xx | |
 | NFR-02 | Availability | | | | | |
 | NFR-03 | Security | | | | | |
 | NFR-04 | Privacy / Data protection | | | | | |
@@ -81,14 +88,14 @@ flowchart LR
 | Entity.field | Rule |
 |--------------|------|
 ### 5.3 Data Migration
-<!-- From Brief §9. Which entities move, transform, or archive, and how the migration is verified. -->
+<!-- From Brief section 9. Which entities move, transform, or archive, and how the migration is verified. -->
 | Current entity / table | Target entity | Action (migrate / transform / archive / drop) | Verification |
 |------------------------|---------------|-----------------------------------------------|--------------|
 
 ## 6. External Interface Requirements
 ### 6.1 User Interfaces
 ### 6.2 Software Interfaces (integrations)
-| ID | System | Current (Profile §12) | Target | Data exchanged | Direction | Method (Proposed) |
+| ID | System | Current (Profile section 12) | Target | Data exchanged | Direction | Method (Proposed) |
 |----|--------|-----------------------|--------|----------------|-----------|-------------------|
 ### 6.3 Hardware Interfaces
 ### 6.4 Communication Interfaces
@@ -101,7 +108,7 @@ flowchart LR
 <!-- Every Drop feature with its reason, plus anything else excluded. -->
 | Item | Reason | Source |
 |------|--------|--------|
-| F-xx {{feature}} (Drop) | | Brief §6 |
+| F-xx {{feature}} (Drop) | | Brief section 6 |
 
 ## 9. Acceptance Approach
 <!-- UAT with side-by-side comparison where possible (see Migration Test Plan); sign-off authority. -->

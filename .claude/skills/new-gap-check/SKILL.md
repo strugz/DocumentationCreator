@@ -25,7 +25,7 @@ the path is missing, ask for it.
    does not exist, run the `doc-intake` procedure on the code path, using the same slug.
    The source code is **read-only**.
 3. Read `mode-b-new-project/templates/09-gap-report.md` and
-   `mode-b-new-project/rules/40-document-specific.md` §09.
+   `mode-b-new-project/rules/40-document-specific.md` section 09.
 
 ## Procedure
 1. For each `FR` and `NFR`, search the Mode A profile's features, endpoints, screens, and

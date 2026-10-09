@@ -15,7 +15,7 @@ Input: `$ARGUMENTS` (slug or path, plus an optional target environment).
 
 ## Preconditions
 1. Resolve `<slug>`. Run the `doc-intake` procedure if the profile is missing.
-2. Read the profile, `mode-a-existing-project/templates/04-technical-manual.md`, and `mode-a-existing-project/rules/40-document-specific.md` §4.
+2. Read the profile, `mode-a-existing-project/templates/04-technical-manual.md`, and `mode-a-existing-project/rules/40-document-specific.md` section 4.
 
 ## Procedure
 1. **Architecture:** build the component table and a Mermaid diagram from docker-compose

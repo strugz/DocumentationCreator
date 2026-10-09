@@ -15,7 +15,7 @@
 ## 1. Introduction
 ### 1.1 Purpose of This Document
 ### 1.2 Product Scope
-<!-- What the product will do and the business goal it serves (Brief §1–2). -->
+<!-- What the product will do and the business goal it serves (Brief section 1–2). -->
 ### 1.3 Definitions and Acronyms
 <!-- Link to the Glossary in Appendix A. -->
 ### 1.4 References
@@ -34,7 +34,7 @@ flowchart LR
 |---------|------|-------------|-----------------|---------------|
 | R-01 | | | Low / Medium / High | [TBD] |
 ### 2.3 Operating Environment
-<!-- Platforms, devices, browsers (Brief §8). Proposed items labeled. -->
+<!-- Platforms, devices, browsers (Brief section 8). Proposed items labeled. -->
 ### 2.4 Design and Implementation Constraints
 | ID | Constraint | Source |
 |----|-----------|--------|
@@ -60,7 +60,7 @@ flowchart LR
 ## 4. Non-Functional Requirements
 | ID | Category | Requirement | Target | Source | How verified |
 |----|----------|-------------|--------|--------|--------------|
-| NFR-01 | Performance | | Proposed: {{value}} | Proposed / Brief §11 | |
+| NFR-01 | Performance | | Proposed: {{value}} | Proposed / Brief section 11 | |
 | NFR-02 | Availability | | | | |
 | NFR-03 | Security | | | | |
 | NFR-04 | Privacy / Data protection | | | | |

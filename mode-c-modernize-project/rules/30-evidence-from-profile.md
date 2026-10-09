@@ -52,11 +52,11 @@ conflict in the brief's **Discrepancies** section, and mark `[VERIFY]`.
 - Cite code as `path:line` relative to the **source project root** recorded in the
   brief's `Source location` field (copied from the profile). The linter verifies these
   citations against the source when it can find it.
-- Cite the Mode A documents by section, never by line: `Profile §7`, `Profile §15`,
-  `Technical Manual §6`. Do not write `00-project-profile.md:42`; the linter would treat
+- Cite the Mode A documents by section, never by line: `Profile section 7`, `Profile section 15`,
+  `Technical Manual section 6`. Do not write `00-project-profile.md:42`; the linter would treat
   it as a code citation.
 - Copy facts from the profile; do not re-derive them differently. If the profile is wrong,
-  fix the profile first (Mode A Rule 00 §4), then continue.
+  fix the profile first (Mode A Rule 00 section 4), then continue.
 
 ## Never invent
 - Costs, budgets, rates, licence prices, or effort hours. Estimates are allowed only when
@@ -75,7 +75,7 @@ conflict in the brief's **Discrepancies** section, and mark `[VERIFY]`.
 - **Current system:** present tense, with evidence. Status values come from the profile:
   Done / Partial / Stub / Broken / Not started.
 - **Target system:** future tense or "shall". Never "the new system sends…" as if built.
-- **Feature disposition** (brief §6) uses exactly: **Keep / Improve / Replace / Drop / New**.
+- **Feature disposition** (brief section 6) uses exactly: **Keep / Improve / Replace / Drop / New**.
   - Keep: same behaviour, new implementation.
   - Improve: same purpose, changed behaviour (state what changes).
   - Replace: a different mechanism serves the same need (for example an off-the-shelf
@@ -94,7 +94,7 @@ conflict in the brief's **Discrepancies** section, and mark `[VERIFY]`.
 - Design components, migration WBS items, and test cases point to the `FR`/`NFR` IDs they
   serve. The Target Requirements Specification holds the master **Traceability Matrix**.
 - The Migration Test Plan also traces **parity tests** back to the current system's
-  behaviour (`F-xx`, Profile §7) so that nothing is lost in the rewrite.
+  behaviour (`F-xx`, Profile section 7) so that nothing is lost in the rewrite.
 
 ## Source revision
 In the Document Control block write

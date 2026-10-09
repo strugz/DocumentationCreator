@@ -12,15 +12,18 @@ argument-hint: <project-slug> [start date / cutover deadline / team size]
 > **Rules:** Before starting, read `mode-c-modernize-project/rules/30-evidence-from-profile.md`
 > and `mode-c-modernize-project/rules/40-document-specific.md`. They are not preloaded.
 
+> **Also read** `mode-c-modernize-project/rules/50-readability-and-refinement.md`, and
+> follow the brief section 4 answers on rollout, testers, release gate, names and wording.
+
 Input: `$ARGUMENTS` (slug, plus optional dates, deadline, and team size, which are
-recorded in the brief §4 first).
+recorded in the brief section 4 first).
 
 ## Preconditions
 1. Resolve `<slug>`. The brief, assessment, and requirements must exist. If
    `03-target-system-design.md` is missing, run the `mod-design` procedure first.
-2. Read the brief (§4, §6, §8, §9), the assessment, the requirements, the design,
+2. Read the brief (sections 4, 6, 8 and 9), the assessment, the requirements, the design,
    `mode-c-modernize-project/templates/04-migration-plan.md`, and
-   `mode-c-modernize-project/rules/40-document-specific.md` §04.
+   `mode-c-modernize-project/rules/40-document-specific.md` section 04.
 
 ## Procedure
 1. **Starting point:** the current system's state (production or not, freeze policy,
@@ -36,7 +39,7 @@ recorded in the brief §4 first).
    Each has an ID, definition of done, dependencies, size (S/M/L/XL), and priority.
    Include items for data migration tooling, parity test automation, the interim router
    or facade (if incremental), cutover rehearsal, and decommission.
-5. **Phases:** use the Rule 40 §04 default phases unless the strategy demands otherwise.
+5. **Phases:** use the Rule 40 section 04 default phases unless the strategy demands otherwise.
    Timelines come from the user's dates or stated capacity; otherwise relative durations
    marked `[ASSUMPTION]`. If the cutover deadline is shorter than the estimate, say so
    and propose scope cuts (Should features first).
@@ -45,12 +48,20 @@ recorded in the brief §4 first).
 7. **Risks:** at least the migration-specific ones: data loss or mismatch, feature
    regressions missed by parity tests, dual maintenance during parallel run, user
    resistance, vendor or hosting delays, and the assessment's Critical findings.
-8. **Data migration, cutover, rollback, decommission:** fill §12–§14 of the template.
+8. **Data migration, cutover, rollback, decommission:** fill sections 12 to 14 of the template.
    The rollback plan names the trigger, the steps back to the current system, the owner,
    and a time limit (`[TBD]` if unknown).
 9. **Traceability:** fill the "WBS item" column of the Target Requirements
    Specification's Traceability Matrix. This is the only edit to that document. Note it
    in its Revision History.
+
+## Readability layer
+Write the `Read This First` section (Rule 50 section 1): the plan on one page, the SDLC process
+flow, the sprint flow, the integration or driver release flow, the ready-to-deploy gate,
+the phases in plain words, and a "Where to Find What" table. Write the Executive Summary as
+bullets (What, How, Testing, Pilot, Migration, When, Effort, Biggest risks, Needed to
+start). Add an "In short" note under every numbered section. Use the estimation method,
+pilot and release milestones, and named testers of Rule 40 section 04.
 
 ## Output
 `output/mode-c/<slug>/04-migration-plan.md` (plus the traceability update in `02`)

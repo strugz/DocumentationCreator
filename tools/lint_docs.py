@@ -8,7 +8,8 @@ Checks every Markdown document under output/mode-a/, output/mode-b/, or output/m
   structure    one H1, no skipped heading levels, Document Control block,
                Table of Contents vs headings, Open Items and Revision History present
   markers      every [TBD]/[ASSUMPTION]/[VERIFY]/[DECISION] is listed in Open Items
-  placeholders no unfilled {{...}} template placeholders or leftover template comments
+  placeholders no unfilled {{...}} template placeholders, leftover template comments,
+               or section signs (write 'section N')
   code         every fenced code block has a language tag; fences are balanced
   mermaid      known diagram type, balanced brackets, quoted special labels, size
   links        internal #anchors resolve to a heading
@@ -266,6 +267,10 @@ def check_placeholders(doc: Doc, out: list[Finding]) -> None:
             continue
         snippet = " ".join(m.group(0)[4:-3].split())[:60]
         out.append(Finding(f, ln, "warning", "placeholders", f"Leftover template comment: {snippet}"))
+    for i, line in enumerate(doc.lines, 1):
+        if "§" in line and not doc.in_fence(i):
+            out.append(Finding(f, i, "error", "placeholders",
+                               "Section sign used; write 'section N' instead (Rule 10)"))
 
 
 def check_code_blocks(doc: Doc, out: list[Finding]) -> None:
