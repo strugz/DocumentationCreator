@@ -20,16 +20,15 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `pptxgenjs` 3.12.0 is a pinned dependency in `tools/package.json`. Tests in
   `tests/test_md_to_pptx.py` (skipped without Node).
 - Mode B and Mode C starter kits enable the `feature-dev` plugin (Mode B Rule 40 section 10
-  and Mode C Rule 40 section 09, Plugins). In Mode C, a `/feature-dev` run for a Keep or
-  Improve feature also names the parity requirement, its parity test, and the current
-  code path (read only).
-- Starter kits now go inside the project folder, `output/<mode>/<slug>/<repo-name>-repo-starter/`,
-  instead of `output/`. `tools/lint_docs.py` and the lint hook skip `*-repo-starter`
-  folders. Mode B detail: a
-  `.claude/settings.json` adds the official plugin marketplace and turns on
-  `feature-dev@claude-plugins-official`, and the kit's `CLAUDE.md` and `README.md` say when
-  to use `/feature-dev` (multi-layer features, started from requirement IDs and the
-  `docs/design/` sections) versus the kit's own skills.
+  and Mode C Rule 40 section 09, Plugins): a `.claude/settings.json` adds the official
+  plugin marketplace and turns on `feature-dev@claude-plugins-official`, and the kit's
+  `CLAUDE.md` and `README.md` say when to use `/feature-dev` (multi-layer features, started
+  from requirement IDs and the `docs/design/` sections) versus the kit's own skills. In
+  Mode C, a run for a Keep or Improve feature also names the parity requirement, its parity
+  test, and the current code path (read only).
+- Starter kits now go inside the project folder,
+  `output/<mode>/<slug>/<repo-name>-repo-starter/`, instead of `output/`.
+  `tools/lint_docs.py` and the lint hook skip `*-repo-starter` folders.
 - Build repository starter kit for Mode B (Rule 40 section 10), like Mode C: `/new-suite`
   Step 4b writes `output/mode-b/<slug>/<repo-name>-repo-starter/` with `CLAUDE.md`, `README.md`, rule
   files (principles, architecture, backend, frontend, database, security, testing, an
