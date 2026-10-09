@@ -177,6 +177,6 @@ Writers cannot set fonts in Markdown, but they control what the exporters can re
 |--------|------------|
 | Word (`.docx`) | `tools/md_to_docx.js` (styles, footer, code and table formatting) |
 | HTML pages Claude writes (INDEX views, online decks without a design system) | The CSS tokens in sections 2, 4, and 7 |
-| PowerPoint (`.pptx`) | The `pptx` skill, using section 5 (Mode C Rule 50 section 8) |
+| PowerPoint (`.pptx`) | Modes A and B: `tools/md_to_pptx.js` (Rule 60). Mode C: the `pptx` skill (Mode C Rule 50 section 8). Both use section 5 |
 
 If you change a value here, change the exporter in the same commit so they never drift.

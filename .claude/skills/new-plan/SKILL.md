@@ -19,7 +19,8 @@ Input: `$ARGUMENTS` (slug, plus optional start date, deadline, team size, sprint
    missing procedures first. If `02-system-design.md` is missing, run `new-design` first,
    because the WBS is built from its components.
 2. Read the brief, requirements, design, `mode-b-new-project/templates/03-project-plan.md`,
-   and `mode-b-new-project/rules/40-document-specific.md` section 03.
+   `mode-b-new-project/rules/40-document-specific.md` section 03, and
+   `rules/45-estimation-and-release-gate.md` (not preloaded).
 3. Merge any new context from `$ARGUMENTS` or chat into the brief section 3 first (increase the
    brief version).
 
@@ -38,21 +39,26 @@ Input: `$ARGUMENTS` (slug, plus optional start date, deadline, team size, sprint
    - Phase 5 Deployment, Training, and Handover: production setup, data migration, go-live,
      final manuals, training, and the support period.
    Every item has an ID, a Definition of Done, dependencies, a size, and a MoSCoW priority.
-3. **Sizing:** S ≈ ≤1 day, M ≈ 2–3 days, L ≈ 1 week, XL ≈ more than 1 week (split XL).
-   Label these as estimates. Total effort = sum of sizes using those midpoints. Show the
-   method.
-4. **Timeline:** use real dates only if the user gave a start date or deadline plus team
-   capacity. Duration ≈ total effort ÷ developer count, plus testing and contingency
-   (state the percentage). Otherwise use relative durations and mark them
-   `[ASSUMPTION]`. If the deadline is shorter than the estimate, say so plainly in the
-   Executive Summary and propose moving Should/Could items out of the first release.
-5. **Team and RACI:** list the roles the work needs (project manager, developers, QA,
+3. **Sizing:** use the fixed sizes of Rule 45 section 1 (S = 1, M = 3, L = 5, XL = 10
+   person-days). Apply the AI-assisted factor (Rule 45 section 2) only when Brief section 3
+   says the team uses AI-assisted coding, and then show both totals.
+4. **Timeline:** compute capacity and duration as Rule 45 section 3 describes, and fill
+   section 8 with its method table. Use real dates only if the user gave a start date or
+   deadline plus the team size; otherwise use relative durations marked `[ASSUMPTION]`.
+   If the deadline is shorter than the estimate, say so plainly in the Executive Summary
+   and name the Should and Could items that move out of the first release.
+5. **Release gate:** write the Rule 45 section 5 gate with the testers from Brief section 3.
+   Name the release milestone "Release 1.0 tested and ready to deploy" (with a pilot,
+   "<Site> pilot live" first), and use the gate in the Go-Live Checklist and the
+   Definition of Done. Client rollouts that depend on a later agreement are described,
+   not scheduled.
+6. **Team and RACI:** list the roles the work needs (project manager, developers, QA,
    designer, client product owner). Names are `[TBD]` unless given.
-6. **Risks:** cover unclear requirements, unresolved decisions, integration access, team
+7. **Risks:** cover unclear requirements, unresolved decisions, integration access, team
    availability, scope creep, data migration quality, user adoption, and the timeline.
-7. **Traceability:** fill the "WBS item" column of the Requirements' Traceability Matrix
+8. **Traceability:** fill the "WBS item" column of the Requirements' Traceability Matrix
    and note it in that document's Revision History.
-8. Fill every remaining template section. Use `[TBD]` for names, owners, and costs.
+9. Fill every remaining template section. Use `[TBD]` for names, owners, and costs.
 
 ## Output
 `output/mode-b/<slug>/03-project-plan.md`

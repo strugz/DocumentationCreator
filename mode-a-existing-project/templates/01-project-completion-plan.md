@@ -13,8 +13,16 @@
 ## Table of Contents
 <!-- generate from headings -->
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     The plan on one page (where the project stands, what is left, who does it, who tests, when it finishes, top risks, decisions needed); the remaining-work flow; the ready-to-deploy gate; a 'Where to Find What' table.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Executive Summary
-<!-- 5–8 sentences: where the project stands, what remains, the biggest risks,
+<!-- Bullets (rules/35-readability.md section 2): What / How / When / Effort / Risks /
+     Needed to start. Cover in 5–8 sentences in total: where the project stands, what remains, the biggest risks,
      the target finish (or [TBD]), and the decision(s) needed from stakeholders. -->
 
 ## 2. Project Background and Objectives
@@ -85,9 +93,17 @@ gantt
 |----------|------------|-------------|-----------|----------|
 
 ## 8. Effort and Cost Estimate
-<!-- Only with a shown method. Otherwise give the line-item structure with [TBD] amounts. -->
+<!-- Method from rules/45-estimation-and-release-gate.md sections 1–3. Keep the AI-assisted row
+     only when the evidence base says the team uses AI-assisted coding. Cost amounts stay [TBD]
+     unless the user gave rates. -->
 | Item | Basis | Estimate |
 |------|-------|----------|
+| Build effort (unassisted) | Sum of WBS sizes | |
+| Build effort (AI-assisted) | Code-heavy items × 0.6 [ASSUMPTION] | |
+| Testing and acceptance | Test schedule, full size | |
+| Capacity | Developers × 20 days × 75 % focus [ASSUMPTION] | |
+| Duration | Effort ÷ capacity + testing + contingency (n %) | |
+| Cost | Effort × rate | [TBD] |
 
 ## 9. Risk Register
 | ID | Risk | Likelihood (L/M/H) | Impact (L/M/H) | Mitigation | Owner |
@@ -104,6 +120,8 @@ gantt
 ## 11. Deployment and Go-Live Plan
 ### 11.1 Environments
 ### 11.2 Go-Live Checklist
+<!-- Starts with the ready-to-deploy gate (Rule 45 section 5). -->
+- [ ] Ready to deploy: all Must test cases pass, {{testers by role}} sign off, user acceptance signed
 - [ ] ...
 ### 11.3 Rollback Plan
 
@@ -116,6 +134,7 @@ gantt
 
 ## 13. Project Definition of Done
 - [ ] All "Must" WBS items complete
+- [ ] Ready-to-deploy gate met (Rule 45 section 5)
 - [ ] ...
 
 ## 14. Communication and Reporting

@@ -41,20 +41,23 @@ Interview Log, treat every unanswered question as `[TBD]` (do **not** silently a
 defaults; a suggested default may appear only as **Proposed**), and continue to Step 4.
 
 Ask the remaining questions in **one message**, grouped and numbered. Ask at most about
-12 questions. For each one, give a suggested default in brackets so the user can reply
+15 questions. For each one, give a suggested default in brackets so the user can reply
 quickly. Skip any group the idea already answers.
 
 | Group | Questions to cover |
 |-------|--------------------|
-| A. Purpose | What problem does this solve? How is the work done today? What does success look like? |
+| A. Purpose | Who asked for this, and what exactly did they ask for (paste the request if there is one)? What problem does this solve, **in the words of the people who do the work**? How is the work done today? What does success look like? |
 | B. Users | Who uses it (roles)? Roughly how many of each? Who is the administrator? |
 | C. Features | The must-have features for the first release. Nice-to-haves. Anything explicitly excluded. |
 | D. Workflows | The 2–3 most important things a user does, start to finish. |
 | E. Data and reports | What information is stored? Which reports or exports are needed? Is there existing data to import? |
 | F. Platform | Web, mobile, or desktop? Cloud or on-premise? Any required tech stack? Sign-in method? Languages? Offline use? |
 | G. Integrations | Other systems it must connect to (email, payments, ERP, Active Directory, SMS). |
-| H. Constraints | Deadline, budget, team size, regulations (data privacy, industry rules). |
-| I. Context | Client or organization name, approver, stakeholders. |
+| H. Constraints | Deadline, budget, team size, regulations (data privacy, industry rules). Development approach: AI-assisted coding such as Claude? [default: yes] |
+| I. Context | Client or organization name, stakeholders. |
+| J. Rollout and testing | Where does it run first (pilot site)? When does a client or site receive it [default: only after it is tested and ready to deploy]? Who tests integrations and the full system? Who runs user acceptance? |
+| K. Audience and wording | Who approves (name the body, for example Management)? Personal names or roles in the documents [default: roles: "Management", "the development team"]? Any words or phrases to avoid? |
+| L. Deliverables | Word files? The proposal as PowerPoint slides? A starter kit for the new code repository (CLAUDE.md, rules, skills, and the `/feature-dev` plugin for building it)? [default: Markdown and Word; slides on request; starter kit yes] |
 
 End the message with: "Answer what you can. Reply **use defaults** to accept my
 suggestions, or **skip** for anything you don't know yet; I'll mark it `[TBD]`."
@@ -77,6 +80,10 @@ Fill `mode-b-new-project/templates/00-project-brief.md` completely and write it 
   default)".
 - Put unknown business facts (budget, dates, names) in section 3 as `[TBD]` and in section 19.
 - Put real choices in section 18 Decisions Needed as `[DECISION: ...]` with a recommendation.
+- Put who asked and the request in section 2.1, and the pain points in the users' own
+  words in section 2.2. Record groups H and J to L in the section 3 table.
+- Put every word or phrase the user rejects in section 16.1 Words to Avoid, with the
+  replacement. These rules are binding for every Mode B document (Rule 10).
 - Build the Glossary from the user's own words for things (e.g. "job order", not "ticket",
   if that is what they say).
 

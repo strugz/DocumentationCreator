@@ -7,6 +7,95 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- `tools/md_to_pptx.js`: the repository's own PowerPoint exporter for the Mode A and B
+  proposal, so slides no longer depend on an outside skill. `--draft` writes a slide
+  spec (`deck/proposal-slides.json`) from the proposal in the Rule 60 order with the
+  section text as speaker notes; the build lays it out with Rule 25 fonts and colours
+  (cover and ask on a dark layout, tables, scope cards, a numbered timeline, highlighted
+  review markers). `--strict` fails on long titles, crowded slides, missing notes, and
+  markers or figures the proposal does not contain. `tools/pptx_to_png.ps1` renders every
+  slide with PowerPoint for checking. New `/proposal-slides` skill runs draft, edit,
+  build, render, and report; the proposal and suite skills hand `--format pptx` to it.
+  `pptxgenjs` 3.12.0 is a pinned dependency in `tools/package.json`. Tests in
+  `tests/test_md_to_pptx.py` (skipped without Node).
+- Mode B and Mode C starter kits enable the `feature-dev` plugin (Mode B Rule 40 section 10
+  and Mode C Rule 40 section 09, Plugins): a `.claude/settings.json` adds the official
+  plugin marketplace and turns on `feature-dev@claude-plugins-official`, and the kit's
+  `CLAUDE.md` and `README.md` say when to use `/feature-dev` (multi-layer features, started
+  from requirement IDs and the `docs/design/` sections) versus the kit's own skills. In
+  Mode C, a run for a Keep or Improve feature also names the parity requirement, its parity
+  test, and the current code path (read only).
+- Starter kits now go inside the project folder,
+  `output/<mode>/<slug>/<repo-name>-repo-starter/`, instead of `output/`.
+  `tools/lint_docs.py` and the lint hook skip `*-repo-starter` folders.
+- Build repository starter kit for Mode B (Rule 40 section 10), like Mode C: `/new-suite`
+  Step 4b writes `output/mode-b/<slug>/<repo-name>-repo-starter/` with `CLAUDE.md`, `README.md`, rule
+  files (principles, architecture, backend, frontend, database, security, testing, an
+  integration when the design has one, git and traceability), build skills, `.gitignore`,
+  an ADR template, and a `docs/design/` copy of the suite. No application code; undecided
+  stack layers keep their `[DECISION]` at the top of the rule file. The brief's
+  Deliverables row and `/new-brief` group L offer it (default yes), `--only starter`
+  builds it alone, and Rule 55 refreshes it after a change.
+- Change-request mode for `/doc-suite` and `/new-suite` (Step 0), like `/mod-suite`: when
+  the output folder already holds the documents, a change (answers, a decision, new
+  commits in Mode A, scope, wording, names, readability) is applied instead of
+  regenerating. New shared Rule 55 `rules/55-applying-changes.md` (not preloaded) sets
+  the order (evidence base, then each document, INDEX, proposal slides, checks, exports),
+  what to update in each document (Source revision, version, Revision History,
+  readability layer, Open Items), a search for old values, the Mode B scope-addition
+  chain with the capacity re-check, and when to ask one question.
+- Shared Rule 45 `rules/45-estimation-and-release-gate.md` (not preloaded) gives Modes A
+  and B one estimation method and one release gate: fixed sizes (S = 1, M = 3, L = 5,
+  XL = 10 person-days, count × unit for repeated work; Mode A sizes remaining work only),
+  an AI-assisted factor of 0.6 on code-heavy items only when the evidence base says so
+  (both totals shown, checked at the first milestone), capacity = developers × 20 days ×
+  75 % focus, a method table for the Effort and Cost Estimate section, a scope-change
+  re-check, and a ready-to-deploy gate with testers by role that the plan, test plan, and
+  proposal repeat word for word. `/doc-plan`, `/new-plan`, `/new-test-plan`, and both
+  proposal skills apply it; the plan, test plan, and proposal templates carry the method
+  table, the gate in the Go-Live Checklist and Definition of Done, and the gate in the
+  exit criteria and approach.
+- Audience and wording rules for every mode (Rule 10 "Audience and wording"): problems from
+  the users' point of view, approvers read only what helps them decide, roles instead of
+  personal names, and binding Words to Avoid with a search after every change. The Mode B
+  brief adds who asked, pain points in the users' words, development approach, pilot and
+  rollout, testers, user acceptance, naming, deliverables (section 3), and a section 16.1
+  Words to Avoid table. The Mode A profile adds the same context rows to section 2 and a
+  section 17.1 Words to Avoid table. `/new-brief` asks groups J to L (rollout and testing,
+  audience and wording, deliverables) and up to about 15 questions; `/doc-intake` always
+  adds the audience and wording questions to Open Questions, and `/doc-suite` writes the
+  answers into the profile before generating. Both proposal templates start the problem
+  statement from the users' pain points. `tools/lint_docs.py` has a `wording` check that
+  reports any Words to Avoid entry used outside Revision History.
+- Shared Rule 35 `rules/35-readability.md` brings the Mode C readability layer to Modes A
+  and B: a `Read This First` section (questions table, at least one flow, "Where to Find
+  What" for long documents), an "In short" note under every numbered section, and bullet
+  executive summaries in plans and proposals. It lists standard process flows per
+  document and the Mermaid pitfalls. Every Mode A and B document template (Completion
+  Plan, Proposal, the three manuals, Requirements, System Design, Project Plan, Test Plan,
+  Gap Report) has the new section. CLAUDE.md and AGENTS.md load the rule; the review
+  checklist and both suite reviews check it.
+- `tools/lint_docs.py`: a `readability` check warns when a document has no `Read This
+  First` section or a numbered section has no "In short" note (summary sections are
+  exempt), and the `mermaid` check reports a label that starts with "1." as an error,
+  because Mermaid renders it blank.
+- PowerPoint export of the proposal in Modes A and B. New Rule 60
+  `rules/60-proposal-slides.md` (not preloaded) sets when to build the slides, the output
+  path `output/<mode>/<slug>/export/<Product>-Project-Proposal-Slides.pptx`, a 12-slide
+  order that mirrors the proposal sections, content rules (same facts and visible review
+  markers as the proposal, Mode B features stay Planned, detail in speaker notes, no
+  code), the `pptx` skill build with Rule 25 fonts and colours, and a render-and-check
+  step for every slide. `/doc-proposal` and `/new-proposal` take `--format pptx`, and
+  `/doc-suite` and `/new-suite` accept `pptx` in `--format`. Rule 20 Export, Rule 25
+  section 9, the review checklist, both Rule 40 files, CLAUDE.md, AGENTS.md, and the
+  README point to it.
+
+### Changed
+- Mode A and B WBS sizes are fixed values (S = 1, M = 3, L = 5, XL = 10 person-days)
+  instead of ranges (S up to 1 day, M 2 to 3 days, L 1 week, XL more than 1 week), so
+  effort totals are the same in every run.
+
 ## [0.4.0] - 2026-10-09
 
 ### Added

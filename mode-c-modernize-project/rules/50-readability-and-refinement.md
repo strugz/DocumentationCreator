@@ -6,6 +6,9 @@
 > review (`/mod-suite` with the change follows section 5).
 
 ## 1. Readability layer (every document)
+Shared Rule 35 (`rules/35-readability.md`) applies the same layer to Modes A and B. This
+section and section 3 remain the Mode C version, with the Mode C flows.
+
 Technical completeness is not enough: readers said the documents were "complex and hard
 to read" until they had a plain-language entry point. Every Mode C document therefore has:
 
@@ -83,6 +86,8 @@ renders once.
   period. Milestone names use it ("Release 1.0 tested and ready to deploy").
 
 ## 5. Propagating a change
+Shared Rule 55 (`rules/55-applying-changes.md`) gives Modes A and B the same procedure.
+
 A change to a decision, scope, wording or name always flows in this order:
 
 1. **Brief** — record the decision (Decisions, Interview Log, Feature Disposition), bump
@@ -114,9 +119,9 @@ system (for example "SQL Server" is correct for the current system only).
 - Edit long documents with small scripted, asserted replacements (each old string must
   match exactly once) rather than rewriting whole files, and re-run the linter after each
   batch.
-- Files that are not suite documents (repository starter kits, scratch scripts) never go
-  under `output/mode-c/<slug>/`, because the linter treats every Markdown file there as a
-  document.
+- Scratch scripts never go under `output/mode-c/<slug>/`, because the linter treats every
+  Markdown file there as a document. The one exception is the repository starter kit in
+  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 09).
 
 ## 7. Slides
 - One message per slide, few words, for the approvers. Mirror the proposal: today →

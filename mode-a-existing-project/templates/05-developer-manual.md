@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     The codebase on one page (stack, run it locally, where to start reading, how to test, how to ship); the system in one picture or the request flow; a 'Where to Find What' table (I want to add a screen, an endpoint, a migration, a test → section).
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose and Audience
 ### 1.2 Project Overview

@@ -21,8 +21,11 @@
 
 ## 2. Problem and Goals
 ### 2.1 Current Situation
-<!-- How the work is done today (paper, Excel, an old system). -->
+<!-- How the work is done today (paper, Excel, an old system). Who asked for this
+     project, and what exactly they asked for. -->
 ### 2.2 Problem / Opportunity
+<!-- The pain points in the words of the people who do the work, one per line, quoted.
+     The proposal and plan state problems from this list (Rule 10). -->
 ### 2.3 Goals
 | # | Goal | How success is measured | Source |
 |---|------|-------------------------|--------|
@@ -38,6 +41,12 @@
 | Budget | [TBD] |
 | Team (size and roles) | [TBD] |
 | Methodology preference | [TBD] / Proposed: Agile, 2-week sprints |
+| Development approach | [TBD] / Proposed: AI-assisted coding (for example Claude) |
+| Pilot site and client rollout | [TBD] / Proposed: clients receive it only after it is tested and ready to deploy |
+| Testers (integrations, full system) | [TBD] |
+| User acceptance by | [TBD] |
+| Names in documents | Proposed: roles ("Management", "the development team") |
+| Deliverables | Proposed: Markdown and Word; proposal as PowerPoint slides on request; starter kit for the code repository |
 
 ## 4. Users and Roles
 | ID | Role | Who they are | What they need to do | Approx. count |
@@ -100,6 +109,12 @@
 ## 16. Glossary (canonical terms)
 | Term | Definition |
 |------|-----------|
+
+### 16.1 Words to Avoid
+<!-- Binding wording rules from the user (Rule 10). One row per word or phrase.
+     tools/lint_docs.py reports any use of the "Avoid" column in other documents. -->
+| Avoid | Use instead | Source |
+|-------|-------------|--------|
 
 ## 17. Discrepancies
 | Topic | User said (A) | User said / material shows (B) | Resolution |

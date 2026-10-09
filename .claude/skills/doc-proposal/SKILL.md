@@ -1,7 +1,7 @@
 ---
 name: doc-proposal
-description: MODE A (existing code). Write a Project Proposal for a fed-in project, aimed at clients, management, or approvers. It covers the problem, solution, scope, timeline, budget structure, risks, benefits, and approval. Use when the user asks for a proposal, project proposal, pitch document, business case, or approval document.
-argument-hint: <project-slug or path> [client / purpose / budget]
+description: MODE A (existing code). Write a Project Proposal for a fed-in project, aimed at clients, management, or approvers. It covers the problem, solution, scope, timeline, budget structure, risks, benefits, and approval. Use when the user asks for a proposal, project proposal, pitch document, business case, or approval document, or for the proposal as PowerPoint slides (--format pptx).
+argument-hint: <project-slug or path> [client / purpose / budget] [--format docx|pptx]
 ---
 
 # Project Proposal
@@ -41,12 +41,20 @@ If you are unclear, default to the type that matches the project's maturity, and
    assume are included but are not (e.g. mobile app, data migration, 24/7 support),
    based on what is absent from the code.
 5. **Timeline:** reuse the Plan's phases if available. Otherwise use relative milestones.
+   State the Rule 45 section 5 ready-to-deploy gate in Approach, and use the plan's
+   release milestone names and effort figures (`rules/45-estimation-and-release-gate.md`).
 6. **Budget:** give a line-item structure. Amounts stay `[TBD]` unless the user supplied them.
 7. **Executive Summary:** write it last, at most 1 page, ending with the explicit approval request.
 8. Keep technical detail in Appendix A (stack, a simple architecture diagram).
 
 ## Output
 `output/mode-a/<slug>/02-project-proposal.md`
+
+If the user passes `--format pptx` or asks for slides, a deck, or PowerPoint, finish and
+lint the Markdown first, then follow `.claude/skills/proposal-slides/SKILL.md` to build
+`output/mode-a/<slug>/export/<Product>-Project-Proposal-Slides.pptx` with
+`tools/md_to_pptx.js` (Rule 60). For
+`--format docx`, run `node tools/md_to_docx.js output/mode-a/<slug>` (Rule 20 Export).
 
 Run the review checklist. Report the file path, the proposal type chosen, and the Open
 Items. Budget, client, and approver names are usually the most important ones.

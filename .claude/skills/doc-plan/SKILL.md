@@ -18,7 +18,8 @@ or sprint length).
 1. Resolve `<slug>`. If `output/mode-a/<slug>/00-project-profile.md` is missing, run the
    `doc-intake` procedure first (`.claude/skills/doc-intake/SKILL.md`).
 2. Read the profile, `mode-a-existing-project/templates/01-project-completion-plan.md`, and
-   `mode-a-existing-project/rules/40-document-specific.md` section 1.
+   `mode-a-existing-project/rules/40-document-specific.md` section 1, and
+   `rules/45-estimation-and-release-gate.md` (not preloaded).
 3. Merge any context the user gave in `$ARGUMENTS` or in chat into the profile section 2 first.
 
 ## Procedure
@@ -34,15 +35,21 @@ or sprint length).
    - Phase 2 Complete core features: Must items.
    - Phase 3 Hardening and QA: tests, security, performance, Should items.
    - Phase 4 Deployment and Handover: environments, go-live, docs, training.
-4. **Sizing:** S ≈ ≤1 day, M ≈ 2–3 days, L ≈ 1 week, XL ≈ more than 1 week (split XL items
-   if possible). Label these as estimates.
-5. **Timeline:** use dates only if the user gave a start date or deadline and capacity.
-   Otherwise use relative durations in the Gantt chart and mark them `[ASSUMPTION]`.
+4. **Sizing:** use the fixed sizes of Rule 45 section 1 (S = 1, M = 3, L = 5, XL = 10
+   person-days), for remaining work only. Apply the AI-assisted factor (Rule 45 section 2)
+   only when Profile section 2 says the team uses AI-assisted coding.
+5. **Timeline:** compute capacity and duration as Rule 45 section 3 describes, and fill
+   section 8 with its method table. Use dates only if the user gave a start date or
+   deadline and the team size. Otherwise use relative durations in the Gantt chart and
+   mark them `[ASSUMPTION]`.
    If the user's deadline is shorter than the estimate, say so plainly in the Executive
    Summary and propose scope cuts (Could → Won't).
-6. **Risks:** derive them from evidence (single points of failure, no tests, outdated
+6. **Release gate:** write the Rule 45 section 5 gate with the testers from Profile
+   section 2, and use it in the release milestone, the Go-Live Checklist, and the
+   Definition of Done.
+7. **Risks:** derive them from evidence (single points of failure, no tests, outdated
    dependencies, unclear requirements, missing environments) plus timeline risk.
-7. Fill every remaining template section. Use `[TBD]` for names, owners, and costs.
+8. Fill every remaining template section. Use `[TBD]` for names, owners, and costs.
 
 ## Output
 `output/mode-a/<slug>/01-project-completion-plan.md`

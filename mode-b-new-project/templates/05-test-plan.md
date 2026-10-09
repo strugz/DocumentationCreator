@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     Testing on one page (what is tested, who tests what, when it is ready to deploy); the testing flow; the defect flow; the ready-to-deploy gate.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose
 ### 1.2 Scope of Testing
@@ -37,6 +44,8 @@
 <!-- What data is needed, how it is created, and how personal data is protected (anonymized or synthetic). -->
 
 ## 5. Entry and Exit Criteria
+<!-- The last level's exit criteria are the ready-to-deploy gate
+     (rules/45-estimation-and-release-gate.md section 5), word for word as in the Plan. -->
 | Level | Entry criteria | Exit criteria |
 |-------|----------------|---------------|
 

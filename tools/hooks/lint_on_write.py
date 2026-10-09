@@ -38,6 +38,8 @@ def main() -> int:
         return 0
     if not rel.parts or rel.parts[0] not in ("mode-a", "mode-b", "mode-c"):
         return 0
+    if any(part.endswith("-repo-starter") for part in rel.parts):
+        return 0  # starter kit files are not suite documents
 
     import lint_docs  # noqa: E402  (after sys.path setup)
 

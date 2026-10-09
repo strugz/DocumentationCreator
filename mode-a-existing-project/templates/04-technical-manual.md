@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     The system on one page (what runs where, how to install, where configuration lives, how to back up and restore, where the logs are, who to call); the system in one picture; a 'Where to Find What' table (I want to install, configure, back up, troubleshoot → section).
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose and Audience
 ### 1.2 System Overview

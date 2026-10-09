@@ -45,3 +45,23 @@
   from the UI strings, routes, or models in the code; Mode B: taken from the brief's
   Glossary).
 - Pick one term per concept and never vary it ("user" vs "member" vs "account").
+
+## Audience and wording
+- **Problems from the users' point of view.** In proposals and plans, state each problem as
+  the people who use the system feel it ("cannot find last month's records", "reports take
+  a day"), then confirm it with evidence. Technical causes follow in one short paragraph
+  or go to an appendix.
+- **Approvers read only what helps them decide.** Keep proposal bodies to the decision:
+  problem, solution, scope, time, cost, risk, the ask. Technical detail goes in an appendix.
+- **Roles, not personal names.** Name approvers, builders, and testers by role
+  ("Management", "the development team", "QA personnel"), unless the user asks for names.
+  The evidence base records the choice (Mode A Profile section 2, Mode B Brief section 3).
+  Never invent a person's name.
+- **Words to avoid are binding.** When the user rejects a word or phrase, add it to the
+  **Words to Avoid** table in the evidence base (Profile section 17.1, Brief section 16.1;
+  Mode C: the brief's Decisions and Interview Log). Replace it in every document, the
+  INDEX, and the slides. Paraphrase an earlier quote that contains it and mark it
+  "user, paraphrased". `tools/lint_docs.py` reports any remaining use in Modes A and B.
+- After a wording change, search the whole output folder for the old terms and fix every
+  hit outside Revision History rows:
+  `grep -rn -i -E "<old term 1>|<old term 2>" output/<mode>/<slug> --include=*.md`.

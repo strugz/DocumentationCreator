@@ -17,6 +17,9 @@
   phases ("Phase 1: ~2 weeks after start") marked `[ASSUMPTION]`.
 - Always include: Risks (likelihood × impact), Definition of Done for the whole project,
   a quality and testing plan, a deployment and go-live plan, and a handover checklist.
+- Estimate and gate with `rules/45-estimation-and-release-gate.md`: fixed sizes for the
+  remaining work, the AI-assisted factor when the profile says so, capacity, and one
+  ready-to-deploy gate.
 
 ## 2. Project Proposal
 - Structure: problem → proposed solution → scope → approach → timeline → resources
@@ -27,6 +30,8 @@
 - Cost and budget sections use `[TBD]` unless the user gives figures. You may provide
   a cost **structure** (line items) without amounts.
 - Keep technical depth light. Put architecture detail in an appendix.
+- PowerPoint slides of the proposal, when requested, follow `rules/60-proposal-slides.md`
+  and carry exactly the proposal's facts and markers.
 
 ## 3. User Manual
 - Organized by **user goals and tasks**, not by code modules.

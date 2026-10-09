@@ -22,7 +22,7 @@ names) is marked `[TBD]`. In Modes B and C, Claude's own suggestions are labeled
 | [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension) | Running the skills. Other AI agents work too; see [Using Other AI Tools](#using-other-ai-tools) | Yes, or another agent |
 | Python 3.9 or later | The document linter and its auto-lint hook (`tools/lint_docs.py`) | Yes |
 | `git` | Recording the source revision in Mode A documents | Optional |
-| Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) | Optional |
+| Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) and the proposal to PowerPoint (`tools/md_to_pptx.js`) | Optional |
 
 Mode A also needs read access to the project you want to document.
 
@@ -80,12 +80,12 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 |---------|--------------|--------|
 | `/doc-intake <path> [name]` | Analyzes the code and builds the evidence base | `00-project-profile.md` |
 | `/doc-plan <slug> [deadline/team]` | Project Completion Plan | `01-project-completion-plan.md` |
-| `/doc-proposal <slug> [client/budget]` | Project Proposal | `02-project-proposal.md` |
+| `/doc-proposal <slug> [client/budget] [--format pptx]` | Project Proposal, optionally as PowerPoint slides | `02-project-proposal.md`, `export/*-Slides.pptx` |
 | `/doc-user-manual <slug> [roles]` | User Manual | `03-user-manual.md` |
 | `/doc-technical-manual <slug> [env]` | Technical Manual | `04-technical-manual.md` |
 | `/doc-developer-manual <slug>` | Developer Manual | `05-developer-manual.md` |
 | `/doc-repo-files <slug> [readme\|architecture\|api\|all]` | GitHub-style repo docs | `repo/*.md` |
-| `/doc-suite <path> [--only ...] [--format docx\|pdf]` | All of the above, plus a consistency review | everything + `INDEX.md` |
+| `/doc-suite <path> [change] [--only ...] [--format docx\|pdf\|pptx]` | All of the above, plus a consistency review. Run it again with a change (answers, decision, new code, scope, wording, names) to update every document | everything + `INDEX.md` |
 
 ### Mode B — New project (`new-*`)
 | Command | What it does | Output |
@@ -94,10 +94,10 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/new-requirements <slug>` | Software Requirements Specification | `01-requirements-specification.md` |
 | `/new-design <slug> [stack/hosting]` | System Design Document | `02-system-design.md` |
 | `/new-plan <slug> [start/deadline/team]` | Project Plan (build from zero) | `03-project-plan.md` |
-| `/new-proposal <slug> [client/budget/rates]` | Project Proposal (new system) | `04-project-proposal.md` |
+| `/new-proposal <slug> [client/budget/rates] [--format pptx]` | Project Proposal (new system), optionally as PowerPoint slides | `04-project-proposal.md`, `export/*-Slides.pptx` |
 | `/new-test-plan <slug>` | Test Plan with UAT scenarios | `05-test-plan.md` |
 | `/new-manuals <slug> [user\|technical\|developer\|all]` | Draft manuals for the planned system | `06`–`08` |
-| `/new-suite <idea> [--only ...] [--no-manuals] [--format docx\|pdf]` | All of the above, plus a traceability review | everything + `INDEX.md` |
+| `/new-suite <idea> [change] [--only ...] [--no-manuals] [--format docx\|pdf\|pptx]` | All of the above, plus a traceability review. Builds a starter kit for the new code repository when the brief lists it. Run it again with a change (answers, decision, scope, wording, names) to update every document | everything + `INDEX.md` |
 | `/new-gap-check <slug> <code-path>` | After the build: planned vs built (Mode B or C slug) | `09-gap-report.md` |
 
 ### Mode C — Modernize an existing project (`mod-*`)
@@ -110,7 +110,7 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/mod-plan <slug> [start/deadline/team]` | Migration Plan with cutover, rollback, and decommission | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | Modernization Proposal with options considered | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | Migration Test Plan with parity, data migration, and cutover tests | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `output/<repo>-repo-starter/` |
+| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `<repo>-repo-starter/` |
 
 ### Examples
 ```text
@@ -215,6 +215,35 @@ Mermaid from the jsDelivr CDN) to `output/<mode>/<slug>/assets/diagrams/`. The W
 then embeds those images. Re-run it after a diagram changes. For PDF, open the `.docx` in Word and save
 as PDF. The suites do this for you when you pass `--format docx` or `--format pdf`.
 
+## Exporting the Proposal to PowerPoint
+In Modes A and B, pass `--format pptx` to `/doc-proposal`, `/new-proposal`, or a suite, or
+ask for the proposal as slides, or run `/proposal-slides <slug>` on a finished proposal.
+The repository's own exporter builds the deck in three steps:
+
+```bash
+node tools/md_to_pptx.js output/mode-b/my-app --draft
+```
+
+```bash
+node tools/md_to_pptx.js output/mode-b/my-app --strict
+```
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pptx_to_png.ps1 `
+  -Path output/mode-b/my-app/export/My-App-Project-Proposal-Slides.pptx
+```
+
+1. `--draft` writes the slide spec `deck/proposal-slides.json` from the proposal: about 12
+   slides in the proposal's order, with the section text as speaker notes. Claude then
+   shortens the slide text for approvers and keeps every fact and review marker.
+2. The build writes `export/<Product>-Project-Proposal-Slides.pptx` with Rule 25 fonts and
+   colours. `--strict` fails on long titles, crowded slides, missing notes, and markers or
+   figures the proposal does not contain.
+3. `tools/pptx_to_png.ps1` renders every slide with PowerPoint so each one can be checked.
+
+The rules are in [`rules/60-proposal-slides.md`](rules/60-proposal-slides.md). Mode C builds
+its own presentation deck in `/mod-suite`.
+
 ## Measuring Quality (Evals)
 If you change a rule, template, or skill, run the eval set before and after the change
 and compare the scores. Two fixture cases (one per mode) test that Claude does not invent
@@ -244,7 +273,11 @@ DocumentationCreator/
 │   ├── 15-response-and-code-output.md
 │   ├── 20-formatting.md
 │   ├── 25-typography.md
-│   └── 50-review-checklist.md
+│   ├── 35-readability.md         # Read This First, In short notes, process flows
+│   ├── 45-estimation-and-release-gate.md  # Modes A and B: sizes, AI factor, gate
+│   ├── 50-review-checklist.md
+│   ├── 55-applying-changes.md    # Modes A and B: update an existing suite
+│   └── 60-proposal-slides.md     # Modes A and B: proposal as PowerPoint (not preloaded)
 ├── mode-a-existing-project/      # MODE A — document existing code
 │   ├── README.md
 │   ├── rules/                    #   30 evidence (code), 40 document rules
@@ -266,6 +299,8 @@ DocumentationCreator/
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
 │   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)
+│   ├── md_to_pptx.js             # Proposal → PowerPoint slides (Modes A and B)
+│   ├── pptx_to_png.ps1           # Renders slides to PNG with PowerPoint for checking
 │   ├── render_mermaid.py         # Renders Mermaid diagrams to PNG for the Word export
 │   └── hooks/lint_on_write.py    # Hook: lints each document as Claude writes it
 ├── evals/                        # Eval cases, grader, and baseline scores
@@ -302,6 +337,9 @@ DocumentationCreator/
   `.claude/skills/<name>/SKILL.md` (copy an existing skill of the same mode), add a
   section to that mode's `rules/40-document-specific.md`, and register it in `CLAUDE.md`
   and in the mode's suite skill (`doc-suite`, `new-suite`, or `mod-suite`).
+- **PowerPoint proposal:** pass `--format pptx` to a proposal skill or suite in Mode A or
+  B, or ask "export the proposal to PowerPoint". See
+  [Exporting the Proposal to PowerPoint](#exporting-the-proposal-to-powerpoint).
 - **Word/PDF output:** pass `--format docx` or `--format pdf` to either suite, or ask
   "export the proposal to Word". See [Exporting to Word](#exporting-to-word).
 
