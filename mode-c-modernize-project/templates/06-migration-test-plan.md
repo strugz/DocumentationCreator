@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     Who tests what (role, what they test, when); the testing flow step by step; the integration or driver release flow; the defect flow; the ready-to-deploy gate.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose
 ### 1.2 Scope of Testing
@@ -56,7 +63,7 @@
 <!-- One per Keep and Improve feature. Expected result = current behaviour (Keep) or the stated change (Improve). -->
 | TC ID | Feature | Disposition | Requirement | Current behaviour (evidence) | Steps | Expected result |
 |-------|---------|-------------|-------------|------------------------------|-------|-----------------|
-| TC-P-01 | F-01 | Keep | FR-01 | `path:line` / Profile §7 | | Same as current |
+| TC-P-01 | F-01 | Keep | FR-01 | `path:line` / Profile section 7 | | Same as current |
 
 ## 8. Data Migration Test Cases
 | TC ID | Requirement | Check | Method | Pass condition |

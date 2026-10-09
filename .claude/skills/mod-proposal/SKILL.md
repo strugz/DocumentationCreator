@@ -13,15 +13,18 @@ argument-hint: <project-slug> [client / budget / rates]
 > **Rules:** Before starting, read `mode-c-modernize-project/rules/30-evidence-from-profile.md`
 > and `mode-c-modernize-project/rules/40-document-specific.md`. They are not preloaded.
 
+> **Also read** `mode-c-modernize-project/rules/50-readability-and-refinement.md`, and
+> follow the brief section 4 answers on rollout, testers, release gate, names and wording.
+
 Input: `$ARGUMENTS` (slug, plus optional client, budget, and rates, recorded in the
-brief §4 first).
+brief section 4 first).
 
 ## Preconditions
 1. Resolve `<slug>`. The brief, assessment, and requirements must exist. If
    `04-migration-plan.md` is missing, run the `mod-plan` procedure first.
-2. Read the brief, the assessment, the requirements, the design (§3 Stack Comparison),
+2. Read the brief, the assessment, the requirements, the design (section 3 Stack Comparison),
    the plan, `mode-c-modernize-project/templates/05-modernization-proposal.md`, and
-   `mode-c-modernize-project/rules/40-document-specific.md` §05.
+   `mode-c-modernize-project/rules/40-document-specific.md` section 05.
 
 ## Procedure
 1. **Executive summary:** one page a sponsor can read alone: the current system, why it
@@ -47,6 +50,15 @@ brief §4 first).
 9. **Recommendation and approval:** a clear call to action with the next phase and the
    decisions the approver must make.
 10. **Appendix A:** the Stack Comparison summary and one target architecture diagram.
+
+## Readability layer
+Write the `Read This First` section (Rule 50 section 1): the proposal on one page (what we ask
+for, why, what we get, who builds, who tests, when it is ready, effort), the system in one
+picture, the case flow, the SDLC flow and the ready-to-deploy gate, using the same Mermaid
+source as the design and plan. Add an "In short" note under every numbered section. Write
+the problems from the users' point of view, the options as one short paragraph, a plain
+tech stack table and a Support Needed table (Rule 40 section 05). Use roles, not personal names,
+as the brief section 4 says.
 
 ## Output
 `output/mode-c/<slug>/05-modernization-proposal.md`

@@ -53,7 +53,8 @@ it as it is or plan a modernized rebuild?"
 | 4 | Migration Plan | `/mod-plan` | `04-migration-plan.md` | PM, team lead, stakeholders |
 | 5 | Modernization Proposal | `/mod-proposal` | `05-modernization-proposal.md` | Client, management, approvers |
 | 6 | Migration Test Plan | `/mod-test-plan` | `06-migration-test-plan.md` | QA, client UAT users |
-| ★ | Everything above, in order | `/mod-suite` | — | — |
+| 7 | Tech Stack Questionnaire (always made by `/mod-suite`; answers feed the brief) | `/mod-suite` | `07-tech-stack-questionnaire.md` | Stakeholders, developers |
+| ★ | Everything above, in order, plus INDEX, Word files, presentation deck, and a starter kit for the new code repository; also applies later review changes to every document and slide | `/mod-suite` | — | — |
 
 The Mode C interview always asks which **target tech stack** to use, layer by layer, with
 the current technology shown next to each. Undecided layers become `[DECISION]` items.
@@ -86,7 +87,9 @@ Shared by both modes (always loaded):
 
 @rules/00-core-principles.md
 @rules/10-writing-style.md
+@rules/15-response-and-code-output.md
 @rules/20-formatting.md
+@rules/25-typography.md
 @rules/50-review-checklist.md
 
 Mode-specific rules are **not** loaded up front; the skills read them when they run.
@@ -96,7 +99,7 @@ Before writing or editing any document outside a skill, read the active mode's r
 |------|---------------|----------------|
 | A | `mode-a-existing-project/rules/30-evidence-and-accuracy.md` | `mode-a-existing-project/rules/40-document-specific.md` |
 | B | `mode-b-new-project/rules/30-evidence-from-brief.md` | `mode-b-new-project/rules/40-document-specific.md` |
-| C | `mode-c-modernize-project/rules/30-evidence-from-profile.md` | `mode-c-modernize-project/rules/40-document-specific.md` |
+| C | `mode-c-modernize-project/rules/30-evidence-from-profile.md` | `mode-c-modernize-project/rules/40-document-specific.md`, `mode-c-modernize-project/rules/50-readability-and-refinement.md` |
 
 The non-negotiables from those rules, in short: never invent features, numbers, dates,
 costs, or names; mark every gap with `[TBD]`, `[ASSUMPTION]`, `[VERIFY]` (and in Modes B

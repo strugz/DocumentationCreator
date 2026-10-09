@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     The system in one picture; the main parts in a plain table (what it is, where it runs, what it does); the case flow and one flow per special module with its safety check; a 'Where to Find What' table.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose and Audience
 ### 1.2 Design Goals
@@ -21,7 +28,7 @@
 
 ## 2. Architecture Overview
 ### 2.1 Current Architecture (as built)
-<!-- Short, present tense, from the Assessment §3. -->
+<!-- Short, present tense, from the Assessment section 3. -->
 ### 2.2 Target Architecture Style
 <!-- e.g. modular monolith, SPA + REST API. State why, and what it fixes (D-xx). -->
 ### 2.3 Context Diagram
@@ -53,7 +60,7 @@ flowchart LR
 
 ## 3. Stack Comparison
 <!-- One row per layer. Every changed layer has an ADR; every kept layer says why it stays. -->
-| Layer | Current (Profile §3) | Target | Version | Status | Reason | ADR |
+| Layer | Current (Profile section 3) | Target | Version | Status | Reason | ADR |
 |-------|----------------------|--------|---------|--------|--------|-----|
 | Language | | | | Agreed / Proposed | | ADR-01 |
 | Backend framework | | | | | | |
@@ -65,7 +72,7 @@ flowchart LR
 | Testing | | | | | | |
 
 ## 4. Component Mapping (current → target)
-| Current module (Profile §6) | Status today | Target component | Disposition | What changes |
+| Current module (Profile section 6) | Status today | Target component | Disposition | What changes |
 |-----------------------------|--------------|------------------|-------------|--------------|
 | | Done / Partial / Stub / Broken | | Keep / Improve / Replace / Drop | |
 
@@ -79,19 +86,19 @@ erDiagram
 | Entity | Attribute | Type | Required | Notes |
 |--------|-----------|------|----------|-------|
 ### 5.3 Data Mapping (current → target)
-| Current entity / table (Profile §10) | Target entity | Transformation | Migrated? | Notes |
+| Current entity / table (Profile section 10) | Target entity | Transformation | Migrated? | Notes |
 |--------------------------------------|---------------|----------------|-----------|-------|
 ### 5.4 Data Retention and Archiving
 
 ## 6. API Design
-| Method | Path | Roles | Implements | Replaces (Profile §9.2) |
+| Method | Path | Roles | Implements | Replaces (Profile section 9.2) |
 |--------|------|-------|------------|-------------------------|
 ### 6.1 Conventions
 <!-- Versioning, error format, pagination, auth. -->
 
 ## 7. User Interface Design
 ### 7.1 Screen Inventory
-| ID | Screen | Roles | Implements | Replaces (Profile §9.1) |
+| ID | Screen | Roles | Implements | Replaces (Profile section 9.1) |
 |----|--------|-------|------------|-------------------------|
 | S-01 | | | FR-01 | |
 ### 7.2 Navigation Map
@@ -106,7 +113,7 @@ flowchart LR
 |------------|------|------|
 
 ## 9. Integration Design
-| System | Current method (Profile §12) | Target method | Disposition | Notes |
+| System | Current method (Profile section 12) | Target method | Disposition | Notes |
 |--------|------------------------------|---------------|-------------|-------|
 
 ## 10. Key Processes
@@ -135,7 +142,7 @@ flowchart LR
 ### 13.3 Backup and Recovery Design
 
 ## 14. Configuration (planned)
-| Key | Purpose | Example (placeholder) | Current equivalent (Profile §11) |
+| Key | Purpose | Example (placeholder) | Current equivalent (Profile section 11) |
 |-----|---------|-----------------------|----------------------------------|
 
 ## 15. Proposed Repository Structure

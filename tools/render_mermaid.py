@@ -60,7 +60,8 @@ const JOBS = %(jobs)s;
 const log = (m) => { document.getElementById("log").textContent += m + "\\n"; };
 mermaid.initialize({ startOnLoad: false, theme: "default", securityLevel: "loose",
   htmlLabels: false, flowchart: { htmlLabels: false, useMaxWidth: false },
-  sequence: { useMaxWidth: false }, er: { useMaxWidth: false }, gantt: { useMaxWidth: false },
+  sequence: { useMaxWidth: false }, er: { useMaxWidth: false },
+  gantt: { useMaxWidth: false, useWidth: 1200 }, // gantt sizes to its container, which is 0 wide here
   fontFamily: "Arial, sans-serif" });
 async function toPng(svgText) {
   const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
@@ -75,7 +76,9 @@ async function toPng(svgText) {
   const c = document.createElement("canvas"); c.width = w * 2; c.height = h * 2;
   const g = c.getContext("2d"); g.fillStyle = "#ffffff"; g.fillRect(0, 0, c.width, c.height);
   g.scale(2, 2); g.drawImage(img, 0, 0, w, h);
-  return await new Promise((r) => c.toBlob(r, "image/png"));
+  const png = await new Promise((r) => c.toBlob(r, "image/png"));
+  if (!png || !w || !h) throw new Error("empty image (" + w + " x " + h + ")");
+  return png;
 }
 (async () => {
   let ok = 0;

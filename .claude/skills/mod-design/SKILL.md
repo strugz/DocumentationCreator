@@ -12,16 +12,18 @@ argument-hint: <project-slug> [stack / hosting override]
 > **Rules:** Before starting, read `mode-c-modernize-project/rules/30-evidence-from-profile.md`
 > and `mode-c-modernize-project/rules/40-document-specific.md`. They are not preloaded.
 
+> **Also read** `mode-c-modernize-project/rules/50-readability-and-refinement.md`, and
+> follow the brief section 4 answers on rollout, testers, release gate, names and wording.
+
 Input: `$ARGUMENTS` (slug, plus an optional stack or hosting preference that overrides
-the brief; if it does, update the brief §7 first and bump its version).
+the brief; if it does, update the brief section 7 first and bump its version).
 
 ## Preconditions
 1. Resolve `<slug>`. The brief and the assessment must exist. If
    `02-target-requirements-specification.md` is missing, run the `mod-requirements`
    procedure first.
-2. Read the brief, the assessment, the requirements, the Mode A profile (§3, §6, §9, §10,
-   §11, §12), `mode-c-modernize-project/templates/03-target-system-design.md`, and
-   `mode-c-modernize-project/rules/40-document-specific.md` §03.
+2. Read the brief, the assessment, the requirements, the Mode A profile (sections 3, 6, 9, 10, 11 and 12), `mode-c-modernize-project/templates/03-target-system-design.md`, and
+   `mode-c-modernize-project/rules/40-document-specific.md` section 03.
 
 ## Procedure
 1. **Design goals:** the 3–5 NFRs and findings (`D-xx`) that shape the design most.
@@ -31,28 +33,35 @@ the brief; if it does, update the brief §7 first and bump its version).
    it resolves. For an incremental strategy, draw the **Interim Architecture** (router or
    facade, shared data, sync); otherwise mark that section `Not applicable — big-bang
    strategy`.
-3. **Stack comparison:** one row per layer from Brief §7: current (Profile §3), target,
+3. **Stack comparison:** one row per layer from Brief section 7: current (Profile section 3), target,
    version, status (Agreed / Proposed), reason, ADR. Every changed layer gets an ADR with
    options considered. Every kept layer states why it stays. Versions are current LTS or
    stable releases, **Proposed** unless the user decided; end-of-support dates `[VERIFY]`.
    If a `[DECISION]` on a layer is still open, design for the recommended option and say so.
-4. **Component mapping:** every current module (Profile §6) → target component with its
+4. **Component mapping:** every current module (Profile section 6) → target component with its
    disposition and what changes. Dropped modules say "Drop" and why.
 5. **Data design:** target `erDiagram` and entity table; a **Data Mapping** table from
-   every current entity (Profile §10) with the transformation and whether data migrates.
+   every current entity (Profile section 10) with the transformation and whether data migrates.
 6. **API and UI:** endpoint list and screen inventory (`S-01`…) with "Replaces" columns
-   pointing at the current routes and endpoints (Profile §9). Map every user-facing `FR`.
+   pointing at the current routes and endpoints (Profile section 9). Map every user-facing `FR`.
 7. **Roles, integrations, processes:** permission matrix; integration table with current
    and target methods; sequence diagrams for the 2–4 key workflows.
 8. **Security, logging, observability:** design to resolve the security and operations
    findings and the matching NFRs. Follow OWASP practice; secrets outside the code.
 9. **Deployment and configuration:** environments, deployment diagram, backup design,
    planned configuration keys with placeholders and their current equivalents
-   (Profile §11). Never real values.
+   (Profile section 11). Never real values.
 10. **Repository structure:** propose a tree that matches the target stack's conventions.
 11. **Traceability:** fill the "Design component" column of the Target Requirements
     Specification's Traceability Matrix. This is the only edit to that document. Note it
     in its Revision History.
+
+## Readability layer
+Write the `Read This First` section (Rule 50 section 1): the system in one picture, the main parts
+in a plain table (what it is, where it runs, what it does), the case flow for the main daily
+workflow and one flow per special module with its safety check, and a "Where to Find What"
+table. Add an "In short" note under every numbered section. Use `Step 1:` style labels,
+never `1.`, and keep each flow under about 20 nodes.
 
 ## Output
 `output/mode-c/<slug>/03-target-system-design.md` (plus the traceability update in `02`)

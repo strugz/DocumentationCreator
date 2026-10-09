@@ -16,12 +16,12 @@ new build / continuation / enhancement, budget, or deadline).
 
 ## Preconditions
 1. Resolve `<slug>`. Run the `doc-intake` procedure if the profile is missing.
-2. Read the profile, `mode-a-existing-project/templates/02-project-proposal.md`, and `mode-a-existing-project/rules/40-document-specific.md` §2.
+2. Read the profile, `mode-a-existing-project/templates/02-project-proposal.md`, and `mode-a-existing-project/rules/40-document-specific.md` section 2.
 3. If `output/mode-a/<slug>/01-project-completion-plan.md` exists, reuse its scope, phases,
    milestones, and risks so the two documents agree.
 
 ## Determine the proposal type
-Pick one from the evidence and the user's request, and state it in §1:
+Pick one from the evidence and the user's request, and state it in section 1:
 - **New system proposal:** pitch the solution as designed. Existing code is a prototype
   or proof of concept.
 - **Completion / continuation proposal:** request approval or resources to finish.

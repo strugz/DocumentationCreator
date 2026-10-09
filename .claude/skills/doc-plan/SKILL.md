@@ -18,11 +18,11 @@ or sprint length).
 1. Resolve `<slug>`. If `output/mode-a/<slug>/00-project-profile.md` is missing, run the
    `doc-intake` procedure first (`.claude/skills/doc-intake/SKILL.md`).
 2. Read the profile, `mode-a-existing-project/templates/01-project-completion-plan.md`, and
-   `mode-a-existing-project/rules/40-document-specific.md` §1.
-3. Merge any context the user gave in `$ARGUMENTS` or in chat into the profile §2 first.
+   `mode-a-existing-project/rules/40-document-specific.md` section 1.
+3. Merge any context the user gave in `$ARGUMENTS` or in chat into the profile section 2 first.
 
 ## Procedure
-1. **Current state:** build §3.2 from the profile's Features Inventory. Re-open the
+1. **Current state:** build section 3.2 from the profile's Features Inventory. Re-open the
    evidence for any feature marked Partial or Broken. Note exactly what is missing
    (e.g. "form exists, `onSubmit` is empty at `src/pages/Order.tsx:88`").
 2. **Completion %:** compute it as `(Done + 0.5 × Partial) / total in-scope features`.

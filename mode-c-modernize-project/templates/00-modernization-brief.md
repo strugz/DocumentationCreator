@@ -17,16 +17,23 @@
 | Prepared by | Generated with Claude from the profile and an interview with {{user / [TBD]}} |
 | Status | Draft / Confirmed by user |
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     One-page table: what exists today, why change, the goal, feature counts by disposition, the target stack, how it is built, what is still open (each with a section reference). Then the 'system in one picture' flow.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. The Current System (from the profile)
-- **One-line description:** {{Profile §1}}
-- **Project type:** {{Profile §1}}
-- **Maturity:** {{prototype / MVP / in development / production}}. Evidence: {{Profile §1}}
+- **One-line description:** {{Profile section 1}}
+- **Project type:** {{Profile section 1}}
+- **Maturity:** {{prototype / MVP / in development / production}}. Evidence: {{Profile section 1}}
 - **In production?** {{Yes / No / [TBD]}}. Users today: {{[TBD] unless the user said}}
-- **Current tech stack (Profile §3):**
+- **Current tech stack (Profile section 3):**
 
 | Layer | Technology | Version | Evidence |
 |-------|------------|---------|----------|
-| Language | | | Profile §3 |
+| Language | | | Profile section 3 |
 | Framework | | | |
 | Database | | | |
 | UI | | | |
@@ -41,8 +48,8 @@
 - **Pain points named by the user:**
   | # | Pain point | Evidence in the profile (if any) | Source |
   |---|-----------|----------------------------------|--------|
-  | P-01 | | Profile §15 / `path:line` / none → [VERIFY] | User |
-- **Known gaps from the profile (Profile §15, §16):**
+  | P-01 | | Profile section 15 / `path:line` / none → [VERIFY] | User |
+- **Known gaps from the profile (Profile sections 15 and 16):**
 
 ## 3. Goals of the Modernization
 | # | Goal | How success is measured | Source |
@@ -52,7 +59,7 @@
 ## 4. Business Context
 | Item | Value |
 |------|-------|
-| Client / Organization | {{Profile §2 or [TBD]}} |
+| Client / Organization | {{Profile section 2 or [TBD]}} |
 | Sponsor / Approver | [TBD] |
 | Stakeholders | [TBD] |
 | Target cutover date | [TBD] |
@@ -60,21 +67,31 @@
 | Team (size and roles) | [TBD] |
 | Can the current system be frozen during migration? | [TBD] |
 | Methodology preference | [TBD] / Proposed: Agile, 2-week sprints |
+| Request (who asked for this, and what they asked for) | [TBD] |
+| Development approach (for example AI-assisted coding, and the tool) | [TBD] |
+| Pilot site (where the new version runs first) | [TBD] |
+| When a client or site receives the new version | [TBD] / Proposed: only after it is thoroughly tested and ready to deploy |
+| Data migration from the current system | [TBD] / Proposed: none in release 1; an option at the end |
+| Who tests (integration or transmission, system, user acceptance) | [TBD] |
+| Release gate (what must be true before it is ready to deploy) | Proposed: all Must tests pass, testers sign off, user acceptance signed, pilot stable for two weeks |
+| Names in documents | Proposed: roles, not personal names ("Management", "the development team") |
+| Wording to avoid | [TBD] / none stated |
+| Deliverables | Proposed: Markdown suite, Word files, presentation deck (online and PowerPoint), build repository starter kit; tech stack questionnaire (always) |
 
-## 5. Users and Roles (carried from Profile §8)
+## 5. Users and Roles (carried from Profile section 8)
 | ID | Role | Who they are | Changes in the target system | Approx. count |
 |----|------|--------------|------------------------------|---------------|
 | R-01 | | | None / {{change}} | [TBD] |
 
 ## 6. Feature Disposition
-<!-- Every F-xx from Profile §7, in the same order, then new features. -->
-| ID | Feature | Current status (Profile §7) | Disposition | What changes | Priority (MoSCoW) | Decision state | Source |
+<!-- Every F-xx from Profile section 7, in the same order, then new features. -->
+| ID | Feature | Current status (Profile section 7) | Disposition | What changes | Priority (MoSCoW) | Decision state | Source |
 |----|---------|-----------------------------|-------------|--------------|-------------------|----------------|--------|
 | F-01 | | Done / Partial / Stub / Broken | Keep / Improve / Replace / Drop / New | | Must / Should / Could / Won't | Agreed / Proposed / Deferred | User / Proposed |
 
 ## 7. Target Tech Stack
-<!-- One row per layer. "Current" from Profile §3. A layer without a user decision is a
-     [DECISION] in §16 and a Proposed value here. -->
+<!-- One row per layer. "Current" from Profile section 3. A layer without a user decision is a
+     [DECISION] in section 16 and a Proposed value here. -->
 | Layer | Current | User preference | Target (Agreed / Proposed) | Reason |
 |-------|---------|-----------------|----------------------------|--------|
 | Language | | | | |
@@ -95,12 +112,12 @@
 | Rollback expectation | | |
 | Reason for the recommendation | | Proposed |
 
-## 9. Data (carried from Profile §10)
+## 9. Data (carried from Profile section 10)
 | Entity / Table | Migrate? | Transform? | Archive? | Volume | Source |
 |----------------|----------|------------|----------|--------|--------|
-| | Yes / No | | | [TBD] | Profile §10 / User |
+| | Yes / No | | | [TBD] | Profile section 10 / User |
 
-## 10. Integrations (carried from Profile §12)
+## 10. Integrations (carried from Profile section 12)
 | System | Purpose | Keep / Replace / Drop | Source |
 |--------|---------|-----------------------|--------|
 
@@ -128,7 +145,7 @@
 | # | Decision | Options | Recommendation | Blocking? |
 |---|----------|---------|----------------|-----------|
 
-## 17. Glossary (canonical terms, carried from Profile §17)
+## 17. Glossary (canonical terms, carried from Profile section 17)
 | Term | Definition |
 |------|-----------|
 

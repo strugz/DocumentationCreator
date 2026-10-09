@@ -19,7 +19,7 @@
 - [ ] Facts match `00-project-profile.md` (names, versions, module list, roles).
 
 ## Accuracy — Mode B (new project)
-- [ ] Every feature, role, and requirement traces to the brief (`F-xx`, `R-xx`, `Brief §n`).
+- [ ] Every feature, role, and requirement traces to the brief (`F-xx`, `R-xx`, `Brief section n`).
 - [ ] Every design choice Claude suggested is labeled **Proposed** with its reason.
 - [ ] Every requirement has an ID (`FR-xx` / `NFR-xx`) and acceptance criteria.
 - [ ] All uncertainty is marked with `[TBD]`, `[ASSUMPTION]`, `[DECISION]`, or `[VERIFY]`.
@@ -30,7 +30,7 @@
 - [ ] Every statement about the current system traces to the Mode A profile or to code
       (`path:line`); no current feature is described that the profile does not list.
 - [ ] Every statement about the target system traces to the modernization brief (`F-xx`
-      with its disposition, `D-xx`, `R-xx`, Brief §n) and is in the future tense.
+      with its disposition, `D-xx`, `R-xx`, Brief section n) and is in the future tense.
 - [ ] Every feature from the profile appears in the brief's Feature Disposition table with
       Keep / Improve / Replace / Drop / New, and the same disposition is used everywhere.
 - [ ] Every target stack layer is Agreed or **Proposed** with a reason; undecided layers
@@ -39,11 +39,18 @@
 - [ ] Every Critical and High assessment finding is resolved by a requirement.
 - [ ] All uncertainty is marked with `[TBD]`, `[ASSUMPTION]`, `[DECISION]`, or `[VERIFY]`.
 - [ ] Facts match `00-modernization-brief.md` (names, roles, feature IDs, stack, glossary).
+- [ ] Each document has a `Read This First` section and an "In short" note under every
+      numbered section; no term the user rejected and no personal name the user asked to
+      replace remains (Mode C Rule 50).
 
 ## Quality
 - [ ] Written for the stated audience (no code in the User Manual; exact commands in
       the Technical Manual).
 - [ ] Procedures: one action per step, prerequisites first, expected results stated.
+- [ ] Typography (Rule 25): no inline styling or colour in Markdown, headings H1–H4 only,
+      code lines of 100 characters or fewer; exported Word, HTML, and slides use the Rule 25
+      fonts, minimum sizes, and contrast.
+- [ ] Code blocks are complete and runnable with no truncation placeholders (Rule 15).
 - [ ] All code blocks have language tags; all paths are relative to the project root
       (Mode A) or to the proposed repository structure (Mode B).
 - [ ] Mermaid diagrams are syntactically valid (balanced brackets, quoted labels that

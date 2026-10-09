@@ -35,7 +35,7 @@
 ```bash
 ```
 ### 4.3 Environment Configuration
-<!-- Point to .env.example; link to Technical Manual §5 for the full reference. -->
+<!-- Point to .env.example; link to Technical Manual section 5 for the full reference. -->
 ### 4.4 Database Setup and Seeding
 ### 4.5 Running the Application
 ### 4.6 Common Setup Problems

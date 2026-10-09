@@ -19,7 +19,7 @@ the brief).
 1. Resolve `<slug>`. The brief must exist (run `new-brief` if not). If
    `01-requirements-specification.md` is missing, run the `new-requirements` procedure first.
 2. Read the brief, the requirements, `mode-b-new-project/templates/02-system-design.md`,
-   and `mode-b-new-project/rules/40-document-specific.md` §02.
+   and `mode-b-new-project/rules/40-document-specific.md` section 02.
 
 ## Procedure
 1. **Design goals:** pick the 3–5 NFRs that shape the design most (e.g. security,

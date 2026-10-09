@@ -18,12 +18,12 @@ Input: `$ARGUMENTS` (slug, plus an optional client name, budget, or day rates).
 1. Resolve `<slug>`. Requires the brief and the requirements. The plan is strongly
    recommended. If `03-project-plan.md` is missing, run `new-plan` first so scope,
    timeline, and effort match.
-2. Read the brief, requirements, plan, the design's §2–3 (for Appendix A),
+2. Read the brief, requirements, plan, the design's section 2–3 (for Appendix A),
    `mode-b-new-project/templates/04-project-proposal.md`, and
-   `mode-b-new-project/rules/40-document-specific.md` §04.
+   `mode-b-new-project/rules/40-document-specific.md` section 04.
 
 ## Procedure
-1. **Problem statement:** from Brief §2, in the user's terms. Do not invent statistics
+1. **Problem statement:** from Brief section 2, in the user's terms. Do not invent statistics
    about the client's business. Quantified pain points are `[TBD]` unless the user gave
    them.
 2. **Objectives:** from the brief's goals (`G-xx`) with their measures.

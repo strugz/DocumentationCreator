@@ -18,7 +18,7 @@ Input: `$ARGUMENTS`.
    missing procedures first). Read `02-system-design.md` and `03-project-plan.md` if they
    exist.
 2. Read `mode-b-new-project/templates/05-test-plan.md` and
-   `mode-b-new-project/rules/40-document-specific.md` §05.
+   `mode-b-new-project/rules/40-document-specific.md` section 05.
 
 ## Procedure
 1. **Strategy:** fill the test-level table. Tooling follows the design's stack (e.g. the
@@ -30,7 +30,7 @@ Input: `$ARGUMENTS`.
    (`TC-01`…) from its acceptance criteria. Add a negative case (invalid input, missing
    permission) for every requirement that has validation or role restrictions.
 4. **Non-functional test cases:** one per NFR with a measurable target (`TC-NF-01`…).
-5. **UAT scenarios:** one per key workflow in Brief §6, in business language, each
+5. **UAT scenarios:** one per key workflow in Brief section 6, in business language, each
    listing the requirements it covers.
 6. **Defects:** define severities with examples from this product.
 7. **Coverage:** build the requirements coverage table. Every Must must be covered.

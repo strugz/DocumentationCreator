@@ -16,6 +16,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     The proposal on one page (what we ask for, why, what we get, who builds, who tests, when ready, effort); the system in one picture; the case flow; the SDLC flow; the ready-to-deploy gate.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Executive Summary
 <!-- ≤ 1 page, readable on its own: the current system, why it must change, the proposed
      target, the strategy, cost/timeline headline (or [TBD]), and the approval requested. -->

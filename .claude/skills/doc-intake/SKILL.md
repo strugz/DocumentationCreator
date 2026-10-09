@@ -60,7 +60,7 @@ Fill `mode-a-existing-project/templates/00-project-profile.md` completely and wr
 - Status values: Done / Partial / Stub / Not started / Broken / Planned.
 - Fill the Glossary with the canonical terms taken from code (model names, UI labels).
 - Put anything the code cannot tell you (client, budget, deadline, team, stakeholders)
-  in §2 as `[TBD]`, and add it to §19 Open Questions.
+  in section 2 as `[TBD]`, and add it to section 19 Open Questions.
 
 ## Step 5 — Report
 Give the user:

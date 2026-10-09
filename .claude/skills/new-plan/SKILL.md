@@ -19,8 +19,8 @@ Input: `$ARGUMENTS` (slug, plus optional start date, deadline, team size, sprint
    missing procedures first. If `02-system-design.md` is missing, run `new-design` first,
    because the WBS is built from its components.
 2. Read the brief, requirements, design, `mode-b-new-project/templates/03-project-plan.md`,
-   and `mode-b-new-project/rules/40-document-specific.md` §03.
-3. Merge any new context from `$ARGUMENTS` or chat into the brief §3 first (increase the
+   and `mode-b-new-project/rules/40-document-specific.md` section 03.
+3. Merge any new context from `$ARGUMENTS` or chat into the brief section 3 first (increase the
    brief version).
 
 ## Procedure

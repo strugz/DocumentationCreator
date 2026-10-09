@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (mode-c-modernize-project/rules/50-readability-and-refinement.md sections 1 and 3).
+     One-page table (does the workflow work, where the problems are, finding counts by severity, the most serious findings, what should be done); a severity guide; the main problems in plain words with what the target does instead; the 'problem to fix' flow.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose and Audience
 ### 1.2 Scope of the Assessment
@@ -40,10 +47,10 @@ flowchart LR
 ### 3.2 Tech Stack Currency
 | Layer | Technology | Version in use | Latest supported / LTS | End of support | Status |
 |-------|------------|----------------|------------------------|----------------|--------|
-| | | Profile §3 | [VERIFY] | [VERIFY: vendor page] | Current / Ageing / Unsupported |
+| | | Profile section 3 | [VERIFY] | [VERIFY: vendor page] | Current / Ageing / Unsupported |
 
 ## 4. Findings
-<!-- One row per finding. Evidence: `path:line` or Profile §n. -->
+<!-- One row per finding. Evidence: `path:line` or Profile section n. -->
 | ID | Category | Finding | Severity | Evidence | Consequence for the target system |
 |----|----------|---------|----------|----------|-----------------------------------|
 | D-01 | Technology / Architecture / Code quality / Security / Operations / Data / Process / Documentation | | Critical / High / Medium / Low | | |
@@ -54,7 +61,7 @@ flowchart LR
 ### 4.4 Security
 ### 4.5 Operations (deployment, backup, monitoring)
 ### 4.6 Data Model
-### 4.7 Incomplete Work (Profile §15)
+### 4.7 Incomplete Work (Profile section 15)
 ### 4.8 Documentation and Process
 
 ## 5. What Works Well (Keep List)

@@ -58,7 +58,7 @@ brief's **Discrepancies** section.
 ## Traceability
 - Brief features get stable IDs `F-01, F-02…`; roles get `R-01…`; constraints `C-01…`.
 - Requirements get `FR-01…` (functional) and `NFR-01…` (non-functional), each pointing
-  back to a feature `F-xx` or a brief section (`Brief §n`).
+  back to a feature `F-xx` or a brief section (`Brief section n`).
 - Design components, WBS items, and test cases point to the `FR`/`NFR` IDs they serve.
 - The Requirements Specification holds the master **Traceability Matrix**.
 
