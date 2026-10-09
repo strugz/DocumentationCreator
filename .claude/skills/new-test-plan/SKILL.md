@@ -18,7 +18,8 @@ Input: `$ARGUMENTS`.
    missing procedures first). Read `02-system-design.md` and `03-project-plan.md` if they
    exist.
 2. Read `mode-b-new-project/templates/05-test-plan.md` and
-   `mode-b-new-project/rules/40-document-specific.md` section 05.
+   `mode-b-new-project/rules/40-document-specific.md` section 05, and
+   `rules/45-estimation-and-release-gate.md` section 5 (the release gate).
 
 ## Procedure
 1. **Strategy:** fill the test-level table. Tooling follows the design's stack (e.g. the
@@ -36,7 +37,10 @@ Input: `$ARGUMENTS`.
 7. **Coverage:** build the requirements coverage table. Every Must must be covered.
    Report any gaps.
 8. **Schedule:** align with the Plan's Phase 4 (or relative phases if there is no plan).
-9. **Traceability:** fill the "Test case" column of the Requirements' Traceability Matrix
+9. **Release gate:** the exit criteria of the last level and the UAT Sign-Off use the
+   Rule 45 section 5 gate word for word, with the testers named by role from Brief
+   section 3. If the Plan exists, its gate wording must be identical.
+10. **Traceability:** fill the "Test case" column of the Requirements' Traceability Matrix
    and note it in that document's Revision History.
 
 ## Output

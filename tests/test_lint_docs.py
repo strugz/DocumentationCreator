@@ -161,6 +161,40 @@ class TestContent(LintTestCase):
         p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + "\n```mermaid\nflowchart LR\n  A --> DB[(Database)]\n```\n"))
         self.assertEqual([f for f in self.errors(p) if f.check == "mermaid"], [])
 
+    def test_mermaid_numbered_label_renders_blank(self):
+        p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + '\n```mermaid\nflowchart LR\n  A["1. Plan"] --> B["Step 2: Build"]\n```\n'))
+        self.assertCheck(self.errors(p), "mermaid", "renders blank")
+
+    def test_mermaid_step_label_is_fine(self):
+        p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + '\n```mermaid\nflowchart LR\n  A["Step 1: Plan"] --> B["Version 2.0"]\n```\n'))
+        self.assertEqual([f for f in self.errors(p) if f.check == "mermaid"], [])
+
+    def test_readability_warnings(self):
+        p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY))
+        found = [f for f in lint_docs.lint([p]) if f.check == "readability"]
+        self.assertTrue(any("Read This First" in f.message for f in found), found)
+        self.assertTrue(any("section(s) 1" in f.message for f in found), found)
+        self.assertTrue(all(f.severity == "warning" for f in found), found)
+
+    def test_readability_layer_present(self):
+        body = ("## Read This First\n| Question | Answer |\n|---|---|\n| What? | A design. |\n\n"
+                "## 1. Components\n> [!NOTE]\n> **In short:** Two modules.\n\n### 1.1 List\n"
+                "| Component | Implements |\n|---|---|\n| Auth module | FR-01 |\n| Reports module | FR-02 |\n")
+        p = self.write("02-system-design.md", document("D", "System Design", body))
+        self.assertEqual([f for f in lint_docs.lint([p]) if f.check == "readability"], [])
+
+    def test_word_to_avoid_is_reported(self):
+        self.write("00-project-brief.md", BRIEF + "\n## 16. Glossary\n\n### 16.1 Words to Avoid\n"
+                   "| Avoid | Use instead | Source |\n|---|---|---|\n| in-house | MDMPI | User |\n")
+        p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + "\nAn in-house pilot runs first.\n"))
+        self.assertCheck(self.errors(p), "wording", "in-house")
+
+    def test_word_to_avoid_allowed_in_revision_history(self):
+        self.write("00-project-brief.md", BRIEF + "\n## 16. Glossary\n\n### 16.1 Words to Avoid\n"
+                   "| Avoid | Use instead | Source |\n|---|---|---|\n| Initial | First | User |\n")
+        p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY))
+        self.assertEqual([f for f in self.errors(p) if f.check == "wording"], [])
+
     def test_broken_anchor(self):
         p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + "\nSee [x](#no-such-heading).\n"))
         self.assertCheck(self.errors(p), "links", "no-such-heading")

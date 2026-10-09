@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     The system in one picture; the main parts in a plain table (what it is, where it runs, what it does); the case flow; a 'Where to Find What' table.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose and Audience
 ### 1.2 Design Goals

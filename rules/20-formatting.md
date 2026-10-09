@@ -55,3 +55,5 @@ Add a **Revision History** table at the end of every document.
   output/<mode>/<slug>` has rendered them (open the URL it prints in a browser); then the
   export embeds them as images.
 - PDF: open the `.docx` in Word and save as PDF, or use the `pdf` skill.
+- PowerPoint (Modes A and B, proposal only): build the slides from the finished proposal
+  as `rules/60-proposal-slides.md` describes. Mode C builds its deck per its own rules.

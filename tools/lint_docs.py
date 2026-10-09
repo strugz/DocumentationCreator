@@ -11,7 +11,11 @@ Checks every Markdown document under output/mode-a/, output/mode-b/, or output/m
   placeholders no unfilled {{...}} template placeholders, leftover template comments,
                or section signs (write 'section N')
   code         every fenced code block has a language tag; fences are balanced
-  mermaid      known diagram type, balanced brackets, quoted special labels, size
+  mermaid      known diagram type, balanced brackets, quoted special labels, size,
+               no label that starts with 'N.' (renders blank)
+  wording      no word from the evidence base's 'Words to Avoid' table in other documents
+  readability  (warning) a 'Read This First' section and an 'In short' note under every
+               numbered ## section (Rule 35)
   links        internal #anchors resolve to a heading
   secrets      no credentials, keys, or connection strings with passwords
   citations    (Modes A and C) every `path:line` exists in the source project
@@ -310,6 +314,10 @@ def check_mermaid(doc: Doc, out: list[Finding]) -> None:
                 if s.count(o) != s.count(c):
                     out.append(Finding(f, ln, "error", "mermaid", f"Unbalanced '{o}{c}' in: {line.strip()}"))
                     break
+            if NUMBERED_LABEL_RE.search(line):
+                out.append(Finding(f, ln, "error", "mermaid",
+                                   "Label starts with 'N.' and renders blank; write 'Step N: ...': "
+                                   + line.strip()))
             for m in re.finditer(r"\[([^\]\"]*)\]", s):
                 label = m.group(1)
                 inner = label[1:-1] if label.startswith("(") and label.endswith(")") else label
@@ -322,6 +330,33 @@ def check_mermaid(doc: Doc, out: list[Finding]) -> None:
         if len(nodes) > MERMAID_MAX_NODES:
             out.append(Finding(f, start, "warning", "mermaid",
                                f"Diagram has about {len(nodes)} nodes (limit ~{MERMAID_MAX_NODES}); consider splitting"))
+
+
+NUMBERED_LABEL_RE = re.compile(r"""[\[\(\{>|]\(?["']?\s*\d+\.\s""")
+NUMBERED_SECTION_RE = re.compile(r"^\d+\.\s")
+SUMMARY_SECTION_RE = re.compile(r"^\d+\.\s+(executive\s+)?summary$", re.I)
+
+
+def check_readability(doc: Doc, out: list[Finding]) -> None:
+    """Rule 35: Read This First page and an 'In short' note per numbered section."""
+    if doc.kind != "document" or doc.mode not in ("a", "b", "c"):
+        return
+    f = str(doc.path)
+    if not section_span(doc, r"^read this first$"):
+        out.append(Finding(f, 1, "warning", "readability",
+                           "Missing 'Read This First' section (Rule 35)"))
+    missing = []
+    h2 = [(i, ln, t) for i, (ln, lvl, t) in enumerate(doc.headings) if lvl == 2]
+    for i, ln, text in h2:
+        if not NUMBERED_SECTION_RE.match(text) or SUMMARY_SECTION_RE.match(text):
+            continue
+        end = next((l for l, lvl, _ in doc.headings[i + 1:] if lvl <= 3), len(doc.lines) + 1)
+        intro = "\n".join(doc.lines[ln: end - 1])
+        if not re.search(r"\*\*In short:?\*\*", intro, re.I):
+            missing.append(text.split()[0].rstrip("."))
+    if missing:
+        out.append(Finding(f, 1, "warning", "readability",
+                           "No 'In short' note under section(s) " + ", ".join(missing) + " (Rule 35)"))
 
 
 def check_links(doc: Doc, out: list[Finding]) -> None:
@@ -459,6 +494,31 @@ def check_citations(doc: Doc, source: Path | None, out: list[Finding], cache: di
                                f"Cited lines {start}-{end} are outside {rel} ({count} lines)"))
 
 
+def words_to_avoid(base: Doc | None) -> list[str]:
+    """The 'Avoid' column of the evidence base's Words to Avoid table (Rule 10)."""
+    span = section_span(base, r"words to avoid", level=3) if base else None
+    if not span:
+        return []
+    rows = table_rows(base.lines[span[0]: span[1]])
+    if not rows or rows[0][0].strip("* ").lower() != "avoid":
+        return []
+    words = [r[0].strip().strip('"\u201c\u201d`*') for r in rows[1:]]
+    return [w for w in words if w and not PLACEHOLDER_RE.search(w)]
+
+
+def check_wording(doc: Doc, words: list[str], out: list[Finding]) -> None:
+    f = str(doc.path)
+    history = section_span(doc, r"^revision history$")
+    pats = [(w, re.compile(r"(?<!\w)" + re.escape(w) + r"(?!\w)", re.I)) for w in words]
+    for i, line in enumerate(doc.lines, 1):
+        if history and history[0] <= i <= history[1]:
+            continue
+        for w, pat in pats:
+            if pat.search(line):
+                out.append(Finding(f, i, "error", "wording",
+                                   f"'{w}' is in the Words to Avoid table; use the replacement"))
+
+
 def check_project(folder: Path, docs: dict[str, Doc], targets: set[Path], out: list[Finding]) -> None:
     """Cross-document ID and traceability checks for one output/<mode>/<slug>/ folder."""
     mode = folder.parent.name[-1] if folder.parent.name in MODES else "?"
@@ -468,11 +528,15 @@ def check_project(folder: Path, docs: dict[str, Doc], targets: set[Path], out: l
     req = docs.get(req_name)
     prio = requirement_priorities(req) if req else {}
     trace_targets = TRACE_TARGETS.get(mode, {})
+    evidence = next((d for n, d in docs.items() if n in EVIDENCE_BASE), None)
+    avoid = words_to_avoid(evidence)
 
     for name, doc in docs.items():
         if doc.path not in targets:
             continue
         f = str(doc.path)
+        if avoid and doc is not evidence:
+            check_wording(doc, avoid, out)
         if features and doc is not base:
             for i, line in enumerate(doc.lines, 1):
                 for ref in set(FEATURE_REF_RE.findall(line)):
@@ -546,6 +610,7 @@ def lint(paths: list[Path], source: str | None = None) -> list[Finding]:
         check_placeholders(doc, out)
         check_code_blocks(doc, out)
         check_mermaid(doc, out)
+        check_readability(doc, out)
         check_links(doc, out)
         check_secrets(doc, out)
         check_markers(doc, out)

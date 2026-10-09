@@ -1,7 +1,7 @@
 ---
 name: new-proposal
-description: MODE B (new project, no code yet). Write a New System Project Proposal for clients, management, or approvers, based on the brief, requirements, and plan. It covers the problem, proposed solution, scope, approach, timeline, budget structure, risks, benefits, and the approval request. Use when the user asks for a proposal, pitch, business case, or approval document for a system that is not built yet.
-argument-hint: <project-slug> [client / budget / rates]
+description: MODE B (new project, no code yet). Write a New System Project Proposal for clients, management, or approvers, based on the brief, requirements, and plan. It covers the problem, proposed solution, scope, approach, timeline, budget structure, risks, benefits, and the approval request. Use when the user asks for a proposal, pitch, business case, or approval document for a system that is not built yet, or for that proposal as PowerPoint slides (--format pptx).
+argument-hint: <project-slug> [client / budget / rates] [--format docx|pptx]
 ---
 
 # Project Proposal (new system)
@@ -36,6 +36,8 @@ Input: `$ARGUMENTS` (slug, plus an optional client name, budget, or day rates).
    documents and the final manuals, with acceptance criteria (link to UAT).
 6. **Approach and timeline:** summarize the Plan's phases and milestones. Use the same
    durations or dates.
+   State the Rule 45 section 5 ready-to-deploy gate in Approach, and use the plan's
+   release milestone names and effort figures (`rules/45-estimation-and-release-gate.md`).
 7. **Team and budget:** roles from the Plan. Budget is a line-item structure. Compute
    amounts only if the user gave rates, as effort (from the Plan) × rate, and show the
    formula. Otherwise use `[TBD]`.
@@ -46,6 +48,13 @@ Input: `$ARGUMENTS` (slug, plus an optional client name, budget, or day rates).
 
 ## Output
 `output/mode-b/<slug>/04-project-proposal.md`
+
+If the user passes `--format pptx` or asks for slides, a deck, or PowerPoint, finish and
+lint the Markdown first, then build
+`output/mode-b/<slug>/export/<Product>-Project-Proposal-Slides.pptx` from it as
+`rules/60-proposal-slides.md` describes (read it first; it is not preloaded). Every
+feature on the slides stays **Planned**. For `--format docx`, run
+`node tools/md_to_docx.js output/mode-b/<slug>` (Rule 20 Export).
 
 Run the review checklist. Confirm that the proposal scope equals the Requirements' scope
 and the Plan's WBS. Report the file path and the Open Items. Client, approver, budget,

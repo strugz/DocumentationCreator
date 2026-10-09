@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     In plain words, no code or paths: who this manual is for, the tasks you can do (task, role, section), how to get help; the main task or case flow in the users' terms.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 About {{Product Name}}
 ### 1.2 Who This Manual Is For

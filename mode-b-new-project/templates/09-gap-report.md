@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     The result on one page (how much of the plan is built, the biggest gaps, what to do next, decisions needed); the gap flow.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Summary
 | Metric | Value | Method |
 |--------|-------|--------|

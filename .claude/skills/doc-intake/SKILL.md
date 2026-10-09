@@ -61,6 +61,12 @@ Fill `mode-a-existing-project/templates/00-project-profile.md` completely and wr
 - Fill the Glossary with the canonical terms taken from code (model names, UI labels).
 - Put anything the code cannot tell you (client, budget, deadline, team, stakeholders)
   in section 2 as `[TBD]`, and add it to section 19 Open Questions.
+- Always add these audience and wording questions to section 19, each with its default:
+  who approves (name the body) [Management]; personal names or roles in the documents
+  [roles]; who tests and who runs user acceptance [`TBD`]; the users' main pain points in
+  their own words; words or phrases to avoid [none]; deliverables [Markdown and Word;
+  proposal slides on request]. Record answers in section 2, and rejected words in
+  section 17.1 Words to Avoid (Rule 10).
 
 ## Step 5 — Report
 Give the user:

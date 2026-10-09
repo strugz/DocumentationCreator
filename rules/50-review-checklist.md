@@ -12,6 +12,8 @@
 ## Accuracy (common)
 - [ ] No invented numbers, dates, costs, names, or SLAs.
 - [ ] No secrets or personal data copied into the document.
+- [ ] People are named by role unless the evidence base records that the user wants
+      names; no word from the Words to Avoid table is used (Rule 10).
 
 ## Accuracy — Mode A (existing project)
 - [ ] Every feature, command, endpoint, config key, and screen was confirmed in the source.
@@ -56,12 +58,21 @@
 - [ ] Mermaid diagrams are syntactically valid (balanced brackets, quoted labels that
       contain special characters).
 - [ ] Acronyms are defined on first use and in the Glossary.
+- [ ] Readability layer (Rule 35): a `Read This First` section with a questions table and
+      at least one flow, an "In short" note under every numbered section, and a bullet
+      executive summary in plans and proposals; it adds no fact the sections lack.
 - [ ] Internal links and anchors resolve.
 
 ## Suite consistency (when more than one document exists)
 - [ ] Same product name, version, and terminology everywhere.
 - [ ] Proposal scope matches the Plan's WBS; the Plan's features match the User Manual's tasks.
+- [ ] Proposal slides, when built (Rule 60), carry the same features, figures, dates,
+      tags, and markers as the proposal.
 - [ ] Technical Manual config reference matches the Developer Manual's environment setup.
+- [ ] After a change (Rule 55): every changed document has a new version, Source revision,
+      and Revision History row, and no old value remains outside Revision History.
+- [ ] Plan effort uses the Rule 45 sizes and method table; the proposal's effort, timeline,
+      and ready-to-deploy gate equal the plan's; the Test Plan repeats the same gate.
 - [ ] Mode B: every Must requirement appears in the Plan's WBS, the System Design, and the
       Test Plan (check the traceability matrix).
 - [ ] Mode C: every Must requirement appears in the Migration Plan's WBS, the Target

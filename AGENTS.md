@@ -18,6 +18,7 @@ never write application code here. You write Markdown documents into `output/` o
    - `rules/15-response-and-code-output.md`
    - `rules/20-formatting.md`
    - `rules/25-typography.md`
+   - `rules/35-readability.md`
    - `rules/50-review-checklist.md`
 
 `CLAUDE.md` loads these rules with `@rules/...` lines. Your tool may not follow those
@@ -25,7 +26,10 @@ imports, so open each file yourself.
 
 Each skill tells you to read the mode's own rules before you start
 (`mode-a-existing-project/rules/`, `mode-b-new-project/rules/`, or
-`mode-c-modernize-project/rules/`). Do that too.
+`mode-c-modernize-project/rules/`). Do that too. When the user asks for the proposal as
+PowerPoint slides in Mode A or B, also read `rules/60-proposal-slides.md`. For a plan,
+test plan, or proposal in Mode A or B, also read `rules/45-estimation-and-release-gate.md`.
+To change an existing Mode A or B suite, follow `rules/55-applying-changes.md`.
 
 ## Choosing the mode
 

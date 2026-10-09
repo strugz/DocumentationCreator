@@ -14,6 +14,7 @@
 | 05 | Test Plan | `/new-test-plan` | Requirements + Design |
 | 06–08 | Draft User / Technical / Developer Manuals | `/new-manuals` | Requirements + Design |
 | 09 | Gap Report (after code exists) | `/new-gap-check` | Mode B Requirements + Mode A Profile |
+| 10 | Build repository starter kit (not a document) | `/new-suite` Step 4b | The finished suite |
 
 Later documents reuse earlier ones. Never contradict an earlier document. If a later
 document reveals a problem, fix the earlier one first.
@@ -26,6 +27,9 @@ document reveals a problem, fix the earlier one first.
 - The interview asks all questions in **one round**. A second round is allowed only for
   blocking answers (product purpose, main users, core features).
 - Increase the brief version (`v1`, `v2`…) every time the user changes a fact.
+- Section 2.2 holds the pain points in the users' own words; the proposal and plan state
+  problems from it. Section 3 records approvers, testers, rollout, naming, and
+  deliverables. Section 16.1 Words to Avoid is binding for every document (Rule 10).
 
 ## 01. Requirements Specification
 - Structure follows IEEE 29148 / SRS practice in a lighter form: purpose, scope,
@@ -67,6 +71,9 @@ document reveals a problem, fix the earlier one first.
   propose scope cuts.
 - Always include risks, a Definition of Done, a quality plan (link the Test Plan), a
   go-live plan, and a handover checklist.
+- Estimate and gate with `rules/45-estimation-and-release-gate.md`: fixed sizes, the
+  AI-assisted factor when the brief says so, capacity, and one ready-to-deploy gate that
+  the Test Plan and the Proposal repeat word for word.
 
 ## 04. Project Proposal
 - Same structure and rules as Mode A section 2 (problem → solution → scope → approach →
@@ -76,6 +83,8 @@ document reveals a problem, fix the earlier one first.
   and the Plan's WBS.
 - Cost: give a line-item structure. Amounts are `[TBD]` unless the user supplied rates.
   An effort estimate is allowed when it shows its method (from the Plan).
+- PowerPoint slides of the proposal, when requested, follow `rules/60-proposal-slides.md`
+  and carry exactly the proposal's facts and markers.
 
 ## 05. Test Plan
 - Every Must and Should requirement has at least one test case. Every test case traces
@@ -102,3 +111,39 @@ document reveals a problem, fix the earlier one first.
 - Run only when code exists and a Mode A profile has been produced for it.
 - For each `FR`/`NFR`: Implemented / Partial / Missing / Changed, with Mode A evidence
   (`path:line`). Also list features built that were **not** in the requirements.
+
+## 10. Build repository starter kit
+Written last, by `/new-suite`, when Brief section 3 Deliverables lists it (or with
+`--only starter`). It prepares the new code repository so the build starts with the
+agreed decisions. It contains **no application code**.
+
+- **Location:** `output/<repo-name>-repo-starter/`, never inside `output/mode-b/<slug>/`,
+  because the linter treats every Markdown file there as a suite document. `<repo-name>`
+  comes from Design section 14 Proposed Repository Structure, or is the slug.
+- **Source:** the finished suite only. Every rule file cites the design section,
+  requirement, or ADR it comes from. Examples use real IDs from the suite; check that a
+  cited test case really covers the cited requirement.
+- **Undecided layers:** write a stack-specific rule file only for a layer that is Agreed
+  or **Proposed** in Design section 3. For a `[DECISION]` layer, write the file with the
+  open decision at the top and only the stack-neutral rules below it.
+- **Tense:** the kit describes the system the team will build. Planned commands are
+  marked "planned" until the build exists.
+
+| File | Content, from the suite |
+|------|-------------------------|
+| `CLAUDE.md` | The product; a table of the design documents and what each gives a developer; the stack (Agreed or Proposed); the repository layout (Design section 14); planned build and test commands; `@rules/...` imports; the skills table; a working agreement (start from a requirement ID, layer order, tests with every change, no secrets or personal names, small reviewed changes) |
+| `README.md` | For people: what the product does, how it is built, layout, prerequisites, planned commands (one per code block), how to use the skills, how the team works, links to `docs/design/` |
+| `rules/00-project-principles.md` | Goals (`G-xx`), the users and roles (`R-xx`), the ready-to-deploy gate (Rule 45 section 5), glossary terms, Words to Avoid, roles instead of names |
+| `rules/10-architecture.md` | Parts and layer dependencies (Design section 2), fixed ADRs (section 15), how to add an ADR |
+| `rules/20-backend-<language>.md`, `rules/30-frontend-<framework>.md` | API conventions, errors, logging (Design sections 5 and 11); screens and navigation (section 6) |
+| `rules/40-database.md` | Data model, migrations, backups, test data (Design section 4; synthetic data only) |
+| `rules/50-security.md` | Design section 10 and every security NFR as a "never" rule |
+| `rules/60-testing.md` | Test levels and tools from the Test Plan, test names with `FR` and `TC` IDs, the Definition of Done |
+| `rules/70-<integration>.md` | Only when Design section 8 has an integration: the riskiest one and how it is tested and released |
+| `rules/80-git-and-traceability.md` | Branches, commits, and PRs with requirement IDs; `docs/traceability.md` from the Traceability Matrix; new ADRs |
+| `.claude/skills/<name>/SKILL.md` | `implement-requirement`, `add-api-endpoint`, `add-<ui>-screen`, `add-<db>-migration`, `write-tests`, `review-change`, `release-readiness` (and `new-<integration>` when section 8 has one); each reads the design and test plan first, builds in layer order, adds tests, and reports |
+| `.gitignore`, `docs/adr/README.md` | Stack ignores including local secrets; an ADR template numbered after the design's last ADR |
+| `docs/design/` | A copy of the suite's Markdown files and INDEX, unchanged |
+
+Zip the folder when the user wants one file to copy. After any later change to the suite
+(Rule 55), refresh `docs/design/` and every rule file that cites a changed section.

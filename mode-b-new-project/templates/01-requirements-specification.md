@@ -12,6 +12,13 @@
 
 ## Table of Contents
 
+## Read This First
+<!-- Plain-language entry page (rules/35-readability.md).
+     What will be built on one page (who uses it, the must-have features by area with their requirement ranges, how acceptance works); how to read a requirement row (ID, priority, acceptance criteria); the case flow; the 'requirement to acceptance' flow.
+     Add an 'In short' note under every numbered ## section:
+     > [!NOTE]
+     > **In short:** <one or two plain sentences> -->
+
 ## 1. Introduction
 ### 1.1 Purpose of This Document
 ### 1.2 Product Scope

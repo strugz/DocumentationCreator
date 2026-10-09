@@ -27,6 +27,11 @@
 | Target deadline | [TBD] |
 | Budget | [TBD] |
 | Team size and roles | [TBD] |
+| Approvers (body or role) | [TBD] |
+| Testers and user acceptance | [TBD] |
+| Users' pain points (their words) | [TBD] |
+| Names in documents | Proposed: roles ("Management", "the development team") |
+| Deliverables | Proposed: Markdown and Word; proposal as PowerPoint slides on request |
 
 ## 3. Tech Stack
 | Layer | Technology | Version | Evidence |
@@ -114,6 +119,12 @@
 ## 17. Glossary (canonical terms)
 | Term | Definition | Used in code as |
 |------|-----------|-----------------|
+
+### 17.1 Words to Avoid
+<!-- Binding wording rules from the user (Rule 10). One row per word or phrase.
+     tools/lint_docs.py reports any use of the "Avoid" column in other documents. -->
+| Avoid | Use instead | Source |
+|-------|-------------|--------|
 
 ## 18. Discrepancies
 | Topic | Source A says | Source B says | Resolution |

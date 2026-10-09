@@ -21,12 +21,12 @@ it as it is or plan a modernized rebuild?"
 |---|----------|-------|-----------------------------------------------|------------------|
 | 0 | Project Profile (evidence base) | `/doc-intake` | `00-project-profile.md` | Internal — feeds all others |
 | 1 | Project Completion Plan ("planning to finish") | `/doc-plan` | `01-project-completion-plan.md` | PM, team lead, stakeholders |
-| 2 | Project Proposal | `/doc-proposal` | `02-project-proposal.md` | Client, management, approvers |
+| 2 | Project Proposal (+ PowerPoint slides with `--format pptx`) | `/doc-proposal` | `02-project-proposal.md` | Client, management, approvers |
 | 3 | User Manual | `/doc-user-manual` | `03-user-manual.md` | End users, operators |
 | 4 | Technical Manual | `/doc-technical-manual` | `04-technical-manual.md` | IT ops, sysadmins, support |
 | 5 | Developer Manual | `/doc-developer-manual` | `05-developer-manual.md` | Developers, maintainers |
 | + | Repo docs (README / ARCHITECTURE / API) | `/doc-repo-files` | `repo/` | Contributors on GitHub |
-| ★ | Everything above, in order | `/doc-suite` | — | — |
+| ★ | Everything above, in order; also applies later changes to every document | `/doc-suite` | — | — |
 
 ## Mode B — Document a new project (before it is built)
 
@@ -36,11 +36,12 @@ it as it is or plan a modernized rebuild?"
 | 1 | Software Requirements Specification | `/new-requirements` | `01-requirements-specification.md` | Client, PM, developers, QA |
 | 2 | System Design Document | `/new-design` | `02-system-design.md` | Developers, tech lead |
 | 3 | Project Plan (build from zero) | `/new-plan` | `03-project-plan.md` | PM, team lead, stakeholders |
-| 4 | Project Proposal (new system) | `/new-proposal` | `04-project-proposal.md` | Client, management, approvers |
+| 4 | Project Proposal (new system; + PowerPoint slides with `--format pptx`) | `/new-proposal` | `04-project-proposal.md` | Client, management, approvers |
 | 5 | Test Plan | `/new-test-plan` | `05-test-plan.md` | QA, client UAT users |
 | 6–8 | Draft User / Technical / Developer Manuals | `/new-manuals` | Mode A templates `03`–`05` | Same as Mode A |
 | 9 | Planned vs Built Gap Report (after code exists) | `/new-gap-check` | `09-gap-report.md` | PM, tech lead |
-| ★ | Everything above (0–8), in order | `/new-suite` | — | — |
+| + | Build repository starter kit (CLAUDE.md, rules, skills for the new code repository) | `/new-suite` (`--only starter`) | Mode B Rule 40 section 10 | Developers |
+| ★ | Everything above (0–8), in order, plus the starter kit; also applies later changes to every document | `/new-suite` | — | — |
 
 ## Mode C — Modernize an existing project into a new one
 
@@ -90,9 +91,13 @@ Shared by both modes (always loaded):
 @rules/15-response-and-code-output.md
 @rules/20-formatting.md
 @rules/25-typography.md
+@rules/35-readability.md
 @rules/50-review-checklist.md
 
 Mode-specific rules are **not** loaded up front; the skills read them when they run.
+The same holds for three shared rules: `rules/45-estimation-and-release-gate.md` (plans,
+test plans, proposals), `rules/55-applying-changes.md` (a change to an existing Mode A or
+B suite), and `rules/60-proposal-slides.md` (proposal as PowerPoint).
 Before writing or editing any document outside a skill, read the active mode's rules first:
 
 | Mode | Evidence rule | Document rules |
