@@ -7,6 +7,15 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-10-09
+
+### Security
+- `tools/package.json` overrides `image-size` to 2.0.3. `pptxgenjs` 3.12.0 pulled in
+  `image-size` 1.2.1, whose ICNS, JXL, and HEIF parsers allow a denial of service through
+  infinite loops (2 high Dependabot alerts). `pptxgenjs` declares the package but never
+  loads it, so the exporter is unchanged; `npm audit` reports 0 vulnerabilities. Run
+  `npm install` in `tools/` to update.
+
 ## [0.5.0] - 2026-10-09
 
 ### Added
@@ -231,7 +240,8 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Generated documents under `output/mode-a/` and `output/mode-b/` are ignored by git, so
   client and project details stay out of the repository.
 
-[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/strugz/DocumentationCreator/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/strugz/DocumentationCreator/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/strugz/DocumentationCreator/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/strugz/DocumentationCreator/compare/v0.2.0...v0.3.0
