@@ -16,7 +16,7 @@ the documents a team needs to plan the modernization. Documents only, no applica
 | `/mod-plan <slug> [start/deadline/team]` | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or code path> [change] [--only ...] [--format docx\|pdf]` | All of the above + `INDEX.md`, Word files, a presentation deck (`deck/`, PowerPoint in `export/`), and `output/<repo>-repo-starter/` |
+| `/mod-suite <mode-a slug or code path> [change] [--only ...] [--format docx\|pdf]` | All of the above + `INDEX.md`, Word files, a presentation deck (`deck/`, PowerPoint in `export/`), and `<repo>-repo-starter/` |
 
 ## Example
 ```text
@@ -59,7 +59,7 @@ flowchart LR
    so the first draft already follows them.
 5. **Deck and build kit:** the suite ends with Word files, a presentation deck for the
    approvers, and a starter kit for the new code repository (CLAUDE.md, README, rules and
-   Claude skills built from the documents).
+   Claude skills built from the documents, with the `/feature-dev` plugin enabled).
 6. **Changes after review:** run `/mod-suite <slug> <change>`. It records the change in
    the brief and updates every document, the INDEX, the deck and the kit in order.
 7. **Tech stack questionnaire:** every suite includes

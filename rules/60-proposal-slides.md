@@ -3,8 +3,10 @@
 > **Scope: Modes A and B.** Mode C builds its presentation deck with
 > `mode-c-modernize-project/rules/40-document-specific.md` section 08 and
 > `mode-c-modernize-project/rules/50-readability-and-refinement.md` section 8 instead.
-> This rule is not preloaded: `/doc-proposal`, `/new-proposal`, `/doc-suite`, and
-> `/new-suite` read it when slides are requested.
+> This rule is not preloaded: the `/proposal-slides` skill reads it, and `/doc-proposal`,
+> `/new-proposal`, `/doc-suite`, and `/new-suite` hand slide requests to that skill.
+> The repository's own exporter `tools/md_to_pptx.js` builds the file; no outside skill
+> is needed.
 
 ## 1. When to build
 - Build the slides when the user passes `--format pptx` or asks for the proposal as
@@ -19,9 +21,10 @@
 | A | `output/mode-a/<slug>/02-project-proposal.md` | `output/mode-a/<slug>/export/<Product>-Project-Proposal-Slides.pptx` |
 | B | `output/mode-b/<slug>/04-project-proposal.md` | `output/mode-b/<slug>/export/<Product>-Project-Proposal-Slides.pptx` |
 
-`<Product>` is the product name with spaces replaced by hyphens. Never write slide source
-files as Markdown under `output/<mode>/<slug>/`, because the linter treats every Markdown
-file there as a document.
+`<Product>` is the product name with spaces replaced by hyphens. The slide text lives in
+`output/<mode>/<slug>/deck/proposal-slides.json` (the slide spec), so later edits survive
+a rebuild. Never write slide source files as Markdown under `output/<mode>/<slug>/`,
+because the linter treats every Markdown file there as a document.
 
 ## 3. Slide order
 One message per slide, for the approvers. The order mirrors the proposal sections.
@@ -61,22 +64,28 @@ One message per slide, for the approvers. The order mirrors the proposal section
   does.
 
 ## 5. Build
-1. Use the `pptx` skill with a `pptxgenjs` script. Write the script and its
-   `node_modules` in the session scratchpad, never in this repository.
-2. Use the 16:9 wide layout. Use a dark layout for the cover and the ask, and a light
-   content layout with an eyebrow, a one-line title, and the slide number.
-3. Apply Rule 25 section 5 for families and sizes, and Rule 25 section 7 for colours
-   (`#1F3864` and `#2F5496` for titles and accents, `#595959` for muted text).
-4. Use native tables for scope, team, budget, and risks; a timeline or milestone row for
-   the timeline; and large figures only for numbers the proposal states.
-5. Keep each slide title on one line. Shorten the title rather than shrink the font.
-6. Add the speaker notes to every slide.
+Follow `.claude/skills/proposal-slides/SKILL.md`:
+
+1. Draft the slide spec from the proposal:
+   `node tools/md_to_pptx.js output/<mode>/<slug> --draft`.
+2. Edit the spec's slide text for approvers (section 4). Keep the facts; move detail into
+   the notes.
+3. Build: `node tools/md_to_pptx.js output/<mode>/<slug> --strict`.
+
+The exporter applies the layout, so every deck looks the same:
+- 16:9 wide layout; a dark layout for the cover and the ask, and a light content layout
+  with an eyebrow, a one-line title, a footer, and the slide number.
+- Rule 25 section 5 families and sizes (Cambria titles, Calibri text, nothing below
+  14 pt) and Rule 25 section 7 colours; review markers on a yellow highlight.
+- Native tables, two cards for scope, and a numbered timeline for up to 6 milestones.
+- Speaker notes on every slide.
 
 ## 6. Check before reporting
-1. Render every slide to an image. Where PowerPoint is installed, use its COM export from
-   PowerShell; otherwise use the `pptx` skill's LibreOffice conversion.
-2. Look at each image. Fix overflow, overlaps, uneven card tops, text below the Rule 25
-   minimum sizes, and words split across lines.
-3. Render the changed slides again until none has a problem.
-4. Compare the slide figures with the proposal one last time.
-5. Report the `.pptx` path with the proposal's Open Items.
+1. Fix every warning of `--strict`: long titles, too many bullets or rows, missing notes,
+   and review markers or figures that the proposal does not contain.
+2. Render every slide to an image with
+   `powershell -NoProfile -ExecutionPolicy Bypass -File tools/pptx_to_png.ps1 -Path <deck>`
+   (needs PowerPoint), or the `pptx` skill's LibreOffice conversion without it.
+3. Look at each image. Fix overflow, overlaps, cut-off text, and words split across lines
+   in the spec, then build and render again until no slide has a problem.
+4. Report the `.pptx` path with the proposal's Open Items.

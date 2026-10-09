@@ -257,14 +257,16 @@ pasted answers)
   document folder.
 
 ## 09. Build repository starter kit
-Written last, to `output/<repo-name>-repo-starter/` (never inside `output/mode-c/<slug>/`,
-because the linter treats every Markdown file there as a suite document). It prepares the
+Written last, to `output/mode-c/<slug>/<repo-name>-repo-starter/`, inside the project's
+folder so the suite and its kit stay together. `tools/lint_docs.py` and the lint hook skip
+every `*-repo-starter` folder, because the kit is not a suite document. It prepares the
 code repository so the build starts with the agreed decisions. No application code.
 
 | File | Content, from the suite |
 |------|-------------------------|
-| `CLAUDE.md` | The product; a table of the design documents and what each gives a developer; the agreed stack; the repository layout (design "Proposed Repository Structure"); planned build and test commands marked planned; `@rules/...` imports; the skills table; a working agreement (start from a requirement ID, layer order, tests with every change, no secrets or personal names, small reviewed changes) |
-| `README.md` | For people: what the product does, how it is built, layout, prerequisites, planned commands (one per code block), how to use the skills, how the team works, links to `docs/design/` |
+| `CLAUDE.md` | The product; a table of the design documents and what each gives a developer; the agreed stack; the repository layout (design "Proposed Repository Structure"); planned build and test commands marked planned; `@rules/...` imports; the skills and plugins table (`/feature-dev` included, see below); a working agreement (start from a requirement ID, layer order, tests with every change, no secrets or personal names, small reviewed changes) |
+| `README.md` | For people: what the product does, how it is built, layout, prerequisites, planned commands (one per code block), how to use the skills and the `/feature-dev` plugin, how the team works, links to `docs/design/` |
+| `.claude/settings.json` | Enables the `feature-dev` plugin for everyone who opens the repository (block below) |
 | `rules/00-project-principles.md` | Goals, parity rule, user or patient safety, the release gate, glossary terms, roles instead of names |
 | `rules/10-architecture.md` | Parts, layer dependencies, fixed ADRs, how to add an ADR |
 | `rules/20-backend-<language>.md`, `rules/30-frontend-<framework>.md` | API conventions, errors, logging, reports; screens, navigation, printing, live updates |
@@ -279,6 +281,43 @@ code repository so the build starts with the agreed decisions. No application co
 
 Every rule cites the design section, requirement or ADR it comes from. Examples use real
 IDs from the suite (check that a cited test case really covers the cited requirement).
+
+### Plugins: `/feature-dev`
+The kit enables the `feature-dev` plugin from the official Claude Code plugin marketplace.
+`/feature-dev` guides one feature at a time: explore the code, ask clarifying questions,
+compare architecture options, implement after approval, then review. Write
+`.claude/settings.json` exactly as follows:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": { "source": "github", "repo": "anthropics/claude-plugins-official" }
+    }
+  },
+  "enabledPlugins": {
+    "feature-dev@claude-plugins-official": true
+  }
+}
+```
+
+Claude Code asks each developer to trust the marketplace and install the plugin the first
+time they open the repository. In the kit's `CLAUDE.md` and `README.md`, state when to use
+each tool:
+
+| Use | When |
+|-----|------|
+| `/feature-dev <FR-xx …> <short goal>` | A migration increment or feature that spans several layers or needs an architecture choice. Name the requirement IDs and point it to the design sections in `docs/design/`, because its exploration reads only the new code. |
+| `implement-requirement` and the other kit skills | A focused change that follows a pattern already in the design (one endpoint, one screen, one migration) |
+| `review-change`, `release-readiness` | Before every merge and every release, also after `/feature-dev` |
+
+For a **Keep** or **Improve** feature, the `/feature-dev` prompt also names the parity
+requirement, its parity test, and the current system's code path from the Mode A profile,
+read for reference only; the current system's code is never changed. Add this to the
+working agreement: a `/feature-dev` run starts from a requirement ID, follows the `rules/`
+files over its own proposals, and records any new architecture choice as an ADR in
+`docs/adr/`.
+
 Zip the folder when the user wants one file to copy.
 
 ## After the build

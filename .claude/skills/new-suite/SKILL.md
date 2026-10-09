@@ -82,13 +82,14 @@ Fix any inconsistency in place, starting with the earliest document.
    `node tools/md_to_docx.js output/mode-b/<slug>`; see Rule 20 Export).
 3. If `--format pptx` was requested (alone or with another format, for example
    `--format docx,pptx`), build the proposal slides from `04-project-proposal.md` into
-   `output/mode-b/<slug>/export/` as `rules/60-proposal-slides.md` describes. Only the
-   proposal becomes slides.
+   `output/mode-b/<slug>/export/` by following `.claude/skills/proposal-slides/SKILL.md`
+   (`tools/md_to_pptx.js`, Rule 60). Only the proposal becomes slides.
 
 ## Step 4b — Build repository starter kit
 When Brief section 3 Deliverables lists it, or with `--only starter`, write the kit per
 `mode-b-new-project/rules/40-document-specific.md` section 10 to
-`output/<repo-name>-repo-starter/`, with `docs/design/` copied from the finished suite.
+`output/mode-b/<slug>/<repo-name>-repo-starter/`, with `docs/design/` copied from the finished suite
+and `.claude/settings.json` enabling the `feature-dev` plugin (section 10, Plugins).
 Write it after the Step 3 review, so it copies the final documents. Zip it when the user
 asks for one file.
 

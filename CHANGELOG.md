@@ -8,8 +8,30 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- `tools/md_to_pptx.js`: the repository's own PowerPoint exporter for the Mode A and B
+  proposal, so slides no longer depend on an outside skill. `--draft` writes a slide
+  spec (`deck/proposal-slides.json`) from the proposal in the Rule 60 order with the
+  section text as speaker notes; the build lays it out with Rule 25 fonts and colours
+  (cover and ask on a dark layout, tables, scope cards, a numbered timeline, highlighted
+  review markers). `--strict` fails on long titles, crowded slides, missing notes, and
+  markers or figures the proposal does not contain. `tools/pptx_to_png.ps1` renders every
+  slide with PowerPoint for checking. New `/proposal-slides` skill runs draft, edit,
+  build, render, and report; the proposal and suite skills hand `--format pptx` to it.
+  `pptxgenjs` 3.12.0 is a pinned dependency in `tools/package.json`. Tests in
+  `tests/test_md_to_pptx.py` (skipped without Node).
+- Mode B and Mode C starter kits enable the `feature-dev` plugin (Mode B Rule 40 section 10
+  and Mode C Rule 40 section 09, Plugins). In Mode C, a `/feature-dev` run for a Keep or
+  Improve feature also names the parity requirement, its parity test, and the current
+  code path (read only).
+- Starter kits now go inside the project folder, `output/<mode>/<slug>/<repo-name>-repo-starter/`,
+  instead of `output/`. `tools/lint_docs.py` and the lint hook skip `*-repo-starter`
+  folders. Mode B detail: a
+  `.claude/settings.json` adds the official plugin marketplace and turns on
+  `feature-dev@claude-plugins-official`, and the kit's `CLAUDE.md` and `README.md` say when
+  to use `/feature-dev` (multi-layer features, started from requirement IDs and the
+  `docs/design/` sections) versus the kit's own skills.
 - Build repository starter kit for Mode B (Rule 40 section 10), like Mode C: `/new-suite`
-  Step 4b writes `output/<repo-name>-repo-starter/` with `CLAUDE.md`, `README.md`, rule
+  Step 4b writes `output/mode-b/<slug>/<repo-name>-repo-starter/` with `CLAUDE.md`, `README.md`, rule
   files (principles, architecture, backend, frontend, database, security, testing, an
   integration when the design has one, git and traceability), build skills, `.gitignore`,
   an ADR template, and a `docs/design/` copy of the suite. No application code; undecided

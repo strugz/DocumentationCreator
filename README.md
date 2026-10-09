@@ -22,7 +22,7 @@ names) is marked `[TBD]`. In Modes B and C, Claude's own suggestions are labeled
 | [Claude Code](https://claude.com/claude-code) (CLI, desktop app, or IDE extension) | Running the skills. Other AI agents work too; see [Using Other AI Tools](#using-other-ai-tools) | Yes, or another agent |
 | Python 3.9 or later | The document linter and its auto-lint hook (`tools/lint_docs.py`) | Yes |
 | `git` | Recording the source revision in Mode A documents | Optional |
-| Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) | Optional |
+| Node.js 18 or later | Exporting documents to Word (`tools/md_to_docx.js`) and the proposal to PowerPoint (`tools/md_to_pptx.js`) | Optional |
 
 Mode A also needs read access to the project you want to document.
 
@@ -110,7 +110,7 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/mod-plan <slug> [start/deadline/team]` | Migration Plan with cutover, rollback, and decommission | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | Modernization Proposal with options considered | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | Migration Test Plan with parity, data migration, and cutover tests | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `output/<repo>-repo-starter/` |
+| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `<repo>-repo-starter/` |
 
 ### Examples
 ```text
@@ -217,12 +217,32 @@ as PDF. The suites do this for you when you pass `--format docx` or `--format pd
 
 ## Exporting the Proposal to PowerPoint
 In Modes A and B, pass `--format pptx` to `/doc-proposal`, `/new-proposal`, or a suite, or
-ask for the proposal as slides. Claude finishes the Markdown proposal, then builds
-`output/<mode>/<slug>/export/<Product>-Project-Proposal-Slides.pptx` with the `pptx`
-skill: about 12 slides for approvers, the detail in speaker notes, the same figures and
-review markers as the proposal, and Rule 25 fonts. Each slide is rendered and checked
-before it is reported. The rules are in [`rules/60-proposal-slides.md`](rules/60-proposal-slides.md).
-Mode C builds its own presentation deck in `/mod-suite`.
+ask for the proposal as slides, or run `/proposal-slides <slug>` on a finished proposal.
+The repository's own exporter builds the deck in three steps:
+
+```bash
+node tools/md_to_pptx.js output/mode-b/my-app --draft
+```
+
+```bash
+node tools/md_to_pptx.js output/mode-b/my-app --strict
+```
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pptx_to_png.ps1 `
+  -Path output/mode-b/my-app/export/My-App-Project-Proposal-Slides.pptx
+```
+
+1. `--draft` writes the slide spec `deck/proposal-slides.json` from the proposal: about 12
+   slides in the proposal's order, with the section text as speaker notes. Claude then
+   shortens the slide text for approvers and keeps every fact and review marker.
+2. The build writes `export/<Product>-Project-Proposal-Slides.pptx` with Rule 25 fonts and
+   colours. `--strict` fails on long titles, crowded slides, missing notes, and markers or
+   figures the proposal does not contain.
+3. `tools/pptx_to_png.ps1` renders every slide with PowerPoint so each one can be checked.
+
+The rules are in [`rules/60-proposal-slides.md`](rules/60-proposal-slides.md). Mode C builds
+its own presentation deck in `/mod-suite`.
 
 ## Measuring Quality (Evals)
 If you change a rule, template, or skill, run the eval set before and after the change
@@ -279,6 +299,8 @@ DocumentationCreator/
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
 │   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)
+│   ├── md_to_pptx.js             # Proposal → PowerPoint slides (Modes A and B)
+│   ├── pptx_to_png.ps1           # Renders slides to PNG with PowerPoint for checking
 │   ├── render_mermaid.py         # Renders Mermaid diagrams to PNG for the Word export
 │   └── hooks/lint_on_write.py    # Hook: lints each document as Claude writes it
 ├── evals/                        # Eval cases, grader, and baseline scores

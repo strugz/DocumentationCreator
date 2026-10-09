@@ -77,7 +77,7 @@ current technology next to each layer so the user can say "keep" or name a repla
 | I. Rollout | Where does the new version run first (pilot site)? When does a client or site receive it [default: only after it is thoroughly tested and ready to deploy]? Is any data migrated from the current system [default: none in release 1; an option at the end]? |
 | J. Testing | Who tests integrations or analyzer transmission and the full system (for example QA and an IT or interface team)? Who runs user acceptance? [default: release gate = all Must tests pass, testers sign off, UAT signed, pilot stable two weeks] |
 | K. Audience and wording | Who approves (name the body, for example Management)? Use personal names or roles in the documents [default: roles — "Management", "the development team"]? Any words or phrases to avoid? |
-| L. Deliverables | Word files, a presentation deck (online and PowerPoint), a starter kit for the new code repository [default: all]. The tech stack questionnaire is always written. |
+| L. Deliverables | Word files, a presentation deck (online and PowerPoint), a starter kit for the new code repository, with the `/feature-dev` plugin enabled [default: all]. The tech stack questionnaire is always written. |
 
 Where it helps, use the `AskUserQuestion` tool for the highest-impact choices: the
 migration strategy, and the backend, frontend, database, and hosting layers. Offer three

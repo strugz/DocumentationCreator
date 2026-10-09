@@ -57,7 +57,7 @@ quickly. Skip any group the idea already answers.
 | I. Context | Client or organization name, stakeholders. |
 | J. Rollout and testing | Where does it run first (pilot site)? When does a client or site receive it [default: only after it is tested and ready to deploy]? Who tests integrations and the full system? Who runs user acceptance? |
 | K. Audience and wording | Who approves (name the body, for example Management)? Personal names or roles in the documents [default: roles: "Management", "the development team"]? Any words or phrases to avoid? |
-| L. Deliverables | Word files? The proposal as PowerPoint slides? A starter kit for the new code repository (CLAUDE.md, rules, and skills for building it)? [default: Markdown and Word; slides on request; starter kit yes] |
+| L. Deliverables | Word files? The proposal as PowerPoint slides? A starter kit for the new code repository (CLAUDE.md, rules, skills, and the `/feature-dev` plugin for building it)? [default: Markdown and Word; slides on request; starter kit yes] |
 
 End the message with: "Answer what you can. Reply **use defaults** to accept my
 suggestions, or **skip** for anything you don't know yet; I'll mark it `[TBD]`."

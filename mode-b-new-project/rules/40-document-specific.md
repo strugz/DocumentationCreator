@@ -117,8 +117,9 @@ Written last, by `/new-suite`, when Brief section 3 Deliverables lists it (or wi
 `--only starter`). It prepares the new code repository so the build starts with the
 agreed decisions. It contains **no application code**.
 
-- **Location:** `output/<repo-name>-repo-starter/`, never inside `output/mode-b/<slug>/`,
-  because the linter treats every Markdown file there as a suite document. `<repo-name>`
+- **Location:** `output/mode-b/<slug>/<repo-name>-repo-starter/`, inside the project's
+  folder so the suite and its kit stay together. `tools/lint_docs.py` and the lint hook skip
+  every `*-repo-starter` folder, because the kit is not a suite document. `<repo-name>`
   comes from Design section 14 Proposed Repository Structure, or is the slug.
 - **Source:** the finished suite only. Every rule file cites the design section,
   requirement, or ADR it comes from. Examples use real IDs from the suite; check that a
@@ -131,8 +132,9 @@ agreed decisions. It contains **no application code**.
 
 | File | Content, from the suite |
 |------|-------------------------|
-| `CLAUDE.md` | The product; a table of the design documents and what each gives a developer; the stack (Agreed or Proposed); the repository layout (Design section 14); planned build and test commands; `@rules/...` imports; the skills table; a working agreement (start from a requirement ID, layer order, tests with every change, no secrets or personal names, small reviewed changes) |
-| `README.md` | For people: what the product does, how it is built, layout, prerequisites, planned commands (one per code block), how to use the skills, how the team works, links to `docs/design/` |
+| `CLAUDE.md` | The product; a table of the design documents and what each gives a developer; the stack (Agreed or Proposed); the repository layout (Design section 14); planned build and test commands; `@rules/...` imports; the skills and plugins table (`/feature-dev` included, see below); a working agreement (start from a requirement ID, layer order, tests with every change, no secrets or personal names, small reviewed changes) |
+| `README.md` | For people: what the product does, how it is built, layout, prerequisites, planned commands (one per code block), how to use the skills and the `/feature-dev` plugin, how the team works, links to `docs/design/` |
+| `.claude/settings.json` | Enables the `feature-dev` plugin for everyone who opens the repository (block below) |
 | `rules/00-project-principles.md` | Goals (`G-xx`), the users and roles (`R-xx`), the ready-to-deploy gate (Rule 45 section 5), glossary terms, Words to Avoid, roles instead of names |
 | `rules/10-architecture.md` | Parts and layer dependencies (Design section 2), fixed ADRs (section 15), how to add an ADR |
 | `rules/20-backend-<language>.md`, `rules/30-frontend-<framework>.md` | API conventions, errors, logging (Design sections 5 and 11); screens and navigation (section 6) |
@@ -144,6 +146,39 @@ agreed decisions. It contains **no application code**.
 | `.claude/skills/<name>/SKILL.md` | `implement-requirement`, `add-api-endpoint`, `add-<ui>-screen`, `add-<db>-migration`, `write-tests`, `review-change`, `release-readiness` (and `new-<integration>` when section 8 has one); each reads the design and test plan first, builds in layer order, adds tests, and reports |
 | `.gitignore`, `docs/adr/README.md` | Stack ignores including local secrets; an ADR template numbered after the design's last ADR |
 | `docs/design/` | A copy of the suite's Markdown files and INDEX, unchanged |
+
+### Plugins: `/feature-dev`
+The kit enables the `feature-dev` plugin from the official Claude Code plugin marketplace.
+`/feature-dev` guides one feature at a time: explore the code, ask clarifying questions,
+compare architecture options, implement after approval, then review. Write
+`.claude/settings.json` exactly as follows:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": { "source": "github", "repo": "anthropics/claude-plugins-official" }
+    }
+  },
+  "enabledPlugins": {
+    "feature-dev@claude-plugins-official": true
+  }
+}
+```
+
+Claude Code asks each developer to trust the marketplace and install the plugin the first
+time they open the repository. In the kit's `CLAUDE.md` and `README.md`, state when to use
+each tool:
+
+| Use | When |
+|-----|------|
+| `/feature-dev <FR-xx …> <short goal>` | A feature that spans several layers or needs an architecture choice. Name the requirement IDs and point it to the design sections in `docs/design/`, because its exploration reads only the code. |
+| `implement-requirement` and the other kit skills | A focused change that follows a pattern already in the design (one endpoint, one screen, one migration) |
+| `review-change`, `release-readiness` | Before every merge and every release, also after `/feature-dev` |
+
+Add this to the working agreement: a `/feature-dev` run starts from a requirement ID,
+follows the `rules/` files over its own proposals, and records any new architecture choice
+as an ADR in `docs/adr/`.
 
 Zip the folder when the user wants one file to copy. After any later change to the suite
 (Rule 55), refresh `docs/design/` and every rule file that cites a changed section.

@@ -51,9 +51,9 @@ If you are unclear, default to the type that matches the project's maturity, and
 `output/mode-a/<slug>/02-project-proposal.md`
 
 If the user passes `--format pptx` or asks for slides, a deck, or PowerPoint, finish and
-lint the Markdown first, then build
-`output/mode-a/<slug>/export/<Product>-Project-Proposal-Slides.pptx` from it as
-`rules/60-proposal-slides.md` describes (read it first; it is not preloaded). For
+lint the Markdown first, then follow `.claude/skills/proposal-slides/SKILL.md` to build
+`output/mode-a/<slug>/export/<Product>-Project-Proposal-Slides.pptx` with
+`tools/md_to_pptx.js` (Rule 60). For
 `--format docx`, run `node tools/md_to_docx.js output/mode-a/<slug>` (Rule 20 Export).
 
 Run the review checklist. Report the file path, the proposal type chosen, and the Open

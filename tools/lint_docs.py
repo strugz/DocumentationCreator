@@ -590,13 +590,23 @@ def project_folder(path: Path) -> Path | None:
     return None
 
 
+def in_starter_kit(path: Path) -> bool:
+    """True for files in a build repository starter kit (<repo-name>-repo-starter/).
+
+    The kit is a separate code repository with its own CLAUDE.md, rules, and a copy of the
+    suite in docs/design/; it is not a suite document, so it is never linted.
+    """
+    return any(part.endswith("-repo-starter") for part in path.parts)
+
+
 def lint(paths: list[Path], source: str | None = None) -> list[Finding]:
     targets: set[Path] = set()
     for p in paths:
         p = p.resolve()
         if p.is_dir():
-            targets.update(x.resolve() for x in p.rglob("*.md") if "export" not in x.parts)
-        elif p.suffix.lower() == ".md":
+            targets.update(x.resolve() for x in p.rglob("*.md")
+                           if "export" not in x.parts and not in_starter_kit(x))
+        elif p.suffix.lower() == ".md" and not in_starter_kit(p):
             targets.add(p)
     out: list[Finding] = []
     cache: dict = {}

@@ -126,8 +126,9 @@ proposal's and plan's figures exactly; put detail in speaker notes; number the f
 
 ## Step 6 — Build repository starter kit
 When the brief's deliverables include it (default) or `--only starter`, write the kit per
-Rule 40 section 09 to `output/<repo-name>-repo-starter/`, with `docs/design/` copied from the
-finished suite. Zip it when the user asks for one file.
+Rule 40 section 09 to `output/mode-c/<slug>/<repo-name>-repo-starter/`, with `docs/design/` copied from the
+finished suite and `.claude/settings.json` enabling the `feature-dev` plugin (section 09,
+Plugins). Zip it when the user asks for one file.
 
 In non-interactive or evaluation runs, skip Steps 5 and 6 unless the input asks for them.
 

@@ -119,9 +119,9 @@ system (for example "SQL Server" is correct for the current system only).
 - Edit long documents with small scripted, asserted replacements (each old string must
   match exactly once) rather than rewriting whole files, and re-run the linter after each
   batch.
-- Files that are not suite documents (repository starter kits, scratch scripts) never go
-  under `output/mode-c/<slug>/`, because the linter treats every Markdown file there as a
-  document.
+- Scratch scripts never go under `output/mode-c/<slug>/`, because the linter treats every
+  Markdown file there as a document. The one exception is the repository starter kit in
+  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 09).
 
 ## 7. Slides
 - One message per slide, few words, for the approvers. Mirror the proposal: today →

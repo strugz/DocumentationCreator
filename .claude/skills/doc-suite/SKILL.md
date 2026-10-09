@@ -77,8 +77,8 @@ Fix any inconsistency in place.
    `node tools/md_to_docx.js output/mode-a/<slug>`; see Rule 20 Export).
 3. If `--format pptx` was requested (alone or with another format, for example
    `--format docx,pptx`), build the proposal slides from `02-project-proposal.md` into
-   `output/mode-a/<slug>/export/` as `rules/60-proposal-slides.md` describes. Only the
-   proposal becomes slides.
+   `output/mode-a/<slug>/export/` by following `.claude/skills/proposal-slides/SKILL.md`
+   (`tools/md_to_pptx.js`, Rule 60). Only the proposal becomes slides.
 
 ## Step 5 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),

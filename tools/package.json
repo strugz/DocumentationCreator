@@ -3,9 +3,11 @@
   "private": true,
   "description": "Export helpers for DocumentationCreator",
   "scripts": {
-    "export-docx": "node md_to_docx.js"
+    "export-docx": "node md_to_docx.js",
+    "export-pptx": "node md_to_pptx.js"
   },
   "dependencies": {
-    "docx": "^9.8.1"
+    "docx": "^9.8.1",
+    "pptxgenjs": "3.12.0"
   }
 }
