@@ -7,6 +7,8 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-09
+
 ### Added
 - Shared Rule 15 `rules/15-response-and-code-output.md`: direct openings with no filler,
   complete runnable code blocks (only secret and reader-supplied placeholders allowed),
@@ -138,7 +140,8 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Generated documents under `output/mode-a/` and `output/mode-b/` are ignored by git, so
   client and project details stay out of the repository.
 
-[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/strugz/DocumentationCreator/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/strugz/DocumentationCreator/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/strugz/DocumentationCreator/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/strugz/DocumentationCreator/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/strugz/DocumentationCreator/releases/tag/v0.1.0
