@@ -86,10 +86,13 @@ JARGON_TERMS = [
     (r"quer(?:y|ies)", "item / saved details"),
     (r"null", "empty"),
     (r"booleans?", "a Yes or No option"),
-    (r"exceptions?", "error message / technical issue"),
+    (r"(?:unhandled|unexpected|runtime|system|software) exceptions?|exceptions? (?:thrown|raised|occurred)",
+     "error message / technical issue"),
     (r"stack traces?", "error message / technical issue"),
 ]
 JARGON_RE = [(re.compile(r"(?<![\w-])(?:" + pat + r")(?![\w-])", re.I), rep) for pat, rep in JARGON_TERMS]
+# Text that repeats the product's own words: **UI labels**, "quoted messages", `code`, [markers].
+JARGON_EXEMPT_RE = re.compile(r"\*\*[^*\n]+\*\*|\"[^\"\n]*\"|“[^”\n]*”|`[^`\n]+`|" + MARKER_RE.pattern)
 
 # Documents that are evidence bases, not reader-facing documents.
 EVIDENCE_BASE = {"00-project-profile.md", "00-project-brief.md", "00-modernization-brief.md"}
@@ -388,12 +391,18 @@ def check_jargon(doc: Doc, out: list[Finding]) -> None:
     if doc.path.name not in USER_MANUALS:
         return
     f = str(doc.path)
-    history = section_span(doc, r"^revision history$")
+    # Document Control (before the first ##), Open Items, and Revision History are for the
+    # maintainer: source citations and marker text, not reader text.
+    skip = [s for s in (section_span(doc, r"^open items$"), section_span(doc, r"^revision history$")) if s]
+    first_h2 = next((ln for ln, lvl, _ in doc.headings if lvl == 2), len(doc.lines) + 1)
     for i, line in enumerate(doc.lines, 1):
-        if doc.in_fence(i) or (history and history[0] <= i <= history[1]):
+        if i < first_h2 or doc.in_fence(i) or any(a <= i <= b for a, b in skip):
             continue
+        # Exact UI labels (**bold**), quoted on-screen messages, inline code, and review
+        # markers must repeat the product's own words (Rule 12 section 3), so skip them.
+        text = JARGON_EXEMPT_RE.sub(" ", line)
         for pat, rep in JARGON_RE:
-            m = pat.search(line)
+            m = pat.search(text)
             if m:
                 out.append(Finding(f, i, "error", "jargon",
                                    f"'{m.group(0)}' is technical jargon; write {rep} (Rule 12)"))

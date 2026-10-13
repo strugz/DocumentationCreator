@@ -204,6 +204,16 @@ class TestContent(LintTestCase):
         self.assertTrue(any("'authenticates'" in f.message for f in found), found)
         self.assertTrue(any("Code block" in f.message and f.severity == "warning" for f in found), found)
 
+    def test_jargon_ignores_ui_labels_messages_and_plain_english(self):
+        body = ("## 1. Issuing Units\nThe only exception is an emergency issue.\n"
+                "Click **Start Server** if \"Server not reachable\" appears.\n"
+                "An unhandled exception stops the import.\n")
+        p = self.write("06-user-manual-draft.md",
+                       document("Using Demo App", "User Manual", body, revision="backend git abc123"))
+        found = [f for f in lint_docs.lint([p]) if f.check == "jargon"]
+        self.assertEqual(len(found), 1, found)
+        self.assertIn("'unhandled exception'", found[0].message)
+
     def test_jargon_only_checked_in_user_manual(self):
         body = "## 1. API\nThe server runs queries.\n"
         p = self.write("02-system-design.md", document("D", "System Design", body))

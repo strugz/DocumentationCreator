@@ -19,6 +19,10 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `tools/lint_docs.py`: a `jargon` check reports every banned Rule 12 term in a User
   Manual (`03-user-manual.md`, `06-user-manual-draft.md`) as an error and each fenced code
   block there as a warning.
+  Exact UI labels (`**bold**`), quoted on-screen messages, inline code, review markers,
+  the Document Control block, Open Items, and Revision History are exempt, because they
+  repeat the product's own words; 'exception' counts only in a technical phrase such as
+  'unhandled exception'.
 
 ## [0.5.1] - 2026-10-09
 
