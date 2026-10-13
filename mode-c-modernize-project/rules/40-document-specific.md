@@ -15,9 +15,10 @@
 | 05 | Modernization Proposal | `/mod-proposal` | Brief + Assessment + Requirements + Plan |
 | 06 | Migration Test Plan | `/mod-test-plan` | Requirements + Design + Profile (parity) |
 | 07 | Tech Stack Questionnaire | `/mod-suite` (always, right after the brief) | Profile + Brief (section 07 below); its answers feed the brief |
+| 08 | Project Documentation and Implementation Plan (shared Rule 65) | `/mod-suite` Step 3b | The finished suite |
 | — | INDEX | `/mod-suite` | All documents |
-| — | Presentation deck | `/mod-suite` | Proposal + Plan (section 08 below) |
-| — | Build repository starter kit | `/mod-suite` | Brief + Requirements + Design + Plan + Test Plan (section 09 below) |
+| — | Presentation deck | `/mod-suite` | Proposal + Plan (section 09 below) |
+| — | Build repository starter kit | `/mod-suite` | Brief + Requirements + Design + Plan + Test Plan (section 10 below) |
 
 Later documents reuse earlier ones. Never contradict an earlier document. If a later
 document reveals a problem, fix the earlier one first. If the problem is in the Mode A
@@ -241,7 +242,17 @@ pasted answers)
 4. Set the questionnaire Status to "Consolidated" and bump its version. Then carry the
    changes through the other documents in the Rule 50 section 5 order.
 
-## 08. Presentation deck
+## 08. Project Documentation and Implementation Plan
+- Shared document, written by `/mod-suite` Step 3b to
+  `08-documentation-and-implementation-plan.md` from
+  `templates/documentation-and-implementation-plan.md`. Rules:
+  `rules/65-documentation-and-implementation-plan.md`, plus this mode's readability
+  layer (Rule 50 sections 1 and 3).
+- Stages are the Migration Plan's increments and phases, with the parity stage and the
+  cutover rehearsal as separate rows; Stage 0 applies the starter kit. Keep current-system
+  facts in the present tense and target facts in the future tense.
+
+## 09. Presentation deck
 - Audience: the approvers. One message per slide, few words, plain language, and the
   detail in the speaker notes. Default order: cover → today → what the users face (their
   own problems) → what changes (today vs target table) → what we propose (parts and new
@@ -256,7 +267,7 @@ pasted answers)
 - Deck source files live in `output/mode-c/<slug>/deck/` (HTML), never as Markdown in the
   document folder.
 
-## 09. Build repository starter kit
+## 10. Build repository starter kit
 Written last, to `output/mode-c/<slug>/<repo-name>-repo-starter/`, inside the project's
 folder so the suite and its kit stay together. `tools/lint_docs.py` and the lint hook skip
 every `*-repo-starter` folder, because the kit is not a suite document. It prepares the
@@ -277,7 +288,7 @@ code repository so the build starts with the agreed decisions. No application co
 | `rules/80-git-and-traceability.md` | Branches, commits and PRs with requirement IDs; `docs/traceability.md`; new ADRs |
 | `.claude/skills/<name>/SKILL.md` | `implement-requirement`, `add-api-endpoint`, `add-<ui>-screen`, `add-<db>-migration`, `new-<integration>`, `write-tests`, `review-change`, `release-readiness`; each reads the design and test plan first, builds in layer order, adds tests and reports |
 | `.gitignore`, `docs/adr/README.md` | Stack ignores including local secrets and raw captures; ADR template numbered after the design's last ADR |
-| `docs/design/` | Copy of the suite's Markdown files and INDEX, unchanged |
+| `docs/design/` | Copy of the suite's Markdown files and INDEX, unchanged; `CLAUDE.md` and `README.md` name `08-documentation-and-implementation-plan.md` as the first file to read |
 
 Every rule cites the design section, requirement or ADR it comes from. Examples use real
 IDs from the suite (check that a cited test case really covers the cited requirement).

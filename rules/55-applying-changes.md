@@ -27,9 +27,9 @@ fact.
 | Step | Mode A | Mode B |
 |------|--------|--------|
 | 1. Evidence base | `00-project-profile.md`: section 2 for answers, 17.1 for words to avoid. If the code changed, re-read the changed areas and update the inventory with new `path:line` cites. | `00-project-brief.md`: the changed section, the Interview Log, and section 16.1. Increase the brief version (`v3` → `v4`). |
-| 2. Documents | 01 Plan → 02 Proposal → 03 User Manual → 04 Technical Manual → 05 Developer Manual → repo docs | 01 Requirements → 02 Design → 03 Plan → 04 Proposal → 05 Test Plan → 06–08 draft manuals → 09 Gap Report |
+| 2. Documents | 01 Plan → 02 Proposal → 03 User Manual → 04 Technical Manual → 05 Developer Manual → repo docs → 06 Documentation and Implementation Plan (Rule 65) | 01 Requirements → 02 Design → 03 Plan → 04 Proposal → 05 Test Plan → 06–08 draft manuals → 09 Gap Report → 10 Documentation and Implementation Plan (Rule 65) |
 | 3. INDEX | Open Items and their counts, statuses | Open Items and their counts, Decisions Needed, statuses |
-| 4. Slides and kit | The proposal `.pptx` (Rule 60), rebuilt from the updated proposal | Same, then the starter kit's `docs/design/` copy and the rule files that cite a changed section (Mode B Rule 40 section 10) |
+| 4. Slides and kit | The proposal `.pptx` (Rule 60), rebuilt from the updated proposal | Same, then the starter kit's `docs/design/` copy and the rule files that cite a changed section (Mode B Rule 40 section 11) |
 | 5. Checks | Section 4 below | Section 4 below |
 | 6. Exports | Render diagrams, then `node tools/md_to_docx.js output/mode-a/<slug>` | Same, for `output/mode-b/<slug>` |
 

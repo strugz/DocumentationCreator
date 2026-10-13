@@ -97,8 +97,9 @@ A change to a decision, scope, wording or name always flows in this order:
    the brief version (`v7` → `v8`), and update every document's Source revision.
    Update the tech stack questionnaire's Proposed values and "(decision needed)"
    headings too, unless its Status is already "Consolidated".
-2. **Assessment → Requirements → Design → Plan → Test Plan → Proposal** — update each,
-   adding a Revision History row that says what changed and why.
+2. **Assessment → Requirements → Design → Plan → Test Plan → Proposal → Documentation
+   and Implementation Plan** — update each, adding a Revision History row that says what
+   changed and why. The last one is updated after the others (shared Rule 65 section 6).
 3. **INDEX** — headline numbers, Decisions Needed, Open Items and their **counts**.
 4. **Slides** — text, speaker notes, page numbers, and any PowerPoint copy.
 5. **Checks** — `python tools/lint_docs.py output/mode-c/<slug>`, the banned-terms search
@@ -124,7 +125,7 @@ system (for example "SQL Server" is correct for the current system only).
   batch.
 - Scratch scripts never go under `output/mode-c/<slug>/`, because the linter treats every
   Markdown file there as a document. The one exception is the repository starter kit in
-  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 09).
+  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 10).
 
 ## 7. Slides
 - One message per slide, few words, for the approvers. Mirror the proposal: today →

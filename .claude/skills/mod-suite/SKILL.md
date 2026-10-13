@@ -1,7 +1,7 @@
 ---
 name: mod-suite
 description: MODE C (modernize an existing project). Generate the complete modernization set from a Mode A Project Profile in one run — interview (stack, strategy, scope, rollout, testers, audience, wording, deliverables), a Tech Stack Questionnaire for stakeholders and developers, Current State Assessment, Target Requirements, Target System Design, Migration Plan, Modernization Proposal, Migration Test Plan, each with a plain-language Read This First page and process flows, then INDEX, Word files, a presentation deck and a starter kit for the new code repository. Also applies later review feedback (decisions, scope, wording, names) and returned questionnaire answers to every document and slide. Use when the user says "modernize this project", "rebuild it on a new stack and create the documents", "plan the migration of the existing system", gives a Mode A slug, asks for a tech stack questionnaire or survey for stakeholders or developers, brings back questionnaire answers, or asks to update the modernization documents or slides.
-argument-hint: <mode-a project-slug or code path> [change request] [--only questionnaire,assessment,requirements,design,plan,proposal,test,deck,starter] [--format md|docx|pdf]
+argument-hint: <mode-a project-slug or code path> [change request] [--only questionnaire,assessment,requirements,design,plan,proposal,test,implementation,deck,starter] [--format md|docx|pdf]
 ---
 
 # Full Modernization Documentation Suite
@@ -25,7 +25,8 @@ from the first draft.
 - If `output/mode-c/<slug>/` already holds the documents and the input describes a change
   (a decision, new features, a stack choice, testers, a rejected word, names to replace,
   "hard to read", "update all slides"), do **not** regenerate. Apply the change with Rule
-  50 section 5: brief first (new version), then 01 → 02 → 03 → 04 → 06 → 05, INDEX, deck,
+  50 section 5: brief first (new version), then 01 → 02 → 03 → 04 → 06 → 05 → 08 (Step 3b),
+  INDEX, deck,
   PowerPoint copy, starter kit `docs/design/` copy; then Step 3 checks and Step 4 exports.
   If names must be replaced and the replacement for each is unclear, ask one question with
   options; otherwise do not ask.
@@ -101,10 +102,21 @@ mechanical items (markers, structure, IDs, citations, traceability) for the whol
 Then review the judgment items above by reading the documents.
 Fix any inconsistency in place, starting with the earliest document.
 
+## Step 3b — Project Documentation and Implementation Plan
+Read `rules/65-documentation-and-implementation-plan.md` (not preloaded) and write
+`output/mode-c/<slug>/08-documentation-and-implementation-plan.md` from `templates/documentation-and-implementation-plan.md`: the
+developer's map of the suite (inventory, reading order, where each fact lives) and the
+route from the documents to the working system (stages equal to the plan's phases, the
+gate word for word, documentation duties per kind of change, roles). It summarizes the
+reviewed documents and adds no fact of its own; cite the document and section for each
+row. Written now, after the Step 3 review, so the inventory shows final versions. It carries this mode's readability layer (Rule 50 sections 1 and 3) and keeps
+current-system facts in the present tense and target facts in the future tense. Then
+run the linter on the folder again.
+
 ## Step 4 — Index and Word files
 1. Write `output/mode-c/<slug>/INDEX.md`. Start with **How to Use These Documents**: a
-   reader guide (role → documents → what they decide) and the document map flow. Then a
-   table of each document with its audience, status, and Open Items count (count the rows
+   reader guide (role → documents → what they decide; developers start from 08) and the
+   document map flow. Then a table of each document with its audience, status, and Open Items count (count the rows
    of each Open Items table), a **Stack Summary** (layer, current, target, status), a
    consolidated **Decisions Needed** list (all `[DECISION]` items, with recommendations),
    and an **Open Items** list (deduplicated, grouped by who must answer).
@@ -117,7 +129,7 @@ Fix any inconsistency in place, starting with the earliest document.
    say so. For PDF, see Rule 20.
 
 ## Step 5 — Presentation deck
-When the brief's deliverables include a deck (or `--only deck`), build it per Rule 40 section 08:
+When the brief's deliverables include a deck (or `--only deck`), build it per Rule 40 section 09:
 an online deck with the session's slide-deck artifact type when one exists, and a
 PowerPoint file in `output/mode-c/<slug>/export/` when the brief lists PowerPoint (Rule 50
 Section 8: `pptx` skill, same content and notes as the online deck, Rule 25 fonts and sizes, every
@@ -126,8 +138,8 @@ proposal's and plan's figures exactly; put detail in speaker notes; number the f
 
 ## Step 6 — Build repository starter kit
 When the brief's deliverables include it (default) or `--only starter`, write the kit per
-Rule 40 section 09 to `output/mode-c/<slug>/<repo-name>-repo-starter/`, with `docs/design/` copied from the
-finished suite and `.claude/settings.json` enabling the `feature-dev` plugin (section 09,
+Rule 40 section 10 to `output/mode-c/<slug>/<repo-name>-repo-starter/`, with `docs/design/` copied from the
+finished suite and `.claude/settings.json` enabling the `feature-dev` plugin (section 10,
 Plugins). Zip it when the user asks for one file.
 
 In non-interactive or evaluation runs, skip Steps 5 and 6 unless the input asks for them.
@@ -135,7 +147,8 @@ In non-interactive or evaluation runs, skip Steps 5 and 6 unless the input asks 
 ## Step 7 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document
 (include the final lint result), the target stack per layer with its status, the
-decisions the user should make first, where the deck and starter kit are, and the reminder
+decisions the user should make first, where the deck and starter kit are, the reminder that
+developers start from `08-documentation-and-implementation-plan.md`, and the reminder
 that once the new code exists, `/doc-suite <new-code-path>` produces the final manuals and
 `/new-gap-check <slug> <new-code-path>` compares the plan against the build. Do not attach
 or send files unless the user asks for them.

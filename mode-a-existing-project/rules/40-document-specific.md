@@ -71,6 +71,15 @@
 - Only document conventions that exist (lint configs, folder patterns, naming in code).
   Recommended conventions go in a separate "Recommendations" subsection.
 
+## 6. Project Documentation and Implementation Plan
+- Shared document, written last by `/doc-suite` Step 3b to
+  `06-documentation-and-implementation-plan.md` from
+  `templates/documentation-and-implementation-plan.md`. Rules:
+  `rules/65-documentation-and-implementation-plan.md`.
+- Stages are the Completion Plan's phases; Stage 0 is the existing repository and its
+  setup from the Developer Manual. The gate is the Plan's ready-to-deploy gate, word for
+  word.
+
 ## Repo docs (README.md / ARCHITECTURE.md / API.md)
 - **README.md**: overview and purpose, prerequisites, quickstart install commands,
   core CLI or usage examples, and an architecture summary table (Module → Responsibility).

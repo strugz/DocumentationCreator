@@ -1,7 +1,7 @@
 ---
 name: new-suite
 description: MODE B (new project, no code yet). Generate the complete pre-development documentation set from a project idea. It runs the brief interview, then the Requirements Specification, System Design, Project Plan, Proposal, Test Plan, and optional draft manuals, followed by a traceability and consistency review and an optional starter kit for the new code repository. Also applies later changes (answers, decisions, scope, wording, names) to every document and the proposal slides without regenerating. Use when the user says "create a project like…", "I want to build…, create the documents", "plan and document a new system", or describes an idea without giving a code path, or asks to update the existing Mode B documents.
-argument-hint: <project idea or slug> [change request] [--only requirements,design,plan,proposal,test,manuals,starter] [--no-manuals] [--format md|docx|pdf|pptx]
+argument-hint: <project idea or slug> [change request] [--only requirements,design,plan,proposal,test,manuals,implementation,starter] [--no-manuals] [--format md|docx|pdf|pptx]
 ---
 
 # Full New-Project Documentation Suite
@@ -19,7 +19,8 @@ Input: `$ARGUMENTS`.
   (answers, a decision, a new or dropped feature, a rejected word, names to
   replace, "hard to read"), do **not** regenerate. Read `rules/55-applying-changes.md`
   (not preloaded) and apply the change in its order: the brief (new version) first, then
-  01 → 02 → 03 → 04 → 05 → 06–08 → 09, INDEX, proposal slides, starter kit; then the
+  01 → 02 → 03 → 04 → 05 → 06–08 → 09 → 10 (Step 3b), INDEX, proposal slides, starter kit;
+  then the
   Step 3 checks
   and the Step 4 exports.
 - If the replacement for a name or term is unclear, ask one question with options;
@@ -72,8 +73,18 @@ mechanical items (markers, structure, IDs, citations, traceability) for the whol
 Then review the judgment items above by reading the documents.
 Fix any inconsistency in place, starting with the earliest document.
 
+## Step 3b — Project Documentation and Implementation Plan
+Read `rules/65-documentation-and-implementation-plan.md` (not preloaded) and write
+`output/mode-b/<slug>/10-documentation-and-implementation-plan.md` from `templates/documentation-and-implementation-plan.md`: the
+developer's map of the suite (inventory, reading order, where each fact lives) and the
+route from the documents to the working system (stages equal to the plan's phases, the
+gate word for word, documentation duties per kind of change, roles). It summarizes the
+reviewed documents and adds no fact of its own; cite the document and section for each
+row. Written now, after the Step 3 review, so the inventory shows final versions. Then
+run the linter on the folder again.
+
 ## Step 4 — Index and export
-1. Write `output/mode-b/<slug>/INDEX.md`: a table of each document with its audience,
+1. Write `output/mode-b/<slug>/INDEX.md`: a table of each document (10 included) with its audience,
    status, and Open Items count. Then add a consolidated **Decisions Needed** list
    (all `[DECISION]` items, with recommendations) and **Open Items** list (deduplicated,
    grouped by who must answer: client, project manager, technical lead).
@@ -87,14 +98,15 @@ Fix any inconsistency in place, starting with the earliest document.
 
 ## Step 4b — Build repository starter kit
 When Brief section 3 Deliverables lists it, or with `--only starter`, write the kit per
-`mode-b-new-project/rules/40-document-specific.md` section 10 to
+`mode-b-new-project/rules/40-document-specific.md` section 11 to
 `output/mode-b/<slug>/<repo-name>-repo-starter/`, with `docs/design/` copied from the finished suite
-and `.claude/settings.json` enabling the `feature-dev` plugin (section 10, Plugins).
+and `.claude/settings.json` enabling the `feature-dev` plugin (section 11, Plugins).
 Write it after the Step 3 review, so it copies the final documents. Zip it when the user
 asks for one file.
 
 ## Step 5 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),
-the decisions the user should make first, where the starter kit is (if built), and the
+the decisions the user should make first, where the starter kit is (if built), the
+reminder that developers start from `10-documentation-and-implementation-plan.md`, and the
 reminder that once code exists,
 `/new-gap-check` compares plan against build and the Mode A skills produce the final manuals.

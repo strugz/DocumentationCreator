@@ -78,6 +78,9 @@
       and ready-to-deploy gate equal the plan's; the Test Plan repeats the same gate.
 - [ ] Mode B: every Must requirement appears in the Plan's WBS, the System Design, and the
       Test Plan (check the traceability matrix).
+- [ ] Documentation and Implementation Plan (Rule 65): its stages equal the plan's phases,
+      its gate equals the plan's and test plan's, and its inventory lists every file with
+      the current version and status.
 - [ ] Mode C: every Must requirement appears in the Migration Plan's WBS, the Target
       System Design, and the Migration Test Plan; the design's Stack Comparison matches
       the brief's Target Tech Stack layer by layer; the proposal's strategy, timeline,

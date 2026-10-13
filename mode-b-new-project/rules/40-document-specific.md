@@ -14,7 +14,8 @@
 | 05 | Test Plan | `/new-test-plan` | Requirements + Design |
 | 06–08 | Draft User / Technical / Developer Manuals | `/new-manuals` | Requirements + Design |
 | 09 | Gap Report (after code exists) | `/new-gap-check` | Mode B Requirements + Mode A Profile |
-| 10 | Build repository starter kit (not a document) | `/new-suite` Step 4b | The finished suite |
+| 10 | Project Documentation and Implementation Plan (shared Rule 65) | `/new-suite` Step 3b | The finished suite |
+| 11 | Build repository starter kit (not a document) | `/new-suite` Step 4b | The finished suite |
 
 Later documents reuse earlier ones. Never contradict an earlier document. If a later
 document reveals a problem, fix the earlier one first.
@@ -114,7 +115,16 @@ document reveals a problem, fix the earlier one first.
 - For each `FR`/`NFR`: Implemented / Partial / Missing / Changed, with Mode A evidence
   (`path:line`). Also list features built that were **not** in the requirements.
 
-## 10. Build repository starter kit
+## 10. Project Documentation and Implementation Plan
+- Shared document, written by `/new-suite` Step 3b to
+  `10-documentation-and-implementation-plan.md` from
+  `templates/documentation-and-implementation-plan.md`. Rules:
+  `rules/65-documentation-and-implementation-plan.md`.
+- Stages are the Project Plan's phases; Stage 0 applies the starter kit. Section 9 ends
+  with the hand-over: once code exists, `/new-gap-check`, then the Mode A skills for the
+  final manuals.
+
+## 11. Build repository starter kit
 Written last, by `/new-suite`, when Brief section 3 Deliverables lists it (or with
 `--only starter`). It prepares the new code repository so the build starts with the
 agreed decisions. It contains **no application code**.
@@ -147,7 +157,7 @@ agreed decisions. It contains **no application code**.
 | `rules/80-git-and-traceability.md` | Branches, commits, and PRs with requirement IDs; `docs/traceability.md` from the Traceability Matrix; new ADRs |
 | `.claude/skills/<name>/SKILL.md` | `implement-requirement`, `add-api-endpoint`, `add-<ui>-screen`, `add-<db>-migration`, `write-tests`, `review-change`, `release-readiness` (and `new-<integration>` when section 8 has one); each reads the design and test plan first, builds in layer order, adds tests, and reports |
 | `.gitignore`, `docs/adr/README.md` | Stack ignores including local secrets; an ADR template numbered after the design's last ADR |
-| `docs/design/` | A copy of the suite's Markdown files and INDEX, unchanged |
+| `docs/design/` | A copy of the suite's Markdown files and INDEX, unchanged; `CLAUDE.md` and `README.md` name `10-documentation-and-implementation-plan.md` as the first file to read |
 
 ### Plugins: `/feature-dev`
 The kit enables the `feature-dev` plugin from the official Claude Code plugin marketplace.

@@ -10,6 +10,7 @@
 | Has the layer | Does not |
 |---------------|----------|
 | Mode A: Completion Plan, Proposal, User Manual, Technical Manual, Developer Manual | Mode A Project Profile and Mode B Project Brief (internal evidence bases) |
+| All modes: Project Documentation and Implementation Plan (Rule 65) | |
 | Mode B: Requirements, System Design, Project Plan, Proposal, Test Plan, draft manuals, Gap Report | Repo docs (README, ARCHITECTURE, API) and INDEX.md |
 | Mode C: every document, including the brief (Mode C Rule 50) | — |
 
@@ -63,6 +64,7 @@ flow appears in several documents, so it reads the same and renders once.
 | Defect flow | New → Triaged → In progress → Fixed → Retest → Verified → Closed | Test Plan |
 | Request flow | A request from the screen through the API to the database and back | Developer Manual |
 | Gap flow | Planned requirement → built? → gap → action | Gap Report |
+| Implementation route | Documents approved → Stage 0 repository → stages → tests → gate → go-live → documents updated (source in Rule 65 section 4) | Documentation and Implementation Plan |
 
 ## 5. Mermaid pitfalls
 - A label that starts with a number and a period (`["1. Plan"]`) is parsed as a Markdown

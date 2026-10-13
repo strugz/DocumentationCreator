@@ -32,6 +32,9 @@ PowerPoint slides in Mode A or B, follow `.claude/skills/proposal-slides/SKILL.m
 `rules/60-proposal-slides.md` (the exporter is `tools/md_to_pptx.js`). For a plan,
 test plan, or proposal in Mode A or B, also read `rules/45-estimation-and-release-gate.md`.
 To change an existing Mode A or B suite, follow `rules/55-applying-changes.md`.
+Every suite ends with the shared Project Documentation and Implementation Plan: follow
+`rules/65-documentation-and-implementation-plan.md` and
+`templates/documentation-and-implementation-plan.md` (Mode A `06-`, Mode B `10-`, Mode C `08-`).
 
 ## Choosing the mode
 
