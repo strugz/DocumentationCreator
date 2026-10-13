@@ -10,7 +10,8 @@
  * GFM tables, bullet / numbered / checkbox lists, fenced code (Mermaid embedded as an image
  * when tools/render_mermaid.py has rendered it to <folder>/assets/diagrams/, otherwise shown
  * as source with a note), GFM alerts, block quotes, bold, italic, inline code, links, <kbd>.
- * Review markers ([TBD], [ASSUMPTION], [VERIFY], [DECISION]) are highlighted.
+ * Review markers ([TBD], [ASSUMPTION], [VERIFY], [DECISION]) are highlighted. A tick box
+ * character (☐ ☒ ☑) becomes a Word checkbox content control that the reader can click.
  * The Markdown "Table of Contents" section becomes a static, linked list of the ## and ###
  * headings. No Word TOC field is used, so Word never asks to update fields on open.
  */
@@ -20,7 +21,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const {
-  AlignmentType, Bookmark, BorderStyle, Document, ExternalHyperlink, Footer, HeadingLevel,
+  AlignmentType, Bookmark, BorderStyle, CheckBox, Document, ExternalHyperlink, Footer, HeadingLevel,
   ImageRun, InternalHyperlink, LevelFormat, Packer, PageNumber, Paragraph, ShadingType, Table,
   TableCell, TableRow, TextRun, WidthType,
 } = require("docx");
@@ -39,6 +40,7 @@ const INLINE_RE = new RegExp([
   String.raw`\[(?:TBD|ASSUMPTION|VERIFY|DECISION)(?::[^\]]*)?\]`,  // review marker
   String.raw`\[[^\]]+\]\([^)]+\)`,                                 // link
   String.raw`<kbd>[^<]+</kbd>`,                                    // key
+  "[☐☑☒]",                                       // tick box (clickable in Word)
   String.raw`(?<![\w*])\*[^*\s][^*]*\*(?![\w*])`,                  // italic
 ].join("|"), "g");
 
@@ -65,6 +67,9 @@ function runs(text, base = {}) {
       }
     } else if (t.startsWith("<kbd>")) {
       out.push(new TextRun({ text: t.slice(5, -6), font: MONO, bold: true, ...base }));
+    } else if (/^[☐☑☒]$/.test(t)) {
+      // a real Word checkbox content control, so the reader can toggle it with one click
+      out.push(new CheckBox({ checked: t !== "☐" }));
     } else {
       out.push(...runs(t.slice(1, -1), { ...base, italics: true }));
     }
