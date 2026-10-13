@@ -16,6 +16,8 @@ Checks every Markdown document under output/mode-a/, output/mode-b/, or output/m
   wording      no word from the evidence base's 'Words to Avoid' table in other documents
   readability  (warning) a 'Read This First' section and an 'In short' note under every
                numbered ## section (Rule 35)
+  jargon       (User Manual only) no banned technical term from Rule 12; a fenced code
+               block is a warning (allowed only for a command-line product)
   links        internal #anchors resolve to a heading
   secrets      no credentials, keys, or connection strings with passwords
   citations    (Modes A and C) every `path:line` exists in the source project
@@ -66,6 +68,28 @@ SECRET_PATTERNS = [
     (re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"), "Looks like an API secret key"),
     (re.compile(r"\b[a-z][a-z0-9+.-]*://[^:\s/@<>]+:(?![<{\[$%])[^@\s<>]+@"), "Connection string with an embedded password"),
 ]
+
+# End-user documents that Rule 12 governs in full.
+USER_MANUALS = {"03-user-manual.md", "06-user-manual-draft.md"}
+# Rule 12 section 2: banned term pattern -> replacement.
+JARGON_TERMS = [
+    (r"back-?end", "system / application"),
+    (r"APIs?", "system / application"),
+    (r"servers?", "system / application"),
+    (r"execut(?:e|es|ed|ing|ion)", "run / start / click"),
+    (r"trigger(?:s|ed|ing)?", "run / start / click"),
+    (r"input parameters?", "details / fields / information"),
+    (r"arguments?", "details / fields / information"),
+    (r"authenticat(?:e|es|ed|ing|ion)", "log in"),
+    (r"authori[sz]ation", "permissions"),
+    (r"database records?", "item / saved details"),
+    (r"quer(?:y|ies)", "item / saved details"),
+    (r"null", "empty"),
+    (r"booleans?", "a Yes or No option"),
+    (r"exceptions?", "error message / technical issue"),
+    (r"stack traces?", "error message / technical issue"),
+]
+JARGON_RE = [(re.compile(r"(?<![\w-])(?:" + pat + r")(?![\w-])", re.I), rep) for pat, rep in JARGON_TERMS]
 
 # Documents that are evidence bases, not reader-facing documents.
 EVIDENCE_BASE = {"00-project-profile.md", "00-project-brief.md", "00-modernization-brief.md"}
@@ -359,6 +383,26 @@ def check_readability(doc: Doc, out: list[Finding]) -> None:
                            "No 'In short' note under section(s) " + ", ".join(missing) + " (Rule 35)"))
 
 
+def check_jargon(doc: Doc, out: list[Finding]) -> None:
+    """Rule 12: no developer jargon and no code in a User Manual."""
+    if doc.path.name not in USER_MANUALS:
+        return
+    f = str(doc.path)
+    history = section_span(doc, r"^revision history$")
+    for i, line in enumerate(doc.lines, 1):
+        if doc.in_fence(i) or (history and history[0] <= i <= history[1]):
+            continue
+        for pat, rep in JARGON_RE:
+            m = pat.search(line)
+            if m:
+                out.append(Finding(f, i, "error", "jargon",
+                                   f"'{m.group(0)}' is technical jargon; write {rep} (Rule 12)"))
+    for start, _end, _lang in doc.fences:
+        out.append(Finding(f, start, "warning", "jargon",
+                           "Code block in a User Manual; allowed only when the product is a "
+                           "command-line tool (Rule 12)"))
+
+
 def check_links(doc: Doc, out: list[Finding]) -> None:
     f = str(doc.path)
     slugs = heading_slugs(doc)
@@ -621,6 +665,7 @@ def lint(paths: list[Path], source: str | None = None) -> list[Finding]:
         check_code_blocks(doc, out)
         check_mermaid(doc, out)
         check_readability(doc, out)
+        check_jargon(doc, out)
         check_links(doc, out)
         check_secrets(doc, out)
         check_markers(doc, out)

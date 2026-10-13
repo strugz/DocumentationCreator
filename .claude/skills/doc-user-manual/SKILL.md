@@ -15,7 +15,8 @@ Input: `$ARGUMENTS`.
 
 ## Preconditions
 1. Resolve `<slug>`. Run the `doc-intake` procedure if the profile is missing.
-2. Read the profile, `mode-a-existing-project/templates/03-user-manual.md`, `rules/10-writing-style.md`, and
+2. Read the profile, `mode-a-existing-project/templates/03-user-manual.md`, `rules/10-writing-style.md`,
+   `rules/12-end-user-documentation.md` (plain vocabulary, structure, and the self-check), and
    `mode-a-existing-project/rules/40-document-specific.md` section 3.
 
 ## Procedure
@@ -35,7 +36,7 @@ Input: `$ARGUMENTS`.
 4. **Write each task** using the task block in the template: purpose, who, prerequisites,
    numbered steps (one action each, labels in **bold**), result, tips, errors.
 5. **Navigation paths:** derive them from router/menu definitions, e.g.
-   **Settings** › **Users** › **Add User**.
+   **Settings** > **Users** > **Add User**.
 6. **Screenshots:** you cannot capture them. Insert placeholders where a screen is first
    introduced: `![Screenshot: <screen>](assets/TBD.png)` + `[TBD: capture screenshot]`.
    If the user approves running the app and a browser is available, you may capture real
@@ -43,7 +44,8 @@ Input: `$ARGUMENTS`.
 7. **Troubleshooting:** build the table from the error strings you collected. Explain each
    one in plain language and give the fix.
 8. **FAQ:** 5–10 questions inferred from validation rules, permissions, and common flows.
-9. **Language check:** remove code, file paths, and technical jargon (unless the product is a CLI).
+9. **Language check:** run the Rule 12 self-verification audit. Remove code, file paths,
+   and every banned term (unless the product is a CLI); the `jargon` lint check reports them.
 
 ## Output
 `output/mode-a/<slug>/03-user-manual.md`

@@ -99,7 +99,9 @@ document reveals a problem, fix the earlier one first.
 - Add the "planned system" banner (see Rule 30) under the Document Control block and set
   Status to **Draft — Pre-development**.
 - User Manual: tasks come from the user stories; screen and button names come from the
-  Design's screen inventory and are marked `[VERIFY: final label]`.
+  Design's screen inventory and are marked `[VERIFY: final label]`. Shared Rule 12
+  (`rules/12-end-user-documentation.md`) applies in full: plain vocabulary, action-oriented
+  titles, bold UI labels, and error guidance that says what to do next.
 - Technical Manual: requirements, architecture, environments, and the proposed
   configuration keys from the Design. Exact install commands are `[TBD]` until the build
   exists.

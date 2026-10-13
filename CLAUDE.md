@@ -89,6 +89,7 @@ Shared by both modes (always loaded):
 
 @rules/00-core-principles.md
 @rules/10-writing-style.md
+@rules/12-end-user-documentation.md
 @rules/15-response-and-code-output.md
 @rules/20-formatting.md
 @rules/25-typography.md
@@ -109,7 +110,8 @@ Before writing or editing any document outside a skill, read the active mode's r
 
 The non-negotiables from those rules, in short: never invent features, numbers, dates,
 costs, or names; mark every gap with `[TBD]`, `[ASSUMPTION]`, `[VERIFY]` (and in Modes B
-and C, `[DECISION]`); in Modes B and C label Claude's own suggestions **Proposed** and
+and C, `[DECISION]`); no code and no developer jargon in a User Manual or in any
+user-facing text (Rule 12); in Modes B and C label Claude's own suggestions **Proposed** and
 never describe the planned system as already built; in Mode C never describe a current
 feature that the profile does not list.
 

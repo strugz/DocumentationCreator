@@ -270,6 +270,7 @@ DocumentationCreator/
 ├── rules/                        # Shared rules (both modes)
 │   ├── 00-core-principles.md
 │   ├── 10-writing-style.md
+│   ├── 12-end-user-documentation.md  # Plain language for end users: banned jargon
 │   ├── 15-response-and-code-output.md
 │   ├── 20-formatting.md
 │   ├── 25-typography.md
@@ -318,7 +319,7 @@ DocumentationCreator/
 | Module | Responsibility |
 |--------|----------------|
 | `CLAUDE.md` | Entry point. Defines the three modes and the workflow, and imports the rules |
-| `rules/` | Shared standards: principles, style, response and code output, formatting, typography, QA checklist |
+| `rules/` | Shared standards: principles, style, end-user documentation, response and code output, formatting, typography, QA checklist |
 | `mode-a-existing-project/` | Mode A templates and evidence rules (code is the source of truth) |
 | `mode-b-new-project/` | Mode B templates and evidence rules (the brief is the source of truth) |
 | `mode-c-modernize-project/` | Mode C templates and evidence rules (the Mode A profile for the current system, the modernization brief for the target) |

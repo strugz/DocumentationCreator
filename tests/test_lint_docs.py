@@ -195,6 +195,20 @@ class TestContent(LintTestCase):
         p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY))
         self.assertEqual([f for f in self.errors(p) if f.check == "wording"], [])
 
+    def test_jargon_in_user_manual(self):
+        body = ("## 1. Approving an Invoice\n1. The server authenticates you.\n\n"
+                "```sql\nSELECT 1;\n```\n")
+        p = self.write("06-user-manual-draft.md", document("Using Demo App", "User Manual", body))
+        found = [f for f in lint_docs.lint([p]) if f.check == "jargon"]
+        self.assertTrue(any("'server'" in f.message and f.severity == "error" for f in found), found)
+        self.assertTrue(any("'authenticates'" in f.message for f in found), found)
+        self.assertTrue(any("Code block" in f.message and f.severity == "warning" for f in found), found)
+
+    def test_jargon_only_checked_in_user_manual(self):
+        body = "## 1. API\nThe server runs queries.\n"
+        p = self.write("02-system-design.md", document("D", "System Design", body))
+        self.assertEqual([f for f in lint_docs.lint([p]) if f.check == "jargon"], [])
+
     def test_broken_anchor(self):
         p = self.write("02-system-design.md", document("D", "System Design", DESIGN_BODY + "\nSee [x](#no-such-heading).\n"))
         self.assertCheck(self.errors(p), "links", "no-such-heading")

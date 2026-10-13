@@ -17,7 +17,8 @@ Input: `$ARGUMENTS`. Default target: `all`.
 ## Preconditions
 1. Resolve `<slug>`. Requires the brief, `01-requirements-specification.md`, and
    `02-system-design.md` (run the missing procedures first).
-2. Read `mode-b-new-project/rules/40-document-specific.md` section 06–08 and the Mode A templates:
+2. Read `mode-b-new-project/rules/40-document-specific.md` section 06–08,
+   `rules/12-end-user-documentation.md` (for the User Manual), and the Mode A templates:
    - `mode-a-existing-project/templates/03-user-manual.md`
    - `mode-a-existing-project/templates/04-technical-manual.md`
    - `mode-a-existing-project/templates/05-developer-manual.md`
@@ -44,7 +45,8 @@ Input: `$ARGUMENTS`. Default target: `all`.
 2. Screen names and fields come from the design's screen inventory (`S-xx`).
 3. Troubleshooting: list the validation and permission failures from the requirements.
    Messages are `[TBD: final message text]`.
-4. No code, no file paths.
+4. No code, no file paths, no banned term (Rule 12 self-verification audit; the `jargon`
+   lint check reports them).
 
 ## Technical Manual → `07-technical-manual-draft.md`
 1. Architecture, components, ports, and environments come from the design.

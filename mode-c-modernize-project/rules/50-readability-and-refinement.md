@@ -26,6 +26,9 @@ The detail stays in the numbered sections; the readability layer only summarizes
 never adds facts that the sections do not contain.
 
 ## 2. Audience and wording
+- **Plain vocabulary (shared Rule 12).** Read This First pages, the proposal body, and
+  the deck use no banned term from `rules/12-end-user-documentation.md` section 2 and no
+  other developer jargon; technical terms stay in the assessment and design.
 - **Problems from the user's point of view.** For management decks and proposals, state
   each problem as the people who use the system feel it (for a laboratory: "missing lab
   modules", "no archiving", "cannot keep up", "limited formulas", "hard to install", "not

@@ -40,6 +40,9 @@
   expected result, and common errors.
 - Error messages are quoted **exactly** from the code's UI strings, with their meaning
   and fix explained in a Troubleshooting table.
+- Follows shared Rule 12 (`rules/12-end-user-documentation.md`): plain vocabulary with no
+  banned term, action-oriented titles, bold UI labels, `>` between menu steps, and error
+  guidance that says what to do next.
 - No code, terminal commands, or internal file paths. Exception: CLI tools, where the
   "UI" *is* the command line.
 - Include an FAQ and a Glossary of business terms.

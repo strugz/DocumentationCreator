@@ -47,6 +47,8 @@
 - Pick one term per concept and never vary it ("user" vs "member" vs "account").
 
 ## Audience and wording
+- **End-user text follows Rule 12.** The User Manual, the Read This First layer, and
+  proposal bodies use the plain vocabulary in `rules/12-end-user-documentation.md`.
 - **Problems from the users' point of view.** In proposals and plans, state each problem as
   the people who use the system feel it ("cannot find last month's records", "reports take
   a day"), then confirm it with evidence. Technical causes follow in one short paragraph

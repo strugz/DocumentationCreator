@@ -7,6 +7,19 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+- Shared Rule 12 `rules/12-end-user-documentation.md` (Modes A, B, and C): end-user text
+  is written for readers with no technical background. It bans developer jargon with a
+  replacement table (backend, API, server, execute, authenticate, query, null, exception,
+  and others), requires action-oriented titles, bold UI labels, `>` between menu steps,
+  and error guidance that says what to do next, and ends with a self-verification audit.
+  It applies in full to the User Manual and to the Read This First layer, proposal
+  bodies, and slides in every mode. Loaded by `CLAUDE.md`; referenced by Rule 10, Rule 50,
+  the three mode rules, and the manual skills.
+- `tools/lint_docs.py`: a `jargon` check reports every banned Rule 12 term in a User
+  Manual (`03-user-manual.md`, `06-user-manual-draft.md`) as an error and each fenced code
+  block there as a warning.
+
 ## [0.5.1] - 2026-10-09
 
 ### Security

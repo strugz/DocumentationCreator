@@ -15,6 +15,7 @@ never write application code here. You write Markdown documents into `output/` o
 2. The shared rules, in this order. They are mandatory:
    - `rules/00-core-principles.md`
    - `rules/10-writing-style.md`
+   - `rules/12-end-user-documentation.md`
    - `rules/15-response-and-code-output.md`
    - `rules/20-formatting.md`
    - `rules/25-typography.md`

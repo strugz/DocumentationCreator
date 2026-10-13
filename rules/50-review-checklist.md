@@ -48,6 +48,9 @@
 ## Quality
 - [ ] Written for the stated audience (no code in the User Manual; exact commands in
       the Technical Manual).
+- [ ] End-user text (Rule 12): the User Manual, Read This First pages, and proposal bodies
+      use no banned term or other developer jargon, name tasks by the user's goal, bold
+      every UI label, and tell the reader what to do after an error (`jargon` lint check).
 - [ ] Procedures: one action per step, prerequisites first, expected results stated.
 - [ ] Typography (Rule 25): no inline styling or colour in Markdown, headings H1–H4 only,
       code lines of 100 characters or fewer; exported Word, HTML, and slides use the Rule 25
