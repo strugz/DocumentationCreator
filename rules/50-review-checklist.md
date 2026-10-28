@@ -44,6 +44,9 @@
 - [ ] Each document has a `Read This First` section and an "In short" note under every
       numbered section; no term the user rejected and no personal name the user asked to
       replace remains (Mode C Rule 50).
+- [ ] Slides, speaker notes, the proposal body and `Read This First` pages use no bare
+      reference code (`M3`, `RK-13`, `FR-37`, `WBS 2.33`); each is said in plain words with its
+      date, or explained beside it (Mode C Rule 50 section 9).
 
 ## Quality
 - [ ] Written for the stated audience (no code in the User Manual; exact commands in
