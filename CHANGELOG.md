@@ -23,6 +23,10 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the Document Control block, Open Items, and Revision History are exempt, because they
   repeat the product's own words; 'exception' counts only in a technical phrase such as
   'unhandled exception'.
+- Mode C Rule 50 section 9 (`mode-c-modernize-project/rules/50-readability-and-refinement.md`):
+  slides, speaker notes, proposal bodies, and Read This First pages use no bare reference
+  code (`M3`, `RK-13`, `FR-37`, `WBS 2.33`); each is said in plain words with its date, or
+  explained beside it. Rule 50's review checklist has the matching Mode C item.
 
 ## [0.5.1] - 2026-10-09
 
