@@ -134,6 +134,7 @@ system (for example "SQL Server" is correct for the current system only).
 - After adding or removing a slide, renumber every footer and update the deck order.
 - Keep speaker notes in step with the slide text; they carry the detail.
 - When a PowerPoint copy exists, rebuild it after slide changes so the two stay equal.
+- No bare reference codes on a slide or in its speaker notes (section 9).
 
 ## 8. PowerPoint (.pptx) deck
 The online deck cannot export a `.pptx` from the session, so build the PowerPoint file
@@ -166,3 +167,50 @@ directly when the brief lists it (or the user asks "send the slides as pptx").
   across lines, then render the changed slides again.
 - **After any slide change:** rebuild the `.pptx` from the script and check the changed
   slides again.
+
+## 9. Plain references in reader-facing text
+The suite links its facts with short codes: milestones (`M3`), phases (`Phase 4`), work
+items (`WBS 2.33`), risks (`RK-13`), features (`F-18`), requirements (`FR-37`, `NFR-12`),
+findings (`D-14`), decisions, constraints (`C-09`), ADRs (`ADR-10`) and test cases
+(`TC-29`, `UAT-05`). They exist for traceability: the development team follows one code
+from the brief to the requirement, the design, the plan and the test. A reviewer who
+has not read the Migration Plan cannot decode them. "Checked at M3" on a risk slide made
+Management ask what M3 meant.
+
+**Where the rule applies:** every slide and its speaker notes, the proposal body
+(sections 1 to 16), every `Read This First` section, and the INDEX headline and Decisions
+Needed list.
+
+**The rule**
+1. **Never use a bare code.** Say what it means, in plain words, with its date when it
+   has one.
+2. **A code may stay only where its meaning sits right beside it:** a milestone card that
+   reads "M3 · April — Instrument service in the test lab", a table with a "Ref."
+   column, a source line ("Source: Migration Plan section 10"), or a proposal appendix.
+3. **Keep codes in the working documents.** The requirements, design, plan, test plan,
+   assessment, brief and the Implementation Plan keep their codes in the numbered
+   sections, because developers trace with them. Their `Read This First` pages follow
+   this rule.
+4. **Write the plain phrase once, then reuse it** across the proposal, the slides and the
+   notes, so readers see the same words everywhere.
+
+| Instead of | Write |
+|------------|-------|
+| checked at M3 | checked in early April 2027, when the analyzer link first runs in the test lab |
+| from M3 onward | from April 2027 onward |
+| agreed at M1 | agreed by 22 January 2027, when the project is approved |
+| by M7 | by 19 November 2027, when the release is ready to deploy |
+| during Phase 4 | during system testing and user acceptance (October 2027) |
+| WBS 2.33 | the blood bank module build |
+| RK-13 | the risk that the laboratory modules leave little slack |
+| FR-57 | the requirement that each part installs from one installer |
+| D-14 | the hard-coded password found in the current system |
+
+Use the dates from the Migration Plan's milestone table; do not round them into new
+facts. Mode C placeholder markers (`[TBD]`, `[VERIFY]` and the others) are not codes and
+stay as they are.
+
+**Check before reporting** (excluding Revision History rows):
+`grep -n -E "\b(M[0-9]+|Phase [0-9]|WBS [0-9.]+|RK-[0-9]+|F-[0-9]+|N?FR-[0-9]+|D-[0-9]+|C-[0-9]+|ADR-[0-9]+|TC-[A-Z0-9-]+|UAT-[0-9]+)\b" output/mode-c/<slug>/05-*.md output/mode-c/<slug>/deck/project/slides/*.html`.
+Every hit in the proposal body, a `Read This First` section or a slide is either rewritten
+or covered by item 2.
