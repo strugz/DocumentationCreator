@@ -80,6 +80,14 @@
   setup from the Developer Manual. The gate is the Plan's ready-to-deploy gate, word for
   word.
 
+## 7. System Map
+- Shared document, written by `/doc-suite` Step 3a (before the Implementation Plan) or by
+  `/system-map <slug>` to `07-system-map.md` from `templates/system-map.md`. Rules:
+  `rules/70-system-map.md`.
+- Maps the system as built: parts with `path:line` from Profile sections 4–6, screens from
+  section 9, data from section 10, outside systems from section 12, servers from sections 11
+  and 13. "Detail in" cells point to the manuals once they exist.
+
 ## Repo docs (README.md / ARCHITECTURE.md / API.md)
 - **README.md**: overview and purpose, prerequisites, quickstart install commands,
   core CLI or usage examples, and an architecture summary table (Module → Responsibility).

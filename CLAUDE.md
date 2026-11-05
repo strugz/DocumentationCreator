@@ -26,6 +26,7 @@ it as it is or plan a modernized rebuild?"
 | 4 | Technical Manual | `/doc-technical-manual` | `04-technical-manual.md` | IT ops, sysadmins, support |
 | 5 | Developer Manual | `/doc-developer-manual` | `05-developer-manual.md` | Developers, maintainers |
 | 6 | Project Documentation and Implementation Plan (shared, Rule 65) | `/doc-suite` (`--only implementation`) | `templates/documentation-and-implementation-plan.md` | Developers, tech lead, PM |
+| 7 | System Map (shared, Rule 70) | `/system-map` or `/doc-suite` (`--only map`) | `templates/system-map.md` | New team members, tech lead, support, PM |
 | + | Repo docs (README / ARCHITECTURE / API) | `/doc-repo-files` | `repo/` | Contributors on GitHub |
 | + | Proposal as PowerPoint slides (`tools/md_to_pptx.js`) | `/proposal-slides` | Rule 60 | Approvers |
 | ★ | Everything above, in order; also applies later changes to every document | `/doc-suite` | — | — |
@@ -43,8 +44,9 @@ it as it is or plan a modernized rebuild?"
 | 6–8 | Draft User / Technical / Developer Manuals | `/new-manuals` | Mode A templates `03`–`05` | Same as Mode A |
 | 9 | Planned vs Built Gap Report (after code exists) | `/new-gap-check` | `09-gap-report.md` | PM, tech lead |
 | 10 | Project Documentation and Implementation Plan (shared, Rule 65) | `/new-suite` (`--only implementation`) | `templates/documentation-and-implementation-plan.md` | Developers, tech lead, PM |
-| + | Build repository starter kit (CLAUDE.md, rules, skills, and the `/feature-dev` plugin for the new code repository) | `/new-suite` (`--only starter`) | Mode B Rule 40 section 11 | Developers |
-| ★ | Everything above (0–8 and 10), in order, plus the starter kit; also applies later changes to every document | `/new-suite` | — | — |
+| 11 | System Map of the planned system (shared, Rule 70) | `/system-map` or `/new-suite` (`--only map`) | `templates/system-map.md` | New team members, tech lead, PM |
+| + | Build repository starter kit (CLAUDE.md, rules, skills, and the `/feature-dev` plugin for the new code repository) | `/new-suite` (`--only starter`) | Mode B Rule 40 section 12 | Developers |
+| ★ | Everything above (0–8, 10, and 11), in order, plus the starter kit; also applies later changes to every document | `/new-suite` | — | — |
 
 ## Mode C — Modernize an existing project into a new one
 
@@ -59,6 +61,7 @@ it as it is or plan a modernized rebuild?"
 | 6 | Migration Test Plan | `/mod-test-plan` | `06-migration-test-plan.md` | QA, client UAT users |
 | 7 | Tech Stack Questionnaire (always made by `/mod-suite`; answers feed the brief) | `/mod-suite` | `07-tech-stack-questionnaire.md` | Stakeholders, developers |
 | 8 | Project Documentation and Implementation Plan (shared, Rule 65) | `/mod-suite` (`--only implementation`) | `templates/documentation-and-implementation-plan.md` | Developers, tech lead, PM |
+| 9 | System Map, current and target side by side (shared, Rule 70) | `/system-map` or `/mod-suite` (`--only map`) | `templates/system-map.md` | New team members, tech lead, support, PM |
 | ★ | Everything above, in order, plus INDEX, Word files, presentation deck, and a starter kit (with the `/feature-dev` plugin) for the new code repository; also applies later review changes to every document and slide | `/mod-suite` | — | — |
 
 The Mode C interview always asks which **target tech stack** to use, layer by layer, with
@@ -70,6 +73,16 @@ to the working system (`templates/documentation-and-implementation-plan.md`,
 `rules/65-documentation-and-implementation-plan.md`). It is written after the suite's
 consistency review, summarizes the other documents without adding facts, and is the first
 file a developer reads.
+
+**Shared by all modes:** every suite also has a **System Map**, one document that shows the
+whole system and where each part is described: a context picture, users and roles, parts
+(modules), screens and navigation, data stores, outside systems, deployment, a
+feature-to-system cross-reference, and the main flow (`templates/system-map.md`,
+`rules/70-system-map.md`). Mode A maps the system as built, Mode B the planned system, and
+Mode C the current and target systems side by side. Suites write it in Step 3a, after the
+consistency review and before the Implementation Plan; `/system-map <slug>` writes it on
+its own (Mode A needs only the profile). File: Mode A `07-system-map.md`, Mode B
+`11-system-map.md`, Mode C `09-system-map.md`.
 
 ## Workflow (always follow)
 
@@ -110,7 +123,8 @@ Mode-specific rules are **not** loaded up front; the skills read them when they 
 The same holds for three shared rules: `rules/45-estimation-and-release-gate.md` (plans,
 test plans, proposals), `rules/55-applying-changes.md` (a change to an existing Mode A or
 B suite), `rules/60-proposal-slides.md` (proposal as PowerPoint), and
-`rules/65-documentation-and-implementation-plan.md` (the shared developer map).
+`rules/65-documentation-and-implementation-plan.md` (the shared developer map), and
+`rules/70-system-map.md` (the shared System Map).
 Before writing or editing any document outside a skill, read the active mode's rules first:
 
 | Mode | Evidence rule | Document rules |
@@ -145,12 +159,12 @@ review.
 
 - `rules/` — writing and review rules shared by all modes.
 - `templates/` — templates shared by all modes (the Project Documentation and
-  Implementation Plan).
+  Implementation Plan, the System Map).
 - `mode-a-existing-project/` — Mode A templates and rules.
 - `mode-b-new-project/` — Mode B templates and rules.
 - `mode-c-modernize-project/` — Mode C templates and rules.
 - `.claude/skills/` — the slash-command skills (`doc-*` = Mode A, `new-*` = Mode B,
-  `mod-*` = Mode C).
+  `mod-*` = Mode C; `system-map` and `proposal-slides` are shared).
 - `projects/` — optional drop zone for Mode A input projects (read-only).
 - `output/mode-a/<slug>/`, `output/mode-b/<slug>/`, and `output/mode-c/<slug>/` —
   generated documents.

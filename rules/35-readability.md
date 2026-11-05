@@ -10,7 +10,7 @@
 | Has the layer | Does not |
 |---------------|----------|
 | Mode A: Completion Plan, Proposal, User Manual, Technical Manual, Developer Manual | Mode A Project Profile and Mode B Project Brief (internal evidence bases) |
-| All modes: Project Documentation and Implementation Plan (Rule 65) | |
+| All modes: Project Documentation and Implementation Plan (Rule 65), System Map (Rule 70) | |
 | Mode B: Requirements, System Design, Project Plan, Proposal, Test Plan, draft manuals, Gap Report | Repo docs (README, ARCHITECTURE, API) and INDEX.md |
 | Mode C: every document, including the brief (Mode C Rule 50) | — |
 
@@ -54,7 +54,7 @@ flow appears in several documents, so it reads the same and renders once.
 
 | Flow | Shows | Put it in |
 |------|-------|-----------|
-| System in one picture | Users, the main parts, the database, outside systems | Proposal, System Design, Technical Manual, Developer Manual |
+| System in one picture | Users, the main parts, the database, outside systems | Proposal, System Design, Technical Manual, Developer Manual, System Map |
 | Case flow (main workflow) | One real case from start to end in the users' terms, with the key decision | User Manual, Requirements, System Design, Proposal |
 | Remaining-work flow (Mode A) | Current state → finish open work → test → acceptance → go-live → handover | Completion Plan |
 | SDLC flow | Plan → requirements → design → build in sprints → developer tests → QA → user acceptance → ready to deploy → handover; failed tests loop back to build | Project Plan, Proposal |

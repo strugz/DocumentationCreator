@@ -35,6 +35,9 @@ To change an existing Mode A or B suite, follow `rules/55-applying-changes.md`.
 Every suite ends with the shared Project Documentation and Implementation Plan: follow
 `rules/65-documentation-and-implementation-plan.md` and
 `templates/documentation-and-implementation-plan.md` (Mode A `06-`, Mode B `10-`, Mode C `08-`).
+Every suite also has the shared System Map, written before that plan: follow
+`.claude/skills/system-map/SKILL.md`, `rules/70-system-map.md`, and
+`templates/system-map.md` (Mode A `07-`, Mode B `11-`, Mode C `09-`).
 
 ## Choosing the mode
 

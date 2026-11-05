@@ -59,7 +59,7 @@ renders once.
 
 | Flow | Shows | Put it in |
 |------|-------|-----------|
-| System in one picture | Users, the main parts, database, printers, outside systems | Design, Proposal, Brief |
+| System in one picture | Users, the main parts, database, printers, outside systems | Design, Proposal, Brief, System Map |
 | Case flow (domain workflow) | A real case from start to end in the users' terms, with the key decision (for a laboratory: order → check-in → analyzer → verify, hold critical → release → print, HIS, portal, monthly reports → archive) | Design, Requirements, Proposal |
 | Module case flows | One flow per special module (for example QC, microbiology, blood bank), with the safety check as a decision | Design |
 | SDLC process flow | Plan → requirements → design → build in sprints → developer tests → QA testing → user acceptance → pilot → ready to deploy → handover; failed tests loop back to build | Plan, Proposal |
@@ -97,9 +97,10 @@ A change to a decision, scope, wording or name always flows in this order:
    the brief version (`v7` → `v8`), and update every document's Source revision.
    Update the tech stack questionnaire's Proposed values and "(decision needed)"
    headings too, unless its Status is already "Consolidated".
-2. **Assessment → Requirements → Design → Plan → Test Plan → Proposal → Documentation
-   and Implementation Plan** — update each, adding a Revision History row that says what
-   changed and why. The last one is updated after the others (shared Rule 65 section 6).
+2. **Assessment → Requirements → Design → Plan → Test Plan → Proposal → System Map →
+   Documentation and Implementation Plan** — update each, adding a Revision History row
+   that says what changed and why. The System Map comes after the documents it cites
+   (shared Rule 70 section 6); the Implementation Plan comes last (shared Rule 65 section 6).
 3. **INDEX** — headline numbers, Decisions Needed, Open Items and their **counts**.
 4. **Slides** — text, speaker notes, page numbers, and any PowerPoint copy.
 5. **Checks** — `python tools/lint_docs.py output/mode-c/<slug>`, the banned-terms search
@@ -125,7 +126,7 @@ system (for example "SQL Server" is correct for the current system only).
   batch.
 - Scratch scripts never go under `output/mode-c/<slug>/`, because the linter treats every
   Markdown file there as a document. The one exception is the repository starter kit in
-  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 10).
+  `<repo-name>-repo-starter/`, which the linter skips (Rule 40 section 11).
 
 ## 7. Slides
 - One message per slide, few words, for the approvers. Mirror the proposal: today →

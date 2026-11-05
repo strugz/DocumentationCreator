@@ -1,7 +1,7 @@
 ---
 name: doc-suite
 description: MODE A (existing code). Generate the complete documentation suite for a fed-in project. It runs intake, then the Completion Plan, Proposal, User Manual, Technical Manual, Developer Manual (and optionally repo docs), followed by a cross-document consistency review. Also applies later changes (answers to open questions, decisions, new code, scope, wording, names) to every document and the proposal slides without regenerating. Use when the user says "document this project", "create all the documents", "full documentation", or gives a project path without naming a specific document, or asks to update the existing Mode A documents.
-argument-hint: <path-to-project or slug> [change request] [--only plan,proposal,user,technical,developer,repo,implementation] [--format md|docx|pdf|pptx]
+argument-hint: <path-to-project or slug> [change request] [--only plan,proposal,user,technical,developer,repo,map,implementation] [--format md|docx|pdf|pptx]
 ---
 
 # Full Documentation Suite
@@ -18,7 +18,7 @@ Input: `$ARGUMENTS`.
   (answers to open questions, a decision, new commits, a feature to add, a rejected word,
   names to replace, "hard to read"), do **not** regenerate. Read
   `rules/55-applying-changes.md` (not preloaded) and apply the change in its order: the
-  profile first, then 01 → 02 → 03 → 04 → 05 → repo docs → 06 (Step 3b), INDEX, proposal
+  profile first, then 01 → 02 → 03 → 04 → 05 → repo docs → 07 (Step 3a) → 06 (Step 3b), INDEX, proposal
   slides; then
   the Step 3 checks and the Step 4 exports.
 - If the replacement for a name or term is unclear, ask one question with options;
@@ -69,6 +69,14 @@ mechanical items (markers, structure, IDs, citations, traceability) for the whol
 Then review the judgment items above by reading the documents.
 Fix any inconsistency in place.
 
+## Step 3a — System Map
+Read `rules/70-system-map.md` (not preloaded) and write
+`output/mode-a/<slug>/07-system-map.md` from `templates/system-map.md`: one map of
+the whole system (context picture, users and roles, parts, screens, data stores, outside
+systems, deployment, feature cross-reference, main flow), each row pointing to the
+document section that holds the detail. It summarizes the reviewed documents and adds no
+fact of its own. In Mode A every part keeps its `path:line` citation from the profile. Then run the linter on the folder again.
+
 ## Step 3b — Project Documentation and Implementation Plan
 Read `rules/65-documentation-and-implementation-plan.md` (not preloaded) and write
 `output/mode-a/<slug>/06-documentation-and-implementation-plan.md` from `templates/documentation-and-implementation-plan.md`: the
@@ -76,11 +84,12 @@ developer's map of the suite (inventory, reading order, where each fact lives) a
 route from the documents to the working system (stages equal to the plan's phases, the
 gate word for word, documentation duties per kind of change, roles). It summarizes the
 reviewed documents and adds no fact of its own; cite the document and section for each
-row. Written now, after the Step 3 review, so the inventory shows final versions. Then
+row; list the System Map in the inventory and the reading order. Written now, after the
+Step 3 review and Step 3a, so the inventory shows final versions. Then
 run the linter on the folder again.
 
 ## Step 4 — Index and export
-1. Write `output/mode-a/<slug>/INDEX.md`: a table of each document (06 included) with its audience, status,
+1. Write `output/mode-a/<slug>/INDEX.md`: a table of each document (06 and 07 included) with its audience, status,
    and Open Items count, followed by a consolidated **Open Items** list (deduplicated,
    grouped by who must answer).
 2. If `--format docx` or `pdf` was requested, convert each finished Markdown document with
@@ -94,4 +103,5 @@ run the linter on the folder again.
 ## Step 5 — Report
 Give a short summary: the files written (as links), the checklist pass/fail per document (include the final lint result),
 the top Open Items the user should resolve first, and the reminder that developers start
-from `06-documentation-and-implementation-plan.md`.
+from `06-documentation-and-implementation-plan.md` and find any part of the system in
+`07-system-map.md`.
