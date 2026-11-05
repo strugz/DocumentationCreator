@@ -85,7 +85,8 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/doc-technical-manual <slug> [env]` | Technical Manual | `04-technical-manual.md` |
 | `/doc-developer-manual <slug>` | Developer Manual | `05-developer-manual.md` |
 | `/doc-repo-files <slug> [readme\|architecture\|api\|all]` | GitHub-style repo docs | `repo/*.md` |
-| `/doc-suite <path> [change] [--only ...] [--format docx\|pdf\|pptx]` | All of the above, plus a consistency review and the Project Documentation and Implementation Plan (`06-…`, the developer's map of the suite and the build route). Run it again with a change (answers, decision, new code, scope, wording, names) to update every document | everything + `INDEX.md` |
+| `/system-map <slug> [--mode a\|b\|c]` | System Map: the whole system in pictures and tables (any mode) | `07-system-map.md` (B: `11-`, C: `09-`) |
+| `/doc-suite <path> [change] [--only ...] [--format docx\|pdf\|pptx]` | All of the above, plus a consistency review, the System Map (`07-…`), and the Project Documentation and Implementation Plan (`06-…`, the developer's map of the suite and the build route). Run it again with a change (answers, decision, new code, scope, wording, names) to update every document | everything + `INDEX.md` |
 
 ### Mode B — New project (`new-*`)
 | Command | What it does | Output |
@@ -97,7 +98,7 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/new-proposal <slug> [client/budget/rates] [--format pptx]` | Project Proposal (new system), optionally as PowerPoint slides | `04-project-proposal.md`, `export/*-Slides.pptx` |
 | `/new-test-plan <slug>` | Test Plan with UAT scenarios | `05-test-plan.md` |
 | `/new-manuals <slug> [user\|technical\|developer\|all]` | Draft manuals for the planned system | `06`–`08` |
-| `/new-suite <idea> [change] [--only ...] [--no-manuals] [--format docx\|pdf\|pptx]` | All of the above, plus a traceability review and the Project Documentation and Implementation Plan (`10-…`). Builds a starter kit for the new code repository when the brief lists it. Run it again with a change (answers, decision, scope, wording, names) to update every document | everything + `INDEX.md` |
+| `/new-suite <idea> [change] [--only ...] [--no-manuals] [--format docx\|pdf\|pptx]` | All of the above, plus a traceability review, the System Map (`11-…`), and the Project Documentation and Implementation Plan (`10-…`). Builds a starter kit for the new code repository when the brief lists it. Run it again with a change (answers, decision, scope, wording, names) to update every document | everything + `INDEX.md` |
 | `/new-gap-check <slug> <code-path>` | After the build: planned vs built (Mode B or C slug) | `09-gap-report.md` |
 
 ### Mode C — Modernize an existing project (`mod-*`)
@@ -110,7 +111,7 @@ and plan the migration" (Mode C). The matching skills trigger automatically.
 | `/mod-plan <slug> [start/deadline/team]` | Migration Plan with cutover, rollback, and decommission | `04-migration-plan.md` |
 | `/mod-proposal <slug> [client/budget/rates]` | Modernization Proposal with options considered | `05-modernization-proposal.md` |
 | `/mod-test-plan <slug>` | Migration Test Plan with parity, data migration, and cutover tests | `06-migration-test-plan.md` |
-| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, the Project Documentation and Implementation Plan (`08-…`), Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `<repo>-repo-starter/` |
+| `/mod-suite <mode-a slug or path> [change] [--only ...] [--format docx\|pdf]` | All of the above, plus a Tech Stack Questionnaire for stakeholders and developers (`07-tech-stack-questionnaire.md`), in plain, readable form (Read This First pages, case and SDLC flows), plus a traceability review, the System Map (`09-…`, current and target side by side), the Project Documentation and Implementation Plan (`08-…`), Word files, a presentation deck and a starter kit for the new code repository. Run it again with a change (decision, scope, wording, names) or the returned questionnaire answers to update every document and slide | everything + `INDEX.md`, `deck/`, `<repo>-repo-starter/` |
 
 ### Examples
 ```text
@@ -160,6 +161,10 @@ flowchart LR
    Plan** (`rules/65-documentation-and-implementation-plan.md`): which document decides
    what, the build stages from the plan, the ready-to-deploy gate, and which document to
    update when the code changes. Developers read it first.
+5. **System Map:** every suite also has a **System Map** (`rules/70-system-map.md`): the
+   whole system in one place — who uses it, its parts, screens, data, outside systems, and
+   servers — with each part linked to the section that describes it. Run `/system-map
+   <slug>` to write it on its own in any mode.
 
 ### Markers
 | Marker | Meaning |
@@ -283,26 +288,29 @@ DocumentationCreator/
 │   ├── 50-review-checklist.md
 │   ├── 55-applying-changes.md    # Modes A and B: update an existing suite
 │   ├── 60-proposal-slides.md     # Modes A and B: proposal as PowerPoint (not preloaded)
-│   └── 65-documentation-and-implementation-plan.md  # All modes: developer map (not preloaded)
-├── templates/                    # Shared templates: documentation-and-implementation-plan.md
+│   ├── 65-documentation-and-implementation-plan.md  # All modes: developer map (not preloaded)
+│   └── 70-system-map.md          # All modes: System Map (not preloaded)
+├── templates/                    # Shared templates: documentation-and-implementation-plan.md,
+│                                 #   system-map.md
 ├── mode-a-existing-project/      # MODE A — document existing code
 │   ├── README.md
 │   ├── rules/                    #   30 evidence (code), 40 document rules
-│   └── templates/                #   00-profile … 05-developer-manual, repo/ (06 is shared)
+│   └── templates/                #   00-profile … 05-developer-manual, repo/ (06 and 07 are shared)
 ├── mode-b-new-project/           # MODE B — document a project before it is built
 │   ├── README.md
 │   ├── rules/                    #   30 evidence (brief), 40 document rules
-│   └── templates/                #   00-brief … 05-test-plan, 09-gap-report (10 is shared)
+│   └── templates/                #   00-brief … 05-test-plan, 09-gap-report (10 and 11 are shared)
 ├── mode-c-modernize-project/     # MODE C — plan the modernized rebuild of a Mode A project
 │   ├── README.md
 │   ├── rules/                    #   30 evidence (profile + brief), 40 document rules
-│   └── templates/                #   00-modernization-brief … 07-tech-stack-questionnaire (08 is shared)
+│   └── templates/                #   00-modernization-brief … 07-tech-stack-questionnaire (08 and 09 are shared)
 ├── .claude/skills/
 │   ├── doc-*/                    #   Mode A skills (intake, plan, proposal, manuals, repo, suite)
 │   ├── new-*/                    #   Mode B skills (brief, requirements, design, plan, proposal,
 │   │                             #   test-plan, manuals, suite, gap-check)
-│   └── mod-*/                    #   Mode C skills (brief, assessment, requirements, design, plan,
-│                                 #   proposal, test-plan, suite)
+│   ├── mod-*/                    #   Mode C skills (brief, assessment, requirements, design, plan,
+│   │                             #   proposal, test-plan, suite)
+│   └── system-map/               #   Shared: System Map for any mode
 ├── tools/
 │   ├── lint_docs.py              # Automated Rule 50 checks (run on any output folder)
 │   ├── md_to_docx.js             # Markdown → Word export (needs `npm install` in tools/)

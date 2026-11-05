@@ -15,7 +15,8 @@
 | 06–08 | Draft User / Technical / Developer Manuals | `/new-manuals` | Requirements + Design |
 | 09 | Gap Report (after code exists) | `/new-gap-check` | Mode B Requirements + Mode A Profile |
 | 10 | Project Documentation and Implementation Plan (shared Rule 65) | `/new-suite` Step 3b | The finished suite |
-| 11 | Build repository starter kit (not a document) | `/new-suite` Step 4b | The finished suite |
+| 11 | System Map (shared Rule 70) | `/new-suite` Step 3a or `/system-map` | Brief + Design (+ Requirements) |
+| 12 | Build repository starter kit (not a document) | `/new-suite` Step 4b | The finished suite |
 
 Later documents reuse earlier ones. Never contradict an earlier document. If a later
 document reveals a problem, fix the earlier one first.
@@ -124,7 +125,15 @@ document reveals a problem, fix the earlier one first.
   with the hand-over: once code exists, `/new-gap-check`, then the Mode A skills for the
   final manuals.
 
-## 11. Build repository starter kit
+## 11. System Map
+- Shared document, written by `/new-suite` Step 3a (before the Implementation Plan) or by
+  `/system-map <slug>` to `11-system-map.md` from `templates/system-map.md`. Rules:
+  `rules/70-system-map.md`.
+- Maps the planned system in the future tense: parts from Design sections 2.3, 2.4 and 14,
+  screens from section 6, data from section 4, outside systems from section 8, servers from
+  section 12. Screen labels keep `[VERIFY: final label]`.
+
+## 12. Build repository starter kit
 Written last, by `/new-suite`, when Brief section 3 Deliverables lists it (or with
 `--only starter`). It prepares the new code repository so the build starts with the
 agreed decisions. It contains **no application code**.

@@ -16,9 +16,10 @@
 | 06 | Migration Test Plan | `/mod-test-plan` | Requirements + Design + Profile (parity) |
 | 07 | Tech Stack Questionnaire | `/mod-suite` (always, right after the brief) | Profile + Brief (section 07 below); its answers feed the brief |
 | 08 | Project Documentation and Implementation Plan (shared Rule 65) | `/mod-suite` Step 3b | The finished suite |
+| 09 | System Map (shared Rule 70) | `/mod-suite` Step 3a or `/system-map` | Profile + Brief + Target Design |
 | — | INDEX | `/mod-suite` | All documents |
-| — | Presentation deck | `/mod-suite` | Proposal + Plan (section 09 below) |
-| — | Build repository starter kit | `/mod-suite` | Brief + Requirements + Design + Plan + Test Plan (section 10 below) |
+| — | Presentation deck | `/mod-suite` | Proposal + Plan (section 10 below) |
+| — | Build repository starter kit | `/mod-suite` | Brief + Requirements + Design + Plan + Test Plan (section 11 below) |
 
 Later documents reuse earlier ones. Never contradict an earlier document. If a later
 document reveals a problem, fix the earlier one first. If the problem is in the Mode A
@@ -252,7 +253,15 @@ pasted answers)
   cutover rehearsal as separate rows; Stage 0 applies the starter kit. Keep current-system
   facts in the present tense and target facts in the future tense.
 
-## 09. Presentation deck
+## 09. System Map
+- Shared document, written by `/mod-suite` Step 3a (before the Implementation Plan) or by
+  `/system-map <slug>` to `09-system-map.md` from `templates/system-map.md`. Rules:
+  `rules/70-system-map.md`, plus this mode's readability layer (Rule 50 sections 1 and 3).
+- Shows "Today" (Profile, present tense) and "Target" (Target Design, future tense) side
+  by side; section 4.1 maps every current part to its target part with the brief's
+  disposition, and section 9 lists every feature, including Drop features.
+
+## 10. Presentation deck
 - Audience: the approvers. One message per slide, few words, plain language, and the
   detail in the speaker notes. Default order: cover → today → what the users face (their
   own problems) → what changes (today vs target table) → what we propose (parts and new
@@ -267,7 +276,7 @@ pasted answers)
 - Deck source files live in `output/mode-c/<slug>/deck/` (HTML), never as Markdown in the
   document folder.
 
-## 10. Build repository starter kit
+## 11. Build repository starter kit
 Written last, to `output/mode-c/<slug>/<repo-name>-repo-starter/`, inside the project's
 folder so the suite and its kit stay together. `tools/lint_docs.py` and the lint hook skip
 every `*-repo-starter` folder, because the kit is not a suite document. It prepares the

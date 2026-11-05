@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-24.04, windows-latest]  # ubuntu-latest (26.04) has no Python 3.9
         python: ["3.9", "3.13"]
     steps:
       - uses: actions/checkout@v4
@@ -48,4 +48,5 @@ jobs:
           node tools/md_to_docx.js mode-a-existing-project/templates "$RUNNER_TEMP/docx-a"
           node tools/md_to_docx.js mode-b-new-project/templates "$RUNNER_TEMP/docx-b"
           node tools/md_to_docx.js mode-c-modernize-project/templates "$RUNNER_TEMP/docx-c"
-          ls -l "$RUNNER_TEMP"/docx-a "$RUNNER_TEMP"/docx-b "$RUNNER_TEMP"/docx-c
+          for f in templates/*.md; do node tools/md_to_docx.js "$f" "$RUNNER_TEMP/docx-shared"; done
+          ls -l "$RUNNER_TEMP"/docx-a "$RUNNER_TEMP"/docx-b "$RUNNER_TEMP"/docx-c "$RUNNER_TEMP"/docx-shared

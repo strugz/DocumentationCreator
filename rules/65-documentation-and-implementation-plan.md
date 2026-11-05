@@ -43,7 +43,7 @@ in the kit's `CLAUDE.md` and `README.md`.
 | 4 Implementation Approach | Plan sections 5–6 (finish order) | Plan section 6 (phases); Design section 15 (ADRs) | Brief (strategy); Migration Plan (increments, parallel run, cutover) |
 | 5 Implementation Stages | Plan WBS and milestones; Plan Quality section | Plan WBS and phases; Test Plan test cases | Migration Plan increments and phases; Migration Test Plan |
 | 6 Traceability | Plan feature IDs (F-xx); Developer Manual git workflow | Requirements Traceability Matrix; starter kit git rule | Requirements Traceability Matrix; Feature Disposition; starter kit git rule |
-| 7 Development Workflow and Tooling | Developer Manual (setup, standards, CI/CD, git); repo docs | Design section 14; starter kit (Mode B Rule 40 section 11) | Target Design repository section; starter kit (Mode C Rule 40 section 10) |
+| 7 Development Workflow and Tooling | Developer Manual (setup, standards, CI/CD, git); repo docs | Design section 14; starter kit (Mode B Rule 40 section 12) | Target Design repository section; starter kit (Mode C Rule 40 section 11) |
 | 8 Quality Gates and Definition of Done | Plan Definition of Done and gate (Rule 45 section 5) | Plan section 13; Test Plan exit criteria; gate | Migration Plan gate; Migration Test Plan parity and cutover criteria |
 | 9 Keeping the Documents True | Rule 55 (Mode A order); `/doc-suite <slug> <change>` | Rule 55 (Mode B order); `/new-suite <slug> <change>`; `/new-gap-check` once code exists | Mode C Rule 50 section 5; `/mod-suite <slug> <change>`; `/new-gap-check`, then `/doc-suite` on the new code |
 | 10 Roles and Responsibilities | Profile section 2 (roles); Plan RACI | Brief section 3; Plan section 7 | Brief (approvers, testers); Migration Plan RACI |
@@ -63,7 +63,9 @@ statement about a document cites the document and section instead.
 2. **Document Inventory (3.1).** One row per file in the output folder, plus the repo docs
    (Mode A) or starter kit (Modes B and C) as a final row. Version and status are copied
    from each Document Control block on the day of writing; a document that is not yet
-   written is listed with status "Planned".
+   written is listed with status "Planned". The System Map (Rule 70) is listed like any
+   other document and appears on day one of the reading order (3.2), because it shows
+   where every part of the system is described.
 3. **Where Each Fact Lives (3.3).** Exactly one document per kind of fact. If two documents
    both hold a fact today, pick the one the mode's Rule 40 names as the source and note the
    other as a copy.

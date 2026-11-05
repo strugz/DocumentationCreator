@@ -8,6 +8,18 @@ numbers follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- Shared **System Map** for Modes A, B, and C: one document that shows the whole system and
+  where each part is described — a context picture, users and roles, parts (modules),
+  screens and navigation, data stores, outside systems, deployment, a feature-to-system
+  cross-reference, and the main flow. Mode A maps the system as built, Mode B the planned
+  system, Mode C the current and target systems side by side with a current-to-target
+  parts map. New rule `rules/70-system-map.md`, template `templates/system-map.md`, and
+  skill `/system-map <slug>`. The suites write it in a new Step 3a (`--only map`), before
+  the Implementation Plan, which lists it in its inventory and reading order. Files: Mode A
+  `07-system-map.md`, Mode B `11-system-map.md`, Mode C `09-system-map.md`. Wired into
+  `CLAUDE.md`, `AGENTS.md`, `README.md`, Rules 35, 50, 55, 65, the three Rule 40 files, and
+  Mode C Rule 50 section 5. Rule 40 sections renumbered to make room: Mode B starter kit is
+  now section 12; Mode C deck and starter kit are sections 10 and 11.
 - Shared Rule 12 `rules/12-end-user-documentation.md` (Modes A, B, and C): end-user text
   is written for readers with no technical background. It bans developer jargon with a
   replacement table (backend, API, server, execute, authenticate, query, null, exception,
